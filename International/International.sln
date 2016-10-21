@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "International.Entities", "International.Entities\International.Entities.csproj", "{504610FB-98B7-4FCE-8B43-285AB393CFB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "International.BusinessEntities", "International.BusinessEntities\International.BusinessEntities.csproj", "{E0E878C0-2DEB-4DAF-BA55-8BBAB66738B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "International.BusinessLogic", "International.BusinessLogic\International.BusinessLogic.csproj", "{AD8C9EE7-4119-4A5A-8DA1-219284D3B3F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "International.Web", "International.Web\International.Web.csproj", "{AA90DC16-3896-48CA-B626-2E5ED8B7BE02}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://xceedance-sudeep.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = International.BusinessEntities\\International.BusinessEntities.csproj
+		SccProjectName1 = International.BusinessEntities
+		SccLocalPath1 = International.BusinessEntities
+		SccProjectUniqueName2 = International.BusinessLogic\\International.BusinessLogic.csproj
+		SccProjectName2 = International.BusinessLogic
+		SccLocalPath2 = International.BusinessLogic
+		SccProjectUniqueName3 = International.Entities\\International.Entities.csproj
+		SccProjectName3 = International.Entities
+		SccLocalPath3 = International.Entities
+		SccProjectUniqueName4 = International.Web\\International.Web.csproj
+		SccProjectName4 = International.Web
+		SccLocalPath4 = International.Web
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{504610FB-98B7-4FCE-8B43-285AB393CFB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{504610FB-98B7-4FCE-8B43-285AB393CFB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{504610FB-98B7-4FCE-8B43-285AB393CFB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{504610FB-98B7-4FCE-8B43-285AB393CFB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0E878C0-2DEB-4DAF-BA55-8BBAB66738B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0E878C0-2DEB-4DAF-BA55-8BBAB66738B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0E878C0-2DEB-4DAF-BA55-8BBAB66738B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0E878C0-2DEB-4DAF-BA55-8BBAB66738B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD8C9EE7-4119-4A5A-8DA1-219284D3B3F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD8C9EE7-4119-4A5A-8DA1-219284D3B3F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD8C9EE7-4119-4A5A-8DA1-219284D3B3F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD8C9EE7-4119-4A5A-8DA1-219284D3B3F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA90DC16-3896-48CA-B626-2E5ED8B7BE02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA90DC16-3896-48CA-B626-2E5ED8B7BE02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA90DC16-3896-48CA-B626-2E5ED8B7BE02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA90DC16-3896-48CA-B626-2E5ED8B7BE02}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

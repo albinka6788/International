@@ -1,0 +1,86 @@
+﻿@model International.BusinessEntities.Models.SubmissionModel
+@{
+    ViewBag.Title = ViewBag.PageTitle;
+    var currentProcess = @Model.CurrentProcess;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-controller="submissionController" ng-init="submissionId = '@Model.SubmissionId';currentprocess = @((int)Model.CurrentProcess);getSubmissionDetails();">
+    <div class="container-fluid main-heading clearfix">       
+        <ul class="breadcrumb pull-right">@ViewBag.PageTitle - 
+            <li ng-repeat="step in steps|limitTo:getCurrentStepIndex()+1" ng-class="{active: $index==getCurrentStepIndex()}">
+                <a href="javascript:void(0)" ng-click="goToStep($index)">{{step}}</a>
+            </li>
+        </ul>
+    </div>
+    <p></p>
+    <div ng-switch on="selection">
+
+        <!-- First Step -->
+        <div ng-switch-when="Basic Details">
+            @Html.Partial("_basicDetail")
+        </div>
+
+        <div ng-switch-when="Project Details">
+            @Html.Partial("_projectDetail", new ProjectDetailModel())
+        </div>
+
+        <!-- Third Steps -->
+        <div ng-switch-when="Insured Details">
+            @Html.Partial("_insuredDetail")
+        </div>
+
+        <!-- Third Steps -->
+        <div ng-switch-when="Broker Details">
+            @Html.Partial("_brokerDetails")
+        </div>
+
+        <!-- Third Step -->
+        <div ng-switch-when="Other Details">
+            @Html.Partial("_otherDetail")
+        </div>
+
+        <!-- Third Step -->
+        <div ng-switch-when="Status Dependent Detail">
+            @Html.Partial("_statusDependentDetail")
+        </div>
+
+        <!-- Second Step -->
+        <div ng-switch-when="Premium Details">
+            @Html.Partial("_premiumDetails", new PremiumDetailModel())
+        </div>
+
+        <!-- Second Step -->
+        <div ng-switch-when="Premium Details LayerLevel">
+            @Html.Partial("_premiumDetailsCoverageLevel", new PremiumDetailModel())
+        </div> 
+     
+        <!-- Third Step -->
+        <div ng-switch-when="Policy Detail">
+            @Html.Partial("_policyDetail", new PolicyDetailModel())
+        </div>
+
+        <!-- Third Step -->
+        <div ng-switch-when="QC Remarks">
+            @Html.Partial("_QCApproval")
+        </div>
+
+    </div>
+
+
+</div>
+
+@section scripts{
+
+<script src="~/Scripts/controllers/submissionController.js"></script>
+<script src="~/Scripts/controllers/basicDetailController.js"></script>
+<script src="~/Scripts/controllers/projectDetailController.js"></script>
+<script src="~/Scripts/controllers/insuredController.js"></script>
+<script src="~/Scripts/controllers/brokerController.js"></script>
+<script src="~/Scripts/controllers/premiumController.js"></script>
+<script src="~/Scripts/controllers/policyDetailController.js"></script>
+<script src="~/Scripts/controllers/otherDetailController.js"></script>
+<script src="~/Scripts/controllers/CoverageLevelPremiumController.js"></script>
+<script src="~/Scripts/controllers/QCController.js"></script>
+
+}

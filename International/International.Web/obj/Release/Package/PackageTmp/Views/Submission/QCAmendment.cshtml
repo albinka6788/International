@@ -1,0 +1,289 @@
+﻿@{
+    ViewBag.Title = "Submissions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/controllers/submissionListingController.js"></script>
+}
+
+<div class="wrapper" ng-controller="submissionListingController" ng-init="initSubmissionListing(3);">
+    <div class="container-fluid main-heading clearfix">
+        <a href="">
+            <h3 class="pull-left">QC Amendment</h3>
+        </a>
+    </div>
+
+    <div class="container-fluid">
+        <div class="table-responsive">
+            <table border="1" class="table table-bordered">
+                <tr class="main-color">
+                    <th colspan="3">Filter<span class="pull-right" data-toggle="collapse" data-target="#demo" ng-click="setFilters()"><i class="fa fa-chevron-down"></i></span></th>
+
+                </tr>
+                <tr id="demo" class="collapse">
+                    <td class="td-space">
+                        <form class="form-inline" role="form">
+
+                            <div class="form-group col-sm-2">
+                                <input type="text" ng-model="filterVals.SubmissionNumber" placeholder="Work item /submission no." class="form-control">
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <select class="form-control" ng-model="filterVals.NewRenewalCode">
+                                    <option ng-repeat="option in filterLists.NewRenewal" value="{{option.Value}}">{{option.Text}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <select class="form-control" ng-model="filterVals.RenewalCode">
+                                    <option ng-repeat="option in filterLists.Renewable" value="{{option.Value}}">{{option.Text}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <input type="text" placeholder="Master Policy Number" class="form-control" ng-model="filterVals.PolicyNumber">
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <input type="text" placeholder="Insured Name" class="form-control" ng-model="filterVals.InsuredName">
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <select class="form-control" ng-model="filterVals.UwID">
+                                    <option ng-repeat="option in filterLists.ProfitCenterUW" value="{{option.Value}}">{{option.Text}}</option>
+                                </select>
+                            </div>
+
+                            <div class="clearfix"></div><br>
+
+                            <div class="form-group col-sm-2">
+                                <select class="form-control" ng-model="filterVals.PID">
+                                    <option ng-repeat="option in filterLists.ProductLine" value="{{option.Value}}">{{option.Text}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <select class="form-control" ng-model="filterVals.PsID">
+                                    <option ng-repeat="option in filterLists.ProductLineSubtype" value="{{option.Value}}">{{option.Text}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <select class="form-control" ng-model="filterVals.PTypes">
+                                    <option ng-repeat="option in filterLists.PolicyType" value="{{option.Value}}">{{option.Text}}</option>
+                                </select>
+                            </div>
+                            @*<div class="form-group col-sm-2">
+                                <select class="form-control" ng-model="filterVals.CID">
+                                    <option ng-repeat="option in filterLists.CurrentStatus" value="{{option.Value}}">{{option.Text}}</option>
+                                </select>
+                            </div>*@
+
+                            <div class="form-group col-sm-2">
+                                <select class="form-control" ng-model="filterVals.BID">
+                                    <option ng-repeat="option in filterLists.Broker" value="{{option.Value}}">{{option.Text}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <select class="form-control" ng-model="filterVals.BpID">
+                                    <option ng-repeat="option in filterLists.BrokerEntity" value="{{option.Value}}">{{option.Text}}</option>
+                                </select>
+                            </div>
+                            <div class="clearfix"></div><br>
+                            <div class="form-group col-sm-2">
+                                <select class="form-control" ng-model="filterVals.ProfitCentreOffice">
+                                    <option ng-repeat="option in filterLists.ProfitCentreOffices" value="{{option.Value}}">{{option.Text}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <select class="form-control" ng-model="filterVals.IssuingOffice">
+                                    <option ng-repeat="option in filterLists.IssuingOffices" value="{{option.Value}}">{{option.Text}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-sm-2">
+                                <input type="text" placeholder="Edited By" class="form-control" ng-model="filterVals.ModifiedBy">
+                            </div>
+
+                            <div class="form-group col-sm-2">
+                                <input type="text" placeholder="Created By" class="form-control" ng-model="filterVals.CreatedBy">
+                            </div>
+
+                            @*<div class="form-group col-sm-2">
+                                <select class="form-control" ng-model="filterVals.QCStatus">
+                                    <option ng-repeat="option in filterLists.QCStatus" value="{{option.Value}}">{{option.Text}}</option>
+                                </select>
+                            </div>*@
+
+                            <div class="clearfix"></div><br>
+
+                            <div class="form-group col-sm-2">
+                                <div class="input-group date" id="datepicker">
+                                    <input ng-model="filterVals.EffDateF" date_time_picker type="text" class="form-control" placeholder="Effective Date (From)">
+                                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <div class="input-group date" id="datepicker1">
+                                    <input ng-model="filterVals.EffDateT" date_time_picker type="text" class="form-control" placeholder="Effective Date (To)">
+                                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-2">
+                                <div class="input-group">
+                                    <input ng-model="filterVals.ProDateF" date_time_picker type="text" class="form-control" placeholder="Process Date (From)">
+                                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <div class="input-group">
+                                    <input ng-model="filterVals.ProDateT" date_time_picker type="text" class="form-control" placeholder="Process Date (To)">
+                                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-2">
+                                <div class="input-group">
+                                    <input ng-model="filterVals.CreateDateF" date_time_picker type="text" class="form-control" placeholder="Date of Creation (From)">
+                                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <div class="input-group">
+                                    <input ng-model="filterVals.CreateDateT" date_time_picker type="text" class="form-control" placeholder="Date of Creation (To)">
+                                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div><br>
+
+                            <div class="form-group col-sm-2">
+                                <div class="input-group">
+                                    <input ng-model="filterVals.ModifyDateF" date_time_picker type="text" class="form-control" placeholder="Edit Date (From)">
+                                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <div class="input-group">
+                                    <input ng-model="filterVals.ModifyDateT" date_time_picker type="text" class="form-control" placeholder="Edit Date (To)">
+                                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-2">
+                                <div class="input-group">
+                                    <input ng-model="filterVals.QCDateF" date_time_picker type="text" class="form-control" placeholder="Date 1 (From)">
+                                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <div class="input-group">
+                                    <input ng-model="filterVals.QCDateT" date_time_picker type="text" class="form-control" placeholder="Date 1 (To)">
+                                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div><br>
+
+
+                            <div class="form-group m-top col-sm-4 col-xs-12 pull-right">
+                                <button type="button" class="btn btn-primary" ng-click="applyFilters(false);">Search</button>
+                                <button type="button" class="btn btn-default" ng-click="applyFilters(true);">Reset</button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    @{var user = (LoggedInUser)ViewBag.LoggedInUser;}
+    @{
+        string controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+        string action = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+    }
+
+
+
+    <div class="container-fluid">
+        <div class="table clearfix">
+            @*<div class="pull-left">
+                @foreach (var right in user.UserRights)
+                {
+                    if (right.Controller == "Submission" && right.Action == "CreateSubmission" && right.Rights > 1)
+                    {
+                        <a href="@Url.Action("CreateSubmission", "Submission")">
+                            <button type="button" class="btn btn-primary">Create</button>
+                        </a>
+                    }
+                    else if (right.Controller == "Submission" && right.Action == "QCSubmission" && right.Rights > 0)
+                    {
+                        <a href="@Url.Action("QCSubmission", "Submission")">
+                            <button type="button" class="btn btn-primary">QC Queue</button>
+                        </a>
+                    }
+                    else if (right.Controller == "Submission" && right.Action == "QCAmendment" && right.Rights > 0)
+                    {
+                        <a href="@Url.Action("QCAmendment", "Submission")">
+                            <button type="button" class="btn btn-primary">Amendment QC Queue</button>
+                        </a>
+                    }
+                    else if (right.Controller == "Submission" && right.Action == "Export" && right.Rights > 0)
+                    {
+                        <a href="@Url.Action("Export", "Submission")">
+                            <button type="button" class="btn btn-primary">Export</button>
+                        </a>
+                    }
+                }
+
+
+
+
+            </div>*@
+            <div class="pull-right">
+                <button type="button" class="btn btn-primary" ng-click="collapseAll();">Collapse All</button>
+                <button type="button" class="btn btn-primary" ng-click="expandAll();">Expand All</button>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="table-responsive">
+            <div class="bg-primary">
+                <h4>Insured Listing</h4>
+            </div>
+            <table border="1" class="nowrap table table-bordered table-striped t-scroll display dataTable" id="clist" cellspacing="0" width="100%"></table>
+            @*<tr>
+                    <th>Work item /submission no.</th>
+                    <th>New/Renewal</th>
+                    <th>Date Of Renewal</th>
+                    <th>Renewal (Yes/No)</th>
+                    <th>Master Policy Number</th>
+                    <th>Insured Name </th>
+                    <th>Address Line 1</th>
+                    <th>Insured City</th>
+                    <th>Insured State</th>
+                    <th>Insured Country</th>
+                    <th>Profit Centre Underwriter</th>
+                    <th>Product Line </th>
+                    <th>Product Line Subtype</th>
+                    <th>Section Code</th>
+                    <th>Profit Code</th>
+                    <th>Policy Type</th>
+                    <th>Coverage Code</th>
+                    <th>Current Status</th>
+                    <th>Effective Date</th>
+                    <th>Expiry Date</th>
+                    <th>Process Date</th>
+                    <th>Broker Name </th>
+                    <th>Broker City</th>
+                    <th>Broker State</th>
+                    <th>Broker Country</th>
+                    <th>Profit Centre Office</th>
+                    <th>Issuing Office</th>
+                    <th>Gross Premium in USD </th>
+                    <th>Total Insured Value (TIV) in USD</th>
+                    <th>Date of Creation</th>
+                    <th>Date 1</th>
+                    <th>Action</th>
+                </tr>*@
+
+        </div>
+    </div>
+
+</div>
+

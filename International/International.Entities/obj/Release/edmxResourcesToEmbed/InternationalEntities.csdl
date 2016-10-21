@@ -1,0 +1,993 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InternationalSubmissionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="InternationalSubmissionEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="USP_GetGroups" ReturnType="Collection(InternationalSubmissionModel.USP_GetGroups_Result)">
+      <Parameter Name="GroupName" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="Int32" />
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="sp_GeneratePassword" ReturnType="Collection(String)">
+      <Parameter Name="Length" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="USP_GetUsers" ReturnType="Collection(InternationalSubmissionModel.USP_GetUsers_Result)">
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="Int32" />
+      <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <EntitySet Name="ErrorLogs" EntityType="InternationalSubmissionModel.ErrorLog" />
+    <EntitySet Name="Groups" EntityType="InternationalSubmissionModel.Group" />
+    <EntitySet Name="Modules" EntityType="InternationalSubmissionModel.Module" />
+    <EntitySet Name="Rights" EntityType="InternationalSubmissionModel.Right" />
+    <EntitySet Name="RightsToRoles" EntityType="InternationalSubmissionModel.RightsToRole" />
+    <EntitySet Name="sysdiagrams" EntityType="InternationalSubmissionModel.sysdiagram" />
+    <EntitySet Name="UserSessionLogs" EntityType="InternationalSubmissionModel.UserSessionLog" />
+    <EntitySet Name="AdditionalInsureds" EntityType="InternationalSubmissionModel.AdditionalInsured" />
+    <EntitySet Name="LayerDetails" EntityType="InternationalSubmissionModel.LayerDetail" />
+    <EntitySet Name="SubmissionHeaders" EntityType="InternationalSubmissionModel.SubmissionHeader" />
+    <EntitySet Name="UserRegions" EntityType="InternationalSubmissionModel.UserRegion" />
+    <EntitySet Name="ProjectDetails" EntityType="InternationalSubmissionModel.ProjectDetail" />
+    <EntitySet Name="Users" EntityType="InternationalSubmissionModel.User" />
+    <AssociationSet Name="FK_Users_Groups" Association="InternationalSubmissionModel.FK_Users_Groups">
+      <End Role="Group" EntitySet="Groups" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRegions_Users" Association="InternationalSubmissionModel.FK_UserRegions_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserRegion" EntitySet="UserRegions" />
+    </AssociationSet>
+    <EntitySet Name="SubModules" EntityType="InternationalSubmissionModel.SubModule" />
+    <AssociationSet Name="FK_SubModule_Module" Association="InternationalSubmissionModel.FK_SubModule_Module">
+      <End Role="Module" EntitySet="Modules" />
+      <End Role="SubModule" EntitySet="SubModules" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RightsToRole_SubModule" Association="InternationalSubmissionModel.FK_RightsToRole_SubModule">
+      <End Role="SubModule" EntitySet="SubModules" />
+      <End Role="RightsToRole" EntitySet="RightsToRoles" />
+    </AssociationSet>
+    <EntitySet Name="QCStatusHistories" EntityType="InternationalSubmissionModel.QCStatusHistory" />
+    <FunctionImport Name="usp_CreateAmendment">
+      <Parameter Name="SubmissionId" Mode="In" Type="Guid" />
+      <Parameter Name="Userid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="usp_CreateReversal">
+      <Parameter Name="BoundSubmissionId" Mode="In" Type="Guid" />
+      <Parameter Name="Userid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="CoverageDetails" EntityType="InternationalSubmissionModel.CoverageDetail" />
+    <AssociationSet Name="FK_CoverageDetails_LayerDetails" Association="InternationalSubmissionModel.FK_CoverageDetails_LayerDetails">
+      <End Role="LayerDetail" EntitySet="LayerDetails" />
+      <End Role="CoverageDetail" EntitySet="CoverageDetails" />
+    </AssociationSet>
+    <FunctionImport Name="USP_UpdateQCStatus">
+      <Parameter Name="submissionId" Mode="In" Type="Guid" />
+      <Parameter Name="SStatus" Mode="In" Type="Int32" />
+      <Parameter Name="QCStatus" Mode="In" Type="Int32" />
+      <Parameter Name="QCRemark" Mode="In" Type="String" />
+      <Parameter Name="QCApprovalDate" Mode="In" Type="DateTime" />
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="AdditionalCedants" EntityType="InternationalSubmissionModel.AdditionalCedant" />
+    <FunctionImport Name="USP_ExportSubmission" ReturnType="Collection(InternationalSubmissionModel.USP_ExportSubmission_Result)">
+      <Parameter Name="regionId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="USP_GetSubmissions" ReturnType="Collection(InternationalSubmissionModel.USP_GetSubmissions_Result)">
+      <Parameter Name="submissionNumber" Mode="In" Type="String" />
+      <Parameter Name="newRenewalCode" Mode="In" Type="String" />
+      <Parameter Name="renewalCode" Mode="In" Type="String" />
+      <Parameter Name="policyNumber" Mode="In" Type="String" />
+      <Parameter Name="insuredName" Mode="In" Type="String" />
+      <Parameter Name="uwID" Mode="In" Type="Int32" />
+      <Parameter Name="pID" Mode="In" Type="Int32" />
+      <Parameter Name="psID" Mode="In" Type="Int32" />
+      <Parameter Name="cID" Mode="In" Type="Int32" />
+      <Parameter Name="QCStatus" Mode="In" Type="Int32" />
+      <Parameter Name="bID" Mode="In" Type="Guid" />
+      <Parameter Name="bpID" Mode="In" Type="Guid" />
+      <Parameter Name="pTypes" Mode="In" Type="String" />
+      <Parameter Name="effDateF" Mode="In" Type="DateTime" />
+      <Parameter Name="effDateT" Mode="In" Type="DateTime" />
+      <Parameter Name="proDateF" Mode="In" Type="DateTime" />
+      <Parameter Name="proDateT" Mode="In" Type="DateTime" />
+      <Parameter Name="createDateF" Mode="In" Type="DateTime" />
+      <Parameter Name="createDateT" Mode="In" Type="DateTime" />
+      <Parameter Name="modifyDateF" Mode="In" Type="DateTime" />
+      <Parameter Name="modifyDateT" Mode="In" Type="DateTime" />
+      <Parameter Name="modifiedBy" Mode="In" Type="String" />
+      <Parameter Name="createdBy" Mode="In" Type="String" />
+      <Parameter Name="QCDateF" Mode="In" Type="DateTime" />
+      <Parameter Name="QCDateT" Mode="In" Type="DateTime" />
+      <Parameter Name="orderBy" Mode="In" Type="String" />
+      <Parameter Name="orderDirection" Mode="In" Type="String" />
+      <Parameter Name="pageNo" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="regionId" Mode="In" Type="Int32" />
+      <Parameter Name="recordCount" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="USP_GetAmendmentSubmissions" ReturnType="Collection(InternationalSubmissionModel.USP_GetAmendmentSubmissions_Result)">
+      <Parameter Name="submissionNumber" Mode="In" Type="String" />
+      <Parameter Name="regionId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="PolicyDetails" EntityType="InternationalSubmissionModel.PolicyDetail" />
+    <FunctionImport Name="USP_GetAmendmentQC" ReturnType="Collection(InternationalSubmissionModel.USP_GetAmendmentQC_Result)">
+      <Parameter Name="submissionNumber" Mode="In" Type="String" />
+      <Parameter Name="newRenewalCode" Mode="In" Type="String" />
+      <Parameter Name="renewalCode" Mode="In" Type="String" />
+      <Parameter Name="policyNumber" Mode="In" Type="String" />
+      <Parameter Name="insuredName" Mode="In" Type="String" />
+      <Parameter Name="uwID" Mode="In" Type="Int32" />
+      <Parameter Name="pID" Mode="In" Type="Int32" />
+      <Parameter Name="psID" Mode="In" Type="Int32" />
+      <Parameter Name="cID" Mode="In" Type="Int32" />
+      <Parameter Name="QCStatus" Mode="In" Type="Int32" />
+      <Parameter Name="bID" Mode="In" Type="Guid" />
+      <Parameter Name="bpID" Mode="In" Type="Guid" />
+      <Parameter Name="pTypes" Mode="In" Type="String" />
+      <Parameter Name="effDateF" Mode="In" Type="DateTime" />
+      <Parameter Name="effDateT" Mode="In" Type="DateTime" />
+      <Parameter Name="proDateF" Mode="In" Type="DateTime" />
+      <Parameter Name="proDateT" Mode="In" Type="DateTime" />
+      <Parameter Name="createDateF" Mode="In" Type="DateTime" />
+      <Parameter Name="createDateT" Mode="In" Type="DateTime" />
+      <Parameter Name="modifyDateF" Mode="In" Type="DateTime" />
+      <Parameter Name="modifyDateT" Mode="In" Type="DateTime" />
+      <Parameter Name="modifiedBy" Mode="In" Type="String" />
+      <Parameter Name="createdBy" Mode="In" Type="String" />
+      <Parameter Name="QCDateF" Mode="In" Type="DateTime" />
+      <Parameter Name="QCDateT" Mode="In" Type="DateTime" />
+      <Parameter Name="orderBy" Mode="In" Type="String" />
+      <Parameter Name="orderDirection" Mode="In" Type="String" />
+      <Parameter Name="pageNo" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="regionId" Mode="In" Type="Int32" />
+      <Parameter Name="recordCount" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="USP_GetSubmissionsQC" ReturnType="Collection(InternationalSubmissionModel.USP_GetSubmissionsQC_Result)">
+      <Parameter Name="submissionNumber" Mode="In" Type="String" />
+      <Parameter Name="newRenewalCode" Mode="In" Type="String" />
+      <Parameter Name="renewalCode" Mode="In" Type="String" />
+      <Parameter Name="policyNumber" Mode="In" Type="String" />
+      <Parameter Name="insuredName" Mode="In" Type="String" />
+      <Parameter Name="uwID" Mode="In" Type="Int32" />
+      <Parameter Name="pID" Mode="In" Type="Int32" />
+      <Parameter Name="psID" Mode="In" Type="Int32" />
+      <Parameter Name="cID" Mode="In" Type="Int32" />
+      <Parameter Name="QCStatus" Mode="In" Type="Int32" />
+      <Parameter Name="bID" Mode="In" Type="Guid" />
+      <Parameter Name="bpID" Mode="In" Type="Guid" />
+      <Parameter Name="pTypes" Mode="In" Type="String" />
+      <Parameter Name="effDateF" Mode="In" Type="DateTime" />
+      <Parameter Name="effDateT" Mode="In" Type="DateTime" />
+      <Parameter Name="proDateF" Mode="In" Type="DateTime" />
+      <Parameter Name="proDateT" Mode="In" Type="DateTime" />
+      <Parameter Name="createDateF" Mode="In" Type="DateTime" />
+      <Parameter Name="createDateT" Mode="In" Type="DateTime" />
+      <Parameter Name="modifyDateF" Mode="In" Type="DateTime" />
+      <Parameter Name="modifyDateT" Mode="In" Type="DateTime" />
+      <Parameter Name="modifiedBy" Mode="In" Type="String" />
+      <Parameter Name="createdBy" Mode="In" Type="String" />
+      <Parameter Name="QCDateF" Mode="In" Type="DateTime" />
+      <Parameter Name="QCDateT" Mode="In" Type="DateTime" />
+      <Parameter Name="orderBy" Mode="In" Type="String" />
+      <Parameter Name="orderDirection" Mode="In" Type="String" />
+      <Parameter Name="pageNo" Mode="In" Type="Int32" />
+      <Parameter Name="pageSize" Mode="In" Type="Int32" />
+      <Parameter Name="regionId" Mode="In" Type="Int32" />
+      <Parameter Name="recordCount" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="Submissions" EntityType="InternationalSubmissionModel.Submission" />
+    <AssociationSet Name="FK_AdditionalCedant_Submission" Association="InternationalSubmissionModel.FK_AdditionalCedant_Submission">
+      <End Role="Submission" EntitySet="Submissions" />
+      <End Role="AdditionalCedant" EntitySet="AdditionalCedants" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdditionalInsured_AdditionalInsured" Association="InternationalSubmissionModel.FK_AdditionalInsured_AdditionalInsured">
+      <End Role="Submission" EntitySet="Submissions" />
+      <End Role="AdditionalInsured" EntitySet="AdditionalInsureds" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LayerDetails_Submission" Association="InternationalSubmissionModel.FK_LayerDetails_Submission">
+      <End Role="Submission" EntitySet="Submissions" />
+      <End Role="LayerDetail" EntitySet="LayerDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Submission_PolicyDetails" Association="InternationalSubmissionModel.FK_Submission_PolicyDetails">
+      <End Role="PolicyDetail" EntitySet="PolicyDetails" />
+      <End Role="Submission" EntitySet="Submissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Submission_ProjectDetails" Association="InternationalSubmissionModel.FK_Submission_ProjectDetails">
+      <End Role="ProjectDetail" EntitySet="ProjectDetails" />
+      <End Role="Submission" EntitySet="Submissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCStatusHistory_Submission" Association="InternationalSubmissionModel.FK_QCStatusHistory_Submission">
+      <End Role="Submission" EntitySet="Submissions" />
+      <End Role="QCStatusHistory" EntitySet="QCStatusHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Submission_SubmissionHeader_SubmissionHeaderId" Association="InternationalSubmissionModel.FK_Submission_SubmissionHeader_SubmissionHeaderId">
+      <End Role="SubmissionHeader" EntitySet="SubmissionHeaders" />
+      <End Role="Submission" EntitySet="Submissions" />
+    </AssociationSet>
+    <EntitySet Name="PremiumDetails" EntityType="InternationalSubmissionModel.PremiumDetail" />
+    <AssociationSet Name="FK_CoverageDetails_PremiumDetails" Association="InternationalSubmissionModel.FK_CoverageDetails_PremiumDetails">
+      <End Role="PremiumDetail" EntitySet="PremiumDetails" />
+      <End Role="CoverageDetail" EntitySet="CoverageDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Submission_PremiumDetails" Association="InternationalSubmissionModel.FK_Submission_PremiumDetails">
+      <End Role="PremiumDetail" EntitySet="PremiumDetails" />
+      <End Role="Submission" EntitySet="Submissions" />
+    </AssociationSet>
+    <EntitySet Name="SubmissionCoverages" EntityType="InternationalSubmissionModel.SubmissionCoverage" />
+    <AssociationSet Name="FK_SubmissionCoverages_Submission" Association="InternationalSubmissionModel.FK_SubmissionCoverages_Submission">
+      <End Role="Submission" EntitySet="Submissions" />
+      <End Role="SubmissionCoverage" EntitySet="SubmissionCoverages" />
+    </AssociationSet>
+  </EntityContainer>
+  <ComplexType Name="USP_GetGroups_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="GroupName" Nullable="true" MaxLength="50" />
+    <Property Type="Boolean" Name="Status" Nullable="true" />
+    <Property Type="String" Name="CreatedOnDate" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="CreatedByUserId" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="LastModifedOnDate" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="LastModifiedByUserId" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="USP_GetUsers_Result">
+    <Property Type="Int32" Name="UserId" Nullable="false" />
+    <Property Type="String" Name="UserName" Nullable="true" MaxLength="201" />
+    <Property Type="String" Name="Status" Nullable="false" MaxLength="8" />
+    <Property Type="String" Name="Regions" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="CreatedOnDate" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="CreatedByUserId" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="LastModifedOnDate" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="LastModifiedByUserId" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <EntityType Name="ErrorLog">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="LoggedAt" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="Users" Relationship="InternationalSubmissionModel.FK_Users_Groups" FromRole="Group" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Module">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ModuleName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ModuleDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Sort" Type="Int32" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SubModules" Relationship="InternationalSubmissionModel.FK_SubModule_Module" FromRole="Module" ToRole="SubModule" />
+  </EntityType>
+  <EntityType Name="Right">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Right1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="RightsToRole">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+    <Property Name="RoleId" Nullable="false" Type="Int32" />
+    <Property Name="SubModuleId" Nullable="false" Type="Int32" />
+    <Property Name="Rights" Nullable="false" Type="Int16" />
+    <Property Name="CreatedOnDate" Nullable="false" Precision="0" Type="DateTime" />
+    <Property Name="CreatedByUserId" Nullable="false" Type="Int32" />
+    <Property Name="LastModifedOnDate" Precision="3" Type="DateTime" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="SubModule" Relationship="InternationalSubmissionModel.FK_RightsToRole_SubModule" FromRole="RightsToRole" ToRole="SubModule" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="UserSessionLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="SessionString" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SessionStatus" Type="Boolean" />
+    <Property Name="SessionIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SessionMedia" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SessionBrowser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedOnDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="AdditionalInsured">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubmissionId" Type="Guid" Nullable="false" />
+    <Property Name="InsuredName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="ProcessIdentifier" Type="Guid" />
+    <NavigationProperty Name="Submission" Relationship="InternationalSubmissionModel.FK_AdditionalInsured_AdditionalInsured" FromRole="AdditionalInsured" ToRole="Submission" />
+  </EntityType>
+  <EntityType Name="LayerDetail">
+    <Key>
+      <PropertyRef Name="LayerId" />
+    </Key>
+    <Property Name="LayerId" Type="Int32" Nullable="false" />
+    <Property Name="SubmissionId" Type="Guid" />
+    <Property Name="LayerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="CoverageDetails" Relationship="InternationalSubmissionModel.FK_CoverageDetails_LayerDetails" FromRole="LayerDetail" ToRole="CoverageDetail" />
+    <NavigationProperty Name="Submission" Relationship="InternationalSubmissionModel.FK_LayerDetails_Submission" FromRole="LayerDetail" ToRole="Submission" />
+  </EntityType>
+  <EntityType Name="SubmissionHeader">
+    <Key>
+      <PropertyRef Name="SubmissionHeaderId" />
+    </Key>
+    <Property Name="SubmissionHeaderId" Type="Guid" Nullable="false" />
+    <Property Name="SubmissionNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PolicyNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsDuckSubmissionNumber" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="DuckSubmissionNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="ProcessIdentifier" Type="Guid" />
+    <NavigationProperty Name="Submissions" Relationship="InternationalSubmissionModel.FK_Submission_SubmissionHeader_SubmissionHeaderId" FromRole="SubmissionHeader" ToRole="Submission" />
+  </EntityType>
+  <EntityType Name="UserRegion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="RegionId" Type="Int32" />
+    <Property Name="RegionName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="User" Relationship="InternationalSubmissionModel.FK_UserRegions_Users" FromRole="UserRegion" ToRole="User" />
+  </EntityType>
+  <EntityType Name="ProjectDetail">
+    <Key>
+      <PropertyRef Name="ProjectId" />
+    </Key>
+    <Property Name="ProjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="GeneralContractorName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ProjectOwnerName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="CountryId" Type="Int16" />
+    <Property Name="StateId" Type="Int16" />
+    <Property Name="CityId" Type="Int32" />
+    <Property Name="ProjectStreetAddress" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="Latitude" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="Longitude" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="ProcessIdentifier" Type="Guid" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="Submissions" Relationship="InternationalSubmissionModel.FK_Submission_ProjectDetails" FromRole="ProjectDetail" ToRole="Submission" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GroupId" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="Group" Relationship="InternationalSubmissionModel.FK_Users_Groups" FromRole="User" ToRole="Group" />
+    <NavigationProperty Name="UserRegions" Relationship="InternationalSubmissionModel.FK_UserRegions_Users" FromRole="User" ToRole="UserRegion" />
+  </EntityType>
+  <Association Name="FK_Users_Groups">
+    <End Type="InternationalSubmissionModel.Group" Role="Group" Multiplicity="0..1" />
+    <End Type="InternationalSubmissionModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="GroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRegions_Users">
+    <End Type="InternationalSubmissionModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="InternationalSubmissionModel.UserRegion" Role="UserRegion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserRegion">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="SubModule">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ParentId" Type="Int32" Nullable="false" />
+    <Property Name="Sort" Type="Int32" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Controller" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Action" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IsMenu" Type="Boolean" Nullable="false" />
+    <Property Name="MinRight" Type="Int32" Nullable="false" />
+    <Property Name="IsModule" Type="Boolean" />
+    <NavigationProperty Name="Module" Relationship="InternationalSubmissionModel.FK_SubModule_Module" FromRole="SubModule" ToRole="Module" />
+    <NavigationProperty Name="RightsToRoles" Relationship="InternationalSubmissionModel.FK_RightsToRole_SubModule" FromRole="SubModule" ToRole="RightsToRole" />
+  </EntityType>
+  <Association Name="FK_SubModule_Module">
+    <End Type="InternationalSubmissionModel.Module" Role="Module" Multiplicity="1" />
+    <End Type="InternationalSubmissionModel.SubModule" Role="SubModule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Module">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="SubModule">
+        <PropertyRef Name="ParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RightsToRole_SubModule">
+    <End Type="InternationalSubmissionModel.SubModule" Role="SubModule" Multiplicity="1" />
+    <End Type="InternationalSubmissionModel.RightsToRole" Role="RightsToRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubModule">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="RightsToRole">
+        <PropertyRef Name="SubModuleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="QCStatusHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubmissionId" Type="Guid" Nullable="false" />
+    <Property Name="Date1" Type="DateTime" Precision="3" />
+    <Property Name="Status1" Type="Int32" />
+    <Property Name="Date2" Type="DateTime" Precision="3" />
+    <Property Name="Status2" Type="Int32" />
+    <Property Name="Date3" Type="DateTime" Precision="3" />
+    <Property Name="Status3" Type="Int32" />
+    <Property Name="Date4" Type="DateTime" Precision="3" />
+    <Property Name="Status4" Type="Int32" />
+    <Property Name="Date5" Type="DateTime" Precision="3" />
+    <Property Name="Status5" Type="Int32" />
+    <Property Name="Date6" Type="DateTime" Precision="3" />
+    <Property Name="Status6" Type="Int32" />
+    <Property Name="Date7" Type="DateTime" Precision="3" />
+    <Property Name="Status7" Type="Int32" />
+    <Property Name="Date8" Type="DateTime" Precision="3" />
+    <Property Name="Status8" Type="Int32" />
+    <Property Name="Date9" Type="DateTime" Precision="3" />
+    <Property Name="Status9" Type="Int32" />
+    <Property Name="Date10" Type="DateTime" Precision="3" />
+    <Property Name="Status10" Type="Int32" />
+    <Property Name="StatusCount" Type="Int32" />
+    <NavigationProperty Name="Submission" Relationship="InternationalSubmissionModel.FK_QCStatusHistory_Submission" FromRole="QCStatusHistory" ToRole="Submission" />
+  </EntityType>
+  <EntityType Name="CoverageDetail">
+    <Key>
+      <PropertyRef Name="CoverageDetailId" />
+    </Key>
+    <Property Name="CoverageDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LayerId" Type="Int32" />
+    <Property Name="CoverageId" Type="Int32" />
+    <Property Name="PremiumId" Type="Int32" />
+    <NavigationProperty Name="LayerDetail" Relationship="InternationalSubmissionModel.FK_CoverageDetails_LayerDetails" FromRole="CoverageDetail" ToRole="LayerDetail" />
+    <NavigationProperty Name="PremiumDetail" Relationship="InternationalSubmissionModel.FK_CoverageDetails_PremiumDetails" FromRole="CoverageDetail" ToRole="PremiumDetail" />
+  </EntityType>
+  <Association Name="FK_CoverageDetails_LayerDetails">
+    <End Type="InternationalSubmissionModel.LayerDetail" Role="LayerDetail" Multiplicity="0..1" />
+    <End Type="InternationalSubmissionModel.CoverageDetail" Role="CoverageDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LayerDetail">
+        <PropertyRef Name="LayerId" />
+      </Principal>
+      <Dependent Role="CoverageDetail">
+        <PropertyRef Name="LayerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AdditionalCedant">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubmissionId" Type="Guid" Nullable="false" />
+    <Property Name="CedantName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="DomicileCountryId" Type="Int16" />
+    <Property Name="DomicileStateId" Type="Int16" />
+    <Property Name="AssumedEntityType" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="ProcessIdentifier" Type="Guid" />
+    <NavigationProperty Name="Submission" Relationship="InternationalSubmissionModel.FK_AdditionalCedant_Submission" FromRole="AdditionalCedant" ToRole="Submission" />
+  </EntityType>
+  <ComplexType Name="USP_ExportSubmission_Result">
+    <Property Type="String" Name="Work_item__submission_no_" Nullable="true" MaxLength="54" />
+    <Property Type="String" Name="New_Renewal" Nullable="false" MaxLength="20" />
+    <Property Type="DateTime" Name="Date_of_Renewal" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Renewable__Y_N_" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Master_Policy_Number" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Renewal_of__Policy_Number_" Nullable="true" MaxLength="32" />
+  </ComplexType>
+  <ComplexType Name="USP_GetSubmissions_Result">
+    <Property Type="Guid" Name="SubmissionId" Nullable="false" />
+    <Property Type="String" Name="SubmissionNumber" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="NewRenewal" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="RenewalDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Renewal" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="MasterPolicyNumber" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="InsuredName" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="Addressline1" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="CityName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="StateName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="CountryName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="ProfitCenterUW" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="ProductLineName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="ProductLineSubTypeName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="SectionCodeName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ProfitCodeName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="CoverageName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="StatusName" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="EffectiveDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="ExpiryDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="ProcessDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="BrokerName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="BCityName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="BStatename" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="BCountryName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="ProfitCenterOffice" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="IssuingOffice" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="GrossPremiumUSD" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="TotalInsuredValueUSD" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="DateTime" Name="CreatedOnDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="PolicyType" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="Date1" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="LastModifedOnDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="QCStatusName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="MarketSegment" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Affiliations" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Offshore_Onshore" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Formtype" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="USP_GetAmendmentSubmissions_Result">
+    <Property Type="Guid" Name="SubmissionId" Nullable="false" />
+    <Property Type="String" Name="SubmissionNumber" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="NewRenewal" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="RenewalDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Renewal" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="MasterPolicyNumber" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="InsuredName" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="Addressline1" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="CityName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="StateName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="CountryName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="ProfitCenterUW" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="ProductLineName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="ProductLineSubTypeName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="SectionCodeName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ProfitCodeName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="CoverageName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="StatusName" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="EffectiveDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="ExpiryDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="ProcessDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="BrokerName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="BCityName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="BStatename" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="BCountryName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="ProfitCenterOffice" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="IssuingOffice" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="GrossPremiumUSD" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="TotalInsuredValueUSD" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="DateTime" Name="CreatedOnDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="PolicyType" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="Date1" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="LastModifedOnDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="QCStatusName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="MarketSegment" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Affiliations" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Offshore_Onshore" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Formtype" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <EntityType Name="PolicyDetail">
+    <Key>
+      <PropertyRef Name="PolicyId" />
+    </Key>
+    <Property Name="PolicyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IsBindDate" Type="Boolean" />
+    <Property Name="BindDate" Type="DateTime" Precision="3" />
+    <Property Name="Renewable" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="RenewalDate" Type="DateTime" Precision="3" />
+    <Property Name="AdmittedTypeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsCompanyPaperType" Type="Boolean" />
+    <Property Name="CompanyPaperTypeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsCompanyPaperNumber" Type="Boolean" />
+    <Property Name="CompanyPaperNumberTypeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="PolicySymbol" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsPolicyNumber" Type="Boolean" />
+    <Property Name="PolicyNumber" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="SuffixCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="LTACode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="RiskCountryId" Type="Int16" />
+    <Property Name="MasterPolicyNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FormTypeId" Type="Int32" />
+    <Property Name="OffOnShoreCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ProcessIdentifier" Type="Guid" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Submissions" Relationship="InternationalSubmissionModel.FK_Submission_PolicyDetails" FromRole="PolicyDetail" ToRole="Submission" />
+  </EntityType>
+  <ComplexType Name="USP_GetSubmissionsQC_Result">
+    <Property Type="Guid" Name="SubmissionId" Nullable="false" />
+    <Property Type="String" Name="SubmissionNumber" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="NewRenewal" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="RenewalDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Renewal" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="MasterPolicyNumber" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="InsuredName" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="Addressline1" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="CityName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="StateName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="CountryName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="ProfitCenterUW" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="ProductLineName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="ProductLineSubTypeName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="SectionCodeName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ProfitCodeName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="CoverageName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="StatusName" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="EffectiveDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="ExpiryDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="ProcessDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="BrokerName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="BCityName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="BStatename" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="BCountryName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="ProfitCenterOffice" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="IssuingOffice" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="GrossPremiumUSD" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="TotalInsuredValueUSD" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="DateTime" Name="CreatedOnDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="PolicyType" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="Date1" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="LastModifedOnDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="QCStatusName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="MarketSegment" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Affiliations" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Offshore_Onshore" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Formtype" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="USP_GetAmendmentQC_Result">
+    <Property Type="Guid" Name="SubmissionId" Nullable="false" />
+    <Property Type="String" Name="SubmissionNumber" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="NewRenewal" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="RenewalDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Renewal" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="MasterPolicyNumber" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="InsuredName" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="Addressline1" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="CityName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="StateName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="CountryName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="ProfitCenterUW" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="ProductLineName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="ProductLineSubTypeName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="SectionCodeName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="ProfitCodeName" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="CoverageName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="StatusName" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="EffectiveDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="ExpiryDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="ProcessDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="BrokerName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="BCityName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="BStatename" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="BCountryName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="ProfitCenterOffice" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="IssuingOffice" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="GrossPremiumUSD" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="TotalInsuredValueUSD" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="DateTime" Name="CreatedOnDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="PolicyType" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="Date1" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="LastModifedOnDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="QCStatusName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="MarketSegment" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Affiliations" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Offshore_Onshore" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Formtype" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <EntityType Name="Submission">
+    <Key>
+      <PropertyRef Name="SubmissionId" />
+    </Key>
+    <Property Name="SubmissionId" Type="Guid" Nullable="false" />
+    <Property Name="SubmissionHeaderId" Type="Guid" Nullable="false" />
+    <Property Name="SubmissionNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="NewRenewalTypeCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="RegionId" Type="Int16" Nullable="false" />
+    <Property Name="ProfitCenterUnderWriterId" Type="Int32" Nullable="false" />
+    <Property Name="IssuingUnderWriterId" Type="Int32" Nullable="false" />
+    <Property Name="ProductLineTypeId" Type="Int16" Nullable="false" />
+    <Property Name="ProductLineSubTypeId" Type="Int16" Nullable="false" />
+    <Property Name="SectionCodeId" Type="Int16" Nullable="false" />
+    <Property Name="ProfitCodeId" Type="Int16" Nullable="false" />
+    <Property Name="AttachmentTypeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CurrentStatusId" Type="Int32" Nullable="false" />
+    <Property Name="EffectiveDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ExpiryDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="InsuredId" Type="Guid" Nullable="false" />
+    <Property Name="InsuredAddressId" Type="Guid" />
+    <Property Name="InsuredAliasId" Type="Int32" />
+    <Property Name="IsDifferentDBA" Type="Boolean" />
+    <Property Name="DBAName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="PriorityCompanyCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DirectAssumedTypeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CedantName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="DomicileStateId" Type="Int16" />
+    <Property Name="AssumedEntityType" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="BrokerEntityId" Type="Guid" Nullable="false" />
+    <Property Name="RetailBrokerID" Type="Guid" />
+    <Property Name="BrokerContactPersonId" Type="Guid" />
+    <Property Name="IncumbentAttackingBrokerType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsBy_Berk_SI_FROM_Broker" Type="Boolean" />
+    <Property Name="By_Berk_SI_FROM_Broker" Type="DateTime" Precision="3" />
+    <Property Name="IsBy_India_FROM_Berk_SI" Type="Boolean" />
+    <Property Name="By_India_FROM_Berk_SI" Type="DateTime" Precision="3" />
+    <Property Name="ProfitCentreOffice" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="IssuingOffice" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="IsUnclearAccount" Type="Boolean" />
+    <Property Name="ReasonID" Type="Guid" />
+    <Property Name="ProcessDate" Type="DateTime" Precision="3" />
+    <Property Name="PolicyTypeID" Type="Int32" />
+    <Property Name="CoverageID" Type="Int32" />
+    <Property Name="SixDigitSubmissionNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="RenewalofPolicyNumber" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="ParentSubmissionId" Type="Guid" />
+    <Property Name="ProcessIdentifier" Type="Guid" />
+    <Property Name="PolicyId" Type="Int32" />
+    <Property Name="ProjectId" Type="Int32" />
+    <Property Name="PremiumId" Type="Int32" />
+    <Property Name="QCStatusId" Type="Int32" />
+    <Property Name="QCApprovaldate" Type="DateTime" Precision="3" />
+    <Property Name="QCRemark" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="ImmediateParentId" Type="Guid" />
+    <Property Name="AffiliationsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MarketSegmentCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Remark" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="AdditionalCedants" Relationship="InternationalSubmissionModel.FK_AdditionalCedant_Submission" FromRole="Submission" ToRole="AdditionalCedant" />
+    <NavigationProperty Name="AdditionalInsureds" Relationship="InternationalSubmissionModel.FK_AdditionalInsured_AdditionalInsured" FromRole="Submission" ToRole="AdditionalInsured" />
+    <NavigationProperty Name="LayerDetails" Relationship="InternationalSubmissionModel.FK_LayerDetails_Submission" FromRole="Submission" ToRole="LayerDetail" />
+    <NavigationProperty Name="PolicyDetail" Relationship="InternationalSubmissionModel.FK_Submission_PolicyDetails" FromRole="Submission" ToRole="PolicyDetail" />
+    <NavigationProperty Name="ProjectDetail" Relationship="InternationalSubmissionModel.FK_Submission_ProjectDetails" FromRole="Submission" ToRole="ProjectDetail" />
+    <NavigationProperty Name="QCStatusHistories" Relationship="InternationalSubmissionModel.FK_QCStatusHistory_Submission" FromRole="Submission" ToRole="QCStatusHistory" />
+    <NavigationProperty Name="SubmissionHeader" Relationship="InternationalSubmissionModel.FK_Submission_SubmissionHeader_SubmissionHeaderId" FromRole="Submission" ToRole="SubmissionHeader" />
+    <NavigationProperty Name="PremiumDetail" Relationship="InternationalSubmissionModel.FK_Submission_PremiumDetails" FromRole="Submission" ToRole="PremiumDetail" />
+    <NavigationProperty Name="SubmissionCoverages" Relationship="InternationalSubmissionModel.FK_SubmissionCoverages_Submission" FromRole="Submission" ToRole="SubmissionCoverage" />
+  </EntityType>
+  <Association Name="FK_AdditionalCedant_Submission">
+    <End Type="InternationalSubmissionModel.Submission" Role="Submission" Multiplicity="1" />
+    <End Type="InternationalSubmissionModel.AdditionalCedant" Role="AdditionalCedant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Submission">
+        <PropertyRef Name="SubmissionId" />
+      </Principal>
+      <Dependent Role="AdditionalCedant">
+        <PropertyRef Name="SubmissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdditionalInsured_AdditionalInsured">
+    <End Type="InternationalSubmissionModel.Submission" Role="Submission" Multiplicity="1" />
+    <End Type="InternationalSubmissionModel.AdditionalInsured" Role="AdditionalInsured" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Submission">
+        <PropertyRef Name="SubmissionId" />
+      </Principal>
+      <Dependent Role="AdditionalInsured">
+        <PropertyRef Name="SubmissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LayerDetails_Submission">
+    <End Type="InternationalSubmissionModel.Submission" Role="Submission" Multiplicity="0..1" />
+    <End Type="InternationalSubmissionModel.LayerDetail" Role="LayerDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Submission">
+        <PropertyRef Name="SubmissionId" />
+      </Principal>
+      <Dependent Role="LayerDetail">
+        <PropertyRef Name="SubmissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Submission_PolicyDetails">
+    <End Type="InternationalSubmissionModel.PolicyDetail" Role="PolicyDetail" Multiplicity="0..1" />
+    <End Type="InternationalSubmissionModel.Submission" Role="Submission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PolicyDetail">
+        <PropertyRef Name="PolicyId" />
+      </Principal>
+      <Dependent Role="Submission">
+        <PropertyRef Name="PolicyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Submission_ProjectDetails">
+    <End Type="InternationalSubmissionModel.ProjectDetail" Role="ProjectDetail" Multiplicity="0..1" />
+    <End Type="InternationalSubmissionModel.Submission" Role="Submission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectDetail">
+        <PropertyRef Name="ProjectId" />
+      </Principal>
+      <Dependent Role="Submission">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCStatusHistory_Submission">
+    <End Type="InternationalSubmissionModel.Submission" Role="Submission" Multiplicity="1" />
+    <End Type="InternationalSubmissionModel.QCStatusHistory" Role="QCStatusHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Submission">
+        <PropertyRef Name="SubmissionId" />
+      </Principal>
+      <Dependent Role="QCStatusHistory">
+        <PropertyRef Name="SubmissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Submission_SubmissionHeader_SubmissionHeaderId">
+    <End Type="InternationalSubmissionModel.SubmissionHeader" Role="SubmissionHeader" Multiplicity="1" />
+    <End Type="InternationalSubmissionModel.Submission" Role="Submission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubmissionHeader">
+        <PropertyRef Name="SubmissionHeaderId" />
+      </Principal>
+      <Dependent Role="Submission">
+        <PropertyRef Name="SubmissionHeaderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PremiumDetail">
+    <Key>
+      <PropertyRef Name="PremiumId" />
+    </Key>
+    <Property Name="PremiumId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ExchangeRateDate" Type="DateTime" Precision="3" />
+    <Property Name="LayerPercent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PolicyCommissionPercent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="OriginalCurrencyCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="OriginalLayerLimit" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IsOriginalAttachmentPoint" Type="Boolean" />
+    <Property Name="OriginalAttachmentPoint" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TransactionalCurrencyCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="ConversionRateToTransactional" Type="Decimal" Precision="19" Scale="5" />
+    <Property Name="TransactionalSIR" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TransactionalDeductible" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TransactionalGrossPremium" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TransactionalCollections" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TransactionalDeductions" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TransactionalGSTIN" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TransactionalGSTOUT" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IsTransactionalTIV" Type="Boolean" />
+    <Property Name="TransactionalTIV" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="JurCurrencyCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="JurExchangeRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="USDExchangeRate" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PremiumType" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="ProcessIdentifier" Type="Guid" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Installment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CoverageDetails" Relationship="InternationalSubmissionModel.FK_CoverageDetails_PremiumDetails" FromRole="PremiumDetail" ToRole="CoverageDetail" />
+    <NavigationProperty Name="Submissions" Relationship="InternationalSubmissionModel.FK_Submission_PremiumDetails" FromRole="PremiumDetail" ToRole="Submission" />
+  </EntityType>
+  <Association Name="FK_CoverageDetails_PremiumDetails">
+    <End Type="InternationalSubmissionModel.PremiumDetail" Role="PremiumDetail" Multiplicity="0..1" />
+    <End Type="InternationalSubmissionModel.CoverageDetail" Role="CoverageDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PremiumDetail">
+        <PropertyRef Name="PremiumId" />
+      </Principal>
+      <Dependent Role="CoverageDetail">
+        <PropertyRef Name="PremiumId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Submission_PremiumDetails">
+    <End Type="InternationalSubmissionModel.PremiumDetail" Role="PremiumDetail" Multiplicity="0..1" />
+    <End Type="InternationalSubmissionModel.Submission" Role="Submission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PremiumDetail">
+        <PropertyRef Name="PremiumId" />
+      </Principal>
+      <Dependent Role="Submission">
+        <PropertyRef Name="PremiumId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="SubmissionCoverage">
+    <Key>
+      <PropertyRef Name="SubmissionCoverageId" />
+    </Key>
+    <Property Name="SubmissionCoverageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubmissionId" Type="Guid" Nullable="false" />
+    <Property Name="CoverageId" Type="Int32" Nullable="false" />
+    <Property Name="CoverageCode" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="ProcessIdentifier" Type="Guid" />
+    <NavigationProperty Name="Submission" Relationship="InternationalSubmissionModel.FK_SubmissionCoverages_Submission" FromRole="SubmissionCoverage" ToRole="Submission" />
+  </EntityType>
+  <Association Name="FK_SubmissionCoverages_Submission">
+    <End Type="InternationalSubmissionModel.Submission" Role="Submission" Multiplicity="1" />
+    <End Type="InternationalSubmissionModel.SubmissionCoverage" Role="SubmissionCoverage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Submission">
+        <PropertyRef Name="SubmissionId" />
+      </Principal>
+      <Dependent Role="SubmissionCoverage">
+        <PropertyRef Name="SubmissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

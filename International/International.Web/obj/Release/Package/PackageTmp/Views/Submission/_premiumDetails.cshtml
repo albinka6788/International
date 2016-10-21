@@ -1,0 +1,1115 @@
+﻿@model International.BusinessEntities.Models.PremiumDetailModel 
+@{
+    var isView = (bool)ViewBag.isView;
+}  
+    @if (!isView)
+    {
+<div class="container-fluid  dt-overflow" ng-init="PremiumDetailInit()">
+        
+    <div class="bg-primary clearfix">
+        <h4 class="pull-left">Premium Details</h4> 
+        <button style="margin-top:3px;" class="btn btn-info pull-right" ng-show="submissionModel.CurrentStatusId==enums.CurrentStatusEnum.Bound || submissionModel.CurrentStatusId==enums.CurrentStatusEnum.ReEntry" ng-click="OnAddLayerClickPremium()"><i class="fa fa-plus-circle"></i> Add Layer</button>
+    </div>
+    
+    <form id="PremiumDetailForm" name="PremiumDetailForm">
+        <div class="td-space clearfix">
+            <div ng-if="currentprocess == (enums.SubmissionProcess.CreateAmendment) || currentprocess == (enums.SubmissionProcess.EditAmendment)">
+            <div class="row">
+                <div class="col-md-7 form-group">
+                        <label class="col-md-4" for="name">Premium Type </label>
+                    <div class="col-md-7">
+                        <div class="input-group premimum">
+                            <span style="margin-right:50px;">
+                                    @Html.RadioButtonFor(model => model.PremiumType, "PT_AP", new
+                                               {
+                                                   data_ng_model = "submissionModel.PremiumDetail.PremiumType",
+                                                   data_ng_change = "setPremimumType();",                                                  
+                                                   validation_rules = "",
+                                                   status = "{{submissionModel.CurrentStatusId}}",
+                                                   identifier = "PremimumType"
+                                               }) AP (Additional Premium)
+                            </span>
+                            <span>
+                                    @Html.RadioButtonFor(x => x.PremiumType, "PT_RP", new
+                                               {
+                                                   data_ng_model = "submissionModel.PremiumDetail.PremiumType",
+                                                   data_ng_change = "setPremimumType();",                                                   
+                                                   validation_rules = "",
+                                                   status = "{{submissionModel.CurrentStatusId}}",
+                                                   identifier = "PremimumType"
+                                               })RP (Return Premium)
+                            </span>
+
+                        </div>
+                            <div>@Html.ValidationMessageFor(model => model.PremiumType)</div>
+                    </div>
+
+                </div>
+
+            </div>
+            <hr>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Exchange rate as on </label>
+                    <div class="col-md-5">
+                        <div class="input-group date">
+                            @Html.TextBoxFor(model => model.ExchangeRateDate, new
+                            {
+                                @class = "form-control date",
+                                date_time_picker = "",
+                                data_ng_model = "submissionModel.PremiumDetail.ExchangeRateDate",
+                                mindate = "Jan-01-2013",
+                                maxdate = "Dec-31-2040",
+                                validation_rules = "",
+                                status = "{{submissionModel.CurrentStatusId}}",
+                                identifier = "ExchangeRateDate",
+                                ng_change = "ExchangeRateDateChange()"
+                            })
+                            <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.ExchangeRateDate)
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">(%) of Layer</label>
+                    <div class="col-md-5">
+
+                        @Html.TextBoxFor(model => model.LayerPercent, new
+                       {
+                           data_ng_model = "submissionModel.PremiumDetail.LayerPercent",
+                           valid_Decimal_Number2 = "",
+                           maxlength = 16,
+                           placeholder = "(%) of Layer",
+                           @class = "form-control",
+                           ng_change = "CalcOriginalLimit()",
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "LayerPercent",
+                           autocomplete = "off"
+                       })
+                        @Html.ValidationMessageFor(model => model.LayerPercent)
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Policy Commission (%)</label>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(model => model.PolicyCommissionPercent, new
+                       {
+                           data_ng_model = "submissionModel.PremiumDetail.PolicyCommissionPercent",
+                           valid_Decimal_Number2 = "",
+                           maxlength = 16,
+                           placeholder = "Policy Commission",
+                           @class = "form-control",
+                           ng_change = "CalcTransactionalPolicyCommission()",
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "PolicyCommissionPercent",
+                           autocomplete = "off"
+                       })
+                        @Html.ValidationMessageFor(model => model.PolicyCommissionPercent)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Original Currency</label>
+                    <div class="col-md-5">
+                        <select class="form-control" ng-model="submissionModel.PremiumDetail.OriginalCurrencyCode"
+                                ng-options="option.Value as option.Text for option in submissionListModel.OriginalCurrencyList"
+                                data-val="true"
+                                data-val-required="Please select Original Currency"
+                                name="OriginalCurrencyCode" id="OriginalCurrencyCode" ng-change=""
+                                validation_rules status="{{submissionModel.CurrentStatusId}}" identifier="OriginalCurrencyCode">
+                            <option value="">- Select  -</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.OriginalCurrencyCode)
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Instalments (Yes/No)</label>
+                    <div class="col-md-5">
+                        <select class="form-control" id="Installment" name="Installment" ng-model="submissionModel.PremiumDetail.Installment"
+                                validation_rules status="{{submissionModel.CurrentStatusId}}" identifier="Instalment"                                
+                                data-val-required="Instalments (Yes/No) is required">
+                            <option value="">-- Select --</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.Installment)
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Layer Limit in Original Currency</label>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(model => model.OriginalLayerLimit, new
+                       {
+                           data_ng_model = "submissionModel.PremiumDetail.OriginalLayerLimit",
+                           valid_Decimal_Number2 = "",
+                           maxlength = 16,
+                           placeholder = "Layer Limit in Original Currency",
+                           @class = "form-control",
+                           ng_change = "OnOriginalLayerLimitChange()",
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "OriginalLayerLimit",
+                           autocomplete = "off"
+                       })
+                        @Html.ValidationMessageFor(model => model.OriginalLayerLimit)
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Limit in Original Currency &nbsp; </label>
+                    <div class="col-md-5">
+                        <input type="text" readonly placeholder="Limit in Original Currency" ng-model="OriginalLimit"
+                               value="" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Attachment Point in Original Currency &nbsp; 
+                    <input type="checkbox" ng-change="CHKOriginalAttachmentPointChange()" ng-model="submissionModel.PremiumDetail.IsOriginalAttachmentPoint" 
+                            validation_rules status = "{{submissionModel.CurrentStatusId}}" identifier = "OriginalAttachmentPoint">
+                    </label>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(model => model.OriginalAttachmentPoint, new
+                        {
+                           data_ng_model = "submissionModel.PremiumDetail.OriginalAttachmentPoint",
+                           valid_decimal_number2 = "",
+                           maxlength = 16,
+                           placeholder = "Attachment Point in Original Currency",
+                           @class = "form-control",
+                           ng_change = "CalcTransactionalAttachmentPoint()",
+                           ng_disabled = "submissionModel.PremiumDetail.IsOriginalAttachmentPoint",
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "OriginalAttachmentPoint",
+                           ng_show="!submissionModel.PremiumDetail.IsOriginalAttachmentPoint",
+                           autocomplete = "off"
+                       })
+                        <input type="text" class="form-control" readonly value="Not Available" ng-show="submissionModel.PremiumDetail.IsOriginalAttachmentPoint" />
+                        @Html.ValidationMessageFor(model => model.OriginalAttachmentPoint)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Transactional Currency</label>
+                    <div class="col-md-5">
+                        <select class="form-control" ng-model="submissionModel.PremiumDetail.TransactionalCurrencyCode"
+                                ng-options="option.Value as option.Text for option in submissionListModel.TransactionalCurrencyList"
+                                data-val="true"
+                                data-val-required="Please select Transactional Currency"
+                                name="TransactionalCurrencyCode" id="TransactionalCurrencyCode" ng-change=""
+                                validation_rules status="{{submissionModel.CurrentStatusId}}" identifier="TransactionalCurrencyCode">
+                            <option value="">- Select  -</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.TransactionalCurrencyCode)
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Conversion Rate from Original Currency to Transactional Currency</label>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(model => model.ConversionRateToTransactional, new
+                       {
+                           data_ng_model = "submissionModel.PremiumDetail.ConversionRateToTransactional",
+                           valid_Decimal_Number5 = "",
+                           maxlength = 23,
+                           placeholder = "Conversion Rate from Original Currency to Transactional Currency",
+                           @class = "form-control",
+                           ng_change = "OnConversionRateToTransactionalChange(submissionModel.PremiumDetail.ConversionRateToTransactional)",
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "ConversionRateToTransactional",
+                           autocomplete = "off"
+                       })
+                        @Html.ValidationMessageFor(model => model.ConversionRateToTransactional)
+
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Layer Limit in Transactional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" convert-nan readonly placeholder="Layer Limit in Transactional Currency" valid_decimal_number2 ng-model="TransactionalLayerLimit" value="" class=" form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Limit in Transactional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" convert-nan readonly placeholder="Limit in Transactional Currency" valid_decimal_number2 ng-model="TransactionalLimit" value="" class=" form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Attachment Point in Transactional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" convert-nan readonly placeholder="Attachment Point in Transactional Currency" valid_decimal_number2 ng-model="TransactionalAttachmentPoint" value="" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">SIR in Transactional Currency</label>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(model => model.TransactionalSIR, new
+                       {
+                           data_ng_model = "submissionModel.PremiumDetail.TransactionalSIR",
+                           valid_Decimal_Number2 = "",
+                           maxlength = 20,
+                           placeholder = "SIR in Transactional Currency",
+                           @class = "form-control",
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "TransactionalSIR",
+                           autocomplete = "off"
+                       })
+                        @Html.ValidationMessageFor(model => model.TransactionalSIR)
+
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Deductible in Transactional Currency</label>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(model => model.TransactionalDeductible, new
+                       {
+                           data_ng_model = "submissionModel.PremiumDetail.TransactionalDeductible",
+                           valid_Decimal_Number2 = "",
+                           maxlength = 20,
+                           placeholder = "Deductible in Transactional Currency",
+                           @class = "form-control",
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "TransactionalDeductible",
+                           autocomplete = "off"
+                       })
+                        @Html.ValidationMessageFor(model => model.TransactionalDeductible)
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Gross Premium in Transactional Currency</label>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(model => model.TransactionalGrossPremium, new
+                       {
+                           data_ng_model = "submissionModel.PremiumDetail.TransactionalGrossPremium",
+                           valid_Decimal_Number2 = "",
+                           maxlength = 20,
+                           placeholder = "Gross Premium in Transactional Currency",
+                           @class = "form-control",
+                           ng_change = "OnTransactionalGrossPremiumChange()",
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "TransactionalGrossPremium",
+                           autocomplete = "off",
+                           ng_blur = "setPremimumType()"
+                       })
+                        @Html.ValidationMessageFor(model => model.TransactionalGrossPremium)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Policy Commission in Transactional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" convert-nan readonly placeholder="Policy Commission in Transactional Currency" valid_decimal_number2 ng-model="TransactionalPolicyCommission" value="" class=" form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Collections in Transactional Currency</label>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(model => model.TransactionalCollections, new
+                       {
+                           data_ng_model = "submissionModel.PremiumDetail.TransactionalCollections",
+                           valid_Decimal_Number2 = "",
+                           maxlength = 20,
+                           placeholder = "Collections in Transactional Currency",
+                           @class = "form-control",
+                           ng_change = "CalcTransactionalNetPremium()",
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "TransactionalCollections",
+                           autocomplete = "off"
+                       })
+                        @Html.ValidationMessageFor(model => model.TransactionalCollections)
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Deductions in Transactional Currency</label>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(model => model.TransactionalDeductions, new
+                       {
+                           data_ng_model = "submissionModel.PremiumDetail.TransactionalDeductions",
+                           valid_Decimal_Number2 = "",
+                           maxlength = 20,
+                           placeholder = "Deductions in Transactional Currency",
+                           @class = "form-control",
+                           ng_change = "CalcTransactionalNetPremium()",
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "TransactionalDeductions",
+                           autocomplete = "off"
+                       })
+                        @Html.ValidationMessageFor(model => model.TransactionalDeductions)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">GST (IN) (Transactional Currency)</label>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(model => model.TransactionalGSTIN, new
+                       {
+                           data_ng_model = "submissionModel.PremiumDetail.TransactionalGSTIN",
+                           valid_Decimal_Number2 = "",
+                           maxlength = 20,
+                           placeholder = "GST (IN) (Transactional Currency)",
+                           @class = "form-control",
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "TransactionalGSTIN",
+                           autocomplete = "off",
+                           ng_change="CalcTransactionalNetPremiumFromBroker()"
+                       })
+                        @Html.ValidationMessageFor(model => model.TransactionalGSTIN)
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">GST (OUT) (Transactional Currency)</label>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(model => model.TransactionalGSTOUT, new
+                       {
+                           data_ng_model = "submissionModel.PremiumDetail.TransactionalGSTOUT",
+                           valid_Decimal_Number2 = "",
+                           maxlength = 20,
+                           placeholder = "GST (OUT) (Transactional Currency)",
+                           @class = "form-control",
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "TransactionalGSTOUT",
+                           autocomplete = "off",
+                           ng_change = "CalcTransactionalNetPremiumFromBroker()"
+                       })
+                        @Html.ValidationMessageFor(model => model.TransactionalGSTOUT)
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">BHSI Net Premium in Transactional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" convert-nan readonly placeholder="Net Premium in Transactional Currency" valid_decimal_number2 ng-model="TransactionalNetPremium" value="" class="form-control">
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Net Premium From Broker in Transactional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" convert-nan readonly placeholder="Net Premium in Transactional Currency" valid_decimal_number2 ng-model="TransactionalNetPremiumFromBroker" value="" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Total Insured Value (TIV) in Transactional currency &nbsp; <input type="checkbox" ng-change="submissionModel.PremiumDetail.TransactionalTIV=0" ng-model="submissionModel.PremiumDetail.IsTransactionalTIV"></label>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(model => model.TransactionalTIV, new
+                       {
+                           data_ng_model = "submissionModel.PremiumDetail.TransactionalTIV",
+                           valid_Decimal_Number2 = "",
+                           maxlength = 20,
+                           placeholder = "Total Insured Value (TIV) in Transactional currency",
+                           @class = "form-control",                          
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "TransactionalTIV",
+                           product = "{{submissionModel.ProductLineTypeId}}",
+                           ng_disabled = "submissionModel.PremiumDetail.IsTransactionalTIV",
+                           autocomplete = "off",
+                           ng_show = "!submissionModel.PremiumDetail.IsTransactionalTIV" 
+                       })
+                        <input type="text" class="form-control" readonly value="Not Available" ng-show="submissionModel.PremiumDetail.IsTransactionalTIV" />
+                        @Html.ValidationMessageFor(model => model.TransactionalTIV)                        
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Jurisdictional Currency</label>
+                    <div class="col-md-5">
+                        <select class="form-control" ng-model="submissionModel.PremiumDetail.JurCurrencyCode"
+                                ng-options="option.Value as option.Text for option in submissionListModel.JurCurrencyList"
+                                data-val="true"
+                                data-val-required="Please select Jurisdictional Currency"
+                                name="JurCurrencyCode" id="JurCurrencyCode" ng-change=""
+                                validation_rules status="{{submissionModel.CurrentStatusId}}" identifier="JurCurrencyCode">
+                            <option value="">- Select  -</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.JurCurrencyCode)
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Conversion Rate from Transactional to Jurisdictional Currency</label>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(model => model.JurExchangeRate, new
+                       {
+                           data_ng_model = "submissionModel.PremiumDetail.JurExchangeRate",
+                           valid_Decimal_Number5 = "",
+                           maxlength = 23,
+                           placeholder = "Conversion Rate in Jurisdictional",
+                           @class = "form-control",
+                           ng_change = "OnConversionRateJurChange()",
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "ConversionRateToJurisdictional",
+                           autocomplete = "off"
+                       })
+                        @Html.ValidationMessageFor(model => model.JurExchangeRate)
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Layer Limit in Jurisdictional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="JurisdictionalLayerLimit" convert-nan readonly placeholder="Layer Limit in Jurisdictional Currency" value="{{JurisdictionalLayerLimit=(TransactionalLayerLimit*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Limit in Jurisdictional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="JurisdictionalLimit" convert-nan readonly placeholder="Limit in Jurisdictional Currency" value="{{JurisdictionalLimit=(TransactionalLimit*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Attachment Point in Jurisdictional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="JurAttachmentPoint" convert-nan readonly placeholder="Attachment Point in Jurisdictional Currency" valid_decimal_number2 value="{{JurAttachmentPoint=(TransactionalAttachmentPoint*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">SIR in Jurisdictional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="JurSIR" convert-nan readonly placeholder="SIR in Jurisdictional Currency" valid_decimal_number2 value="{{JurSIR=(submissionModel.PremiumDetail.TransactionalSIR*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Deductible in Jurisdictional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="JurDeductible" convert-nan readonly placeholder="Deductible in Jurisdictional Currency" valid_decimal_number2 value="{{JurDeductible=(submissionModel.PremiumDetail.TransactionalDeductible*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Gross Premium in Jurisdictional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="JurGrossPremium" convert-nan readonly placeholder="Gross Premium in Jurisdictional Currency" valid_decimal_number2 value="{{JurGrossPremium=(submissionModel.PremiumDetail.TransactionalGrossPremium*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Policy Commission in Jurisdictional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="JurPolicyCommission" convert-nan readonly placeholder="Policy Commission in Jurisdictional Currency" valid_decimal_number2 value="{{JurPolicyCommission=(TransactionalPolicyCommission*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Collections in Jurisdictional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="JurCollections" convert-nan readonly placeholder="Collections in Jurisdictional Currency" valid_decimal_number2 value="{{JurCollections=(submissionModel.PremiumDetail.TransactionalCollections*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Deductions in Jurisdictional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="JurDeductions" convert-nan readonly placeholder="Deductions in Jurisdictional Currency" valid_decimal_number2 value="{{JurDeductions=(submissionModel.PremiumDetail.TransactionalDeductions*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">GST (IN) (Jurisdictional Currency)</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="JurGSTIN" convert-nan readonly placeholder="GST (IN) (Jurisdictional Currency)"  valid_decimal_number2 value="{{JurGSTIN=(submissionModel.PremiumDetail.TransactionalGSTIN*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">GST (OUT) (Jurisdictional Currency)</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="JurGSTOUT" convert-nan readonly placeholder="GST (OUT) (Jurisdictional Currency)" valid_decimal_number2 value="{{JurGSTOUT=(submissionModel.PremiumDetail.TransactionalGSTOUT*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">BHSI Net Premium in Jurisdictional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="JurNetPremium" convert-nan readonly placeholder="Net Premium in Jurisdictional Currency" valid_decimal_number2 value="{{JurNetPremium=(TransactionalNetPremium*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+               
+                
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Net Premium From Broker in Jurisdictional Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" convert-nan readonly placeholder="Net Premium in Transactional Currency" valid_decimal_number2 ng-model="JurNetPremiumFromBroker" value="{{JurNetPremiumFromBroker=(TransactionalNetPremiumFromBroker*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Total Insured Value (TIV) in Jurisdictional currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="JurTIV" convert-nan readonly placeholder="Total Insured Value (TIV) in Jurisdictional currency" valid_decimal_number2 value="{{JurTIV=(submissionModel.PremiumDetail.TransactionalTIV*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            <div class="row">
+                <div class="col-md-4 form-group">
+
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Conversation Rate from Transactional Currency to USD</label>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(model => model.USDExchangeRate, new
+                       {
+                           data_ng_model = "submissionModel.PremiumDetail.USDExchangeRate",
+                           valid_Decimal_Number5 = "",
+                           maxlength = 23,
+                           placeholder = "Conversation Rate in USD",
+                           @class = "form-control",
+                           ng_change = "OnConversionRateUSDChange()",
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "ConversionRateToUSD",
+                           autocomplete = "off"
+                       })
+                        @Html.ValidationMessageFor(model => model.USDExchangeRate)
+                    </div>
+                </div>
+
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Layer Limit in USD Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="USDLayerLimit" convert-nan readonly placeholder="Layer Limit in USD Currency" valid_decimal_number2 value="{{USDLayerLimit=(TransactionalLayerLimit*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Limit in USD Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="USDLimit" convert-nan readonly placeholder="Limit in USD Currency" valid_decimal_number2 value="{{USDLimit=(TransactionalLimit*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Attachment Point in USD Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="USDAttachmentPoint" convert-nan readonly placeholder="Attachment Point in USD Currency" valid_decimal_number2 value="{{USDAttachmentPoint=(TransactionalAttachmentPoint*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">SIR in USD Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="USDSIR" convert-nan readonly placeholder="SIR in USD Currency" valid_decimal_number2 value="{{USDSIR=(submissionModel.PremiumDetail.TransactionalSIR*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Deductible in USD Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="USDDeductible" convert-nan readonly placeholder="Deductible in USD Currency" valid_decimal_number2 value="{{USDDeductible=(submissionModel.PremiumDetail.TransactionalDeductible*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Gross Premium in USD Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="USDGrossPremium" convert-nan readonly placeholder="Gross Premium in USD Currency" valid_decimal_number2 value="{{USDGrossPremium=(submissionModel.PremiumDetail.TransactionalGrossPremium*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Policy Commission in USD Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="USDPolicyCommission" convert-nan readonly placeholder="Policy Commission in USD Currency" valid_decimal_number2 value="{{USDPolicyCommission=(TransactionalPolicyCommission*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Collections in USD Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="USDCollections" convert-nan readonly placeholder="Collections in USD Currency" valid_decimal_number2 value="{{USDCollections=(submissionModel.PremiumDetail.TransactionalCollections*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Deductions in USD Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="USDDeductions" convert-nan readonly placeholder="Deductions in USD Currency" valid_decimal_number2 value="{{USDDeductions=(submissionModel.PremiumDetail.TransactionalDeductions*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">GST (IN) (USD Currency)</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="USDGSTIN" convert-nan readonly placeholder="GST (IN) (USD Currency)" valid_decimal_number2 value="{{USDGSTIN=(submissionModel.PremiumDetail.TransactionalGSTIN*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">GST (OUT) (USD Currency)</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="USDGSTOUT" convert-nan readonly placeholder="GST (OUT) (USD Currency)" valid_decimal_number2 value="{{USDGSTOUT=(submissionModel.PremiumDetail.TransactionalGSTOUT*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">BHSI Net Premium in USD Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="USDNetPremium" convert-nan readonly placeholder="Net Premium in USD Currency" valid_decimal_number2 value="{{USDNetPremium=(TransactionalNetPremium*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+               
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Net Premium From Broker in USD Currency</label>
+                    <div class="col-md-5">
+                        <input type="text" convert-nan readonly placeholder="Net Premium in Transactional Currency" valid_decimal_number2 ng-model="USDNetPremiumFromBroker" value="{{USDNetPremiumFromBroker=(TransactionalNetPremiumFromBroker*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>               
+                <div class="col-md-4 form-group">
+                    <label class="col-md-7" for="name">Total Insured Value (TIV) in USD currency</label>
+                    <div class="col-md-5">
+                        <input type="text" ng-model="USDTIV" convert-nan readonly placeholder="Total Insured Value (TIV) in USD currency" valid_decimal_number2 value="{{USDTIV=(submissionModel.PremiumDetail.TransactionalTIV*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 btn-size">
+                <button class="btn btn-primary" ng-class="{disabled: !hasPreviousStep()}" ng-click="SavePremiumDetail()">Next</button>
+                <button class="btn btn-primary" ng-class="{disabled: !hasNextStep()}" ng-click="decrementStep();">Back</button>
+            </div>
+        </div>
+
+    </form>
+    </div>
+    }
+    else
+    {
+    <div class="container-fluid  dt-overflow" ng-init="PremiumDetailInit()">
+        <div class="bg-primary">
+            <h4>Premium Details</h4>
+        </div>
+        <form id="PremiumDetailForm" name="PremiumDetailForm">
+            <div class="td-space clearfix">
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Exchange rate as on </label>
+                        <div class="col-md-5">
+                            {{submissionModel.PremiumDetail.ExchangeRateDate}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">(%) of Layer</label>
+                        <div class="col-md-5">
+
+                            {{submissionModel.PremiumDetail.LayerPercent.toFixed(2)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Policy Commission (%)</label>
+                        <div class="col-md-5">
+                            {{submissionModel.PremiumDetail.PolicyCommissionPercent.toFixed(2)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Original Currency</label>
+                        <div class="col-md-5">
+                            {{submissionListModel.OriginalCurrencyList.getValue(submissionModel.PremiumDetail.OriginalCurrencyCode)}}
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Instalments (Yes/No)</label>
+                        <div class="col-md-5">
+                            {{submissionModel.PremiumDetail.Installment}}
+
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Layer Limit in Original Currency</label>
+                        <div class="col-md-5">
+                            {{submissionModel.PremiumDetail.OriginalLayerLimit.toFixed(2)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Limit in Original Currency &nbsp; </label>
+                        <div class="col-md-5">
+                            {{OriginalLimit.toFixed(2)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name" >Attachment Point in Original Currency &nbsp; <input type="checkbox" ng-change="CHKOriginalAttachmentPointChange()" ng-model="submissionModel.PremiumDetail.IsOriginalAttachmentPoint" disabled></label>
+                        <div class="col-md-5">
+                            {{submissionModel.PremiumDetail.OriginalAttachmentPoint.toFixed(2)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Transactional Currency</label>
+                        <div class="col-md-5">
+                            {{submissionListModel.TransactionalCurrencyList.getValue(submissionModel.PremiumDetail.TransactionalCurrencyCode)}}
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Conversion Rate from Original Currency to Transactional Currency</label>
+                        <div class="col-md-5">
+                             {{submissionModel.PremiumDetail.ConversionRateToTransactional | NumFilter:5}} 
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Layer Limit in Transactional Currency</label>
+                        <div class="col-md-5">
+                            {{TransactionalLayerLimit}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Limit in Transactional Currency</label>
+                        <div class="col-md-5">
+                            {{TransactionalLimit}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Attachment Point in Transactional Currency</label>
+                        <div class="col-md-5">
+                            {{TransactionalAttachmentPoint}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">SIR in Transactional Currency</label>
+                        <div class="col-md-5">
+                            {{submissionModel.PremiumDetail.TransactionalSIR.toFixed(2)}}
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Deductible in Transactional Currency</label>
+                        <div class="col-md-5">
+                            {{submissionModel.PremiumDetail.TransactionalDeductible.toFixed(2)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Gross Premium in Transactional Currency</label>
+                        <div class="col-md-5">
+                            {{submissionModel.PremiumDetail.TransactionalGrossPremium.toFixed(2)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Policy Commission in Transactional Currency</label>
+                        <div class="col-md-5">
+                            {{TransactionalPolicyCommission}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Collections in Transactional Currency</label>
+                        <div class="col-md-5">
+                            {{submissionModel.PremiumDetail.TransactionalCollections.toFixed(2)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Deductions in Transactional Currency</label>
+                        <div class="col-md-5">
+                            {{submissionModel.PremiumDetail.TransactionalDeductions.toFixed(2)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">GST (IN) (Transactional Currency)</label>
+                        <div class="col-md-5">
+                            {{(submissionModel.PremiumDetail.TransactionalGSTIN).toFixed(2)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">GST (OUT) (Transactional Currency)</label>
+                        <div class="col-md-5">
+                            {{submissionModel.PremiumDetail.TransactionalGSTOUT.toFixed(2)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">BHSI Net Premium in Transactional Currency</label>
+                        <div class="col-md-5">
+                            {{TransactionalNetPremium}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Net Premium From Broker in Transactional Currency</label>
+                        <div class="col-md-5">
+                            {{TransactionalNetPremiumFromBroker}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Total Insured Value (TIV) in Transactional currency </label>
+                        <div class="col-md-5">
+                            {{(submissionModel.PremiumDetail.TransactionalTIV).toFixed(2)}}
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Jurisdictional Currency</label>
+                        <div class="col-md-5">
+                            {{submissionListModel.JurCurrencyList.getValue(submissionModel.PremiumDetail.JurCurrencyCode)}}
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Conversion Rate from Transactional to Jurisdictional Currency</label>
+                        <div class="col-md-5">
+                            {{submissionModel.PremiumDetail.JurExchangeRate  | NumFilter:5}}
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Layer Limit in Jurisdictional Currency</label>
+                        <div class="col-md-5">
+                            {{JurisdictionalLayerLimit=(TransactionalLayerLimit*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Limit in Jurisdictional Currency</label>
+                        <div class="col-md-5">
+                            {{JurisdictionalLimit=(TransactionalLimit*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Attachment Point in Jurisdictional Currency</label>
+                        <div class="col-md-5">
+                         {{JurAttachmentPoint=(TransactionalAttachmentPoint*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">SIR in Jurisdictional Currency</label>
+                        <div class="col-md-5">
+                           {{JurSIR=(submissionModel.PremiumDetail.TransactionalSIR*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Deductible in Jurisdictional Currency</label>
+                        <div class="col-md-5">
+                            {{JurDeductible=(submissionModel.PremiumDetail.TransactionalDeductible*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Gross Premium in Jurisdictional Currency</label>
+                        <div class="col-md-5">
+                           {{JurGrossPremium=(submissionModel.PremiumDetail.TransactionalGrossPremium*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Policy Commission in Jurisdictional Currency</label>
+                        <div class="col-md-5">
+                           {{JurPolicyCommission=(TransactionalPolicyCommission*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Collections in Jurisdictional Currency</label>
+                        <div class="col-md-5">
+                           {{JurCollections=(submissionModel.PremiumDetail.TransactionalCollections*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Deductions in Jurisdictional Currency</label>
+                        <div class="col-md-5">
+                           {{JurDeductions=(submissionModel.PremiumDetail.TransactionalDeductions*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">GST (IN) (Jurisdictional Currency)</label>
+                        <div class="col-md-5">
+                           {{JurGSTIN=(submissionModel.PremiumDetail.TransactionalGSTIN*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">GST (OUT) (Jurisdictional Currency)</label>
+                        <div class="col-md-5">
+                           {{JurGSTOUT=(submissionModel.PremiumDetail.TransactionalGSTOUT*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">BHSI Net Premium in Jurisdictional Currency</label>
+                        <div class="col-md-5">
+                           {{JurNetPremium=(TransactionalNetPremium*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Net Premium From Broker in Jurisdictional Currency</label>
+                        <div class="col-md-5">
+                            {{JurNetPremiumFromBroker=(TransactionalNetPremiumFromBroker*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Total Insured Value (TIV) in Jurisdictional currency</label>
+                        <div class="col-md-5">
+                            {{JurTIV=(submissionModel.PremiumDetail.TransactionalTIV*submissionModel.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-7" for="name">Conversation Rate from Transactional Currency to USD</label>
+                        <div class="col-md-5">
+                            {{submissionModel.PremiumDetail.USDExchangeRate | NumFilter:5}}
+                        </div>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label class="col-md-7" for="name">Layer Limit in USD Currency</label>
+                            <div class="col-md-5">
+                                {{USDLayerLimit=(TransactionalLayerLimit*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-md-7" for="name">Limit in USD Currency</label>
+                            <div class="col-md-5">
+                               {{USDLimit=(TransactionalLimit*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-md-7" for="name">Attachment Point in USD Currency</label>
+                            <div class="col-md-5">
+                                {{USDAttachmentPoint=(TransactionalAttachmentPoint*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label class="col-md-7" for="name">SIR in USD Currency</label>
+                            <div class="col-md-5">
+                                {{USDSIR=(submissionModel.PremiumDetail.TransactionalSIR*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-md-7" for="name">Deductible in USD Currency</label>
+                            <div class="col-md-5">
+                                {{USDDeductible=(submissionModel.PremiumDetail.TransactionalDeductible*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-md-7" for="name">Gross Premium in USD Currency</label>
+                            <div class="col-md-5">
+                               {{USDGrossPremium=(submissionModel.PremiumDetail.TransactionalGrossPremium*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label class="col-md-7" for="name">Policy Commission in USD Currency</label>
+                            <div class="col-md-5">
+                                {{USDPolicyCommission=(TransactionalPolicyCommission*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-md-7" for="name">Collections in USD Currency</label>
+                            <div class="col-md-5">
+                               {{USDCollections=(submissionModel.PremiumDetail.TransactionalCollections*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-md-7" for="name">Deductions in USD Currency</label>
+                            <div class="col-md-5">
+                               {{USDDeductions=(submissionModel.PremiumDetail.TransactionalDeductions*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label class="col-md-7" for="name">GST (IN) (USD Currency)</label>
+                            <div class="col-md-5">
+                               {{USDGSTIN=(submissionModel.PremiumDetail.TransactionalGSTIN*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-md-7" for="name">GST (OUT) (USD Currency)</label>
+                            <div class="col-md-5">
+                               {{USDGSTOUT=(submissionModel.PremiumDetail.TransactionalGSTOUT*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-md-7" for="name">BHSI Net Premium in USD Currency</label>
+                            <div class="col-md-5">
+                               {{USDNetPremium=(TransactionalNetPremium*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label class="col-md-7" for="name">Net Premium From Broker in USD Currency</label>
+                            <div class="col-md-5">
+                                {{USDNetPremiumFromBroker=(TransactionalNetPremiumFromBroker*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="col-md-7" for="name">Total Insured Value (TIV) in USD currency</label>
+                            <div class="col-md-5">
+                               {{USDTIV=(submissionModel.PremiumDetail.TransactionalTIV*submissionModel.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 btn-size">
+                        <button class="btn btn-primary" ng-class="{disabled: !hasNextStep()}" ng-click="SavePremiumDetail()">Next</button>
+                        <button class="btn btn-primary" ng-class="{disabled: !hasPreviousStep()}" ng-click="decrementStep();">Back</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    }
+
+
+
+
+

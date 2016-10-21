@@ -1,0 +1,105 @@
+﻿@model UserModel
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+
+    <script src="~/Scripts/controllers/UserManagementController.js"></script>
+}
+
+
+
+<div id="manage-groups" class="wrapper" ng-controller="userManagementController" ng-init="getUsers();">
+    <div class="container-fluid main-heading clearfix">
+        <h3 class="pull-left">Manage Users</h3>
+        <div class="pull-right">
+            <a href="@Url.Action("User", "UserManagement")">
+                <button type="button" class="btn btn-primary btn-lg add-button">Create New User</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="container-fluid  dt-overflow">
+        <div class="table-responsive">
+            <table border="1" class="table table-bordered">
+                <tr class="main-color">
+                    <th colspan="3">Filter<span class="pull-right" data-toggle="collapse" data-target="#demo"><i class="fa fa-chevron-down"></i></span></th>
+
+                </tr>
+                <tr id="demo" class="collapse">
+                    <td class="td-space">
+                        <form name="groupFilter">
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-4" for="code">User Name</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", placeholder = "User Name", ng_model = "filterModel.UserName", ng_trim = "true", maxlength = "150" })
+                                        @Html.ValidationMessageFor(model => model.UserName)
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-4" for="code">User Status</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="name" ng-model="filterModel.Status">
+                                            <option>All</option>
+                                            <option value="1">Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label class="col-sm-4" for="code">Create Date</label>
+
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(model => model.FromDate, new { @class = "form-control", placeholder = "From Date", mindate = "Jan-01-2014", maxdate = "Dec-31-2040", ng_model = "filterModel.FromDate", date_time_picker = "", maxlength = "50", data_ng_required = "filterModel.ToDate" })
+                                            <span class="input-group-addon" id="basic-addon2" data-toggle="datepickerp"><i class="fa fa-calendar"></i></span>
+
+                                        </div>
+
+                                        <span data-valmsg-replace="true" class="field-validation-error" data-valmsg-for="CedantName" ng-show="groupFilter.FromDate.$error.required">Date range is not complete</span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(model => model.ToDate, new { @class = "form-control", placeholder = "To Date", ng_model = "filterModel.ToDate", mindate = "{{filterModel.FromDate}}", maxdate = "Dec-31-2040", date_time_picker = "", maxlength = "50", data_ng_required = "filterModel.FromDate" })
+                                            <span class="input-group-addon" id="basic-addon2" data-toggle="datepickerp"><i class="fa fa-calendar"></i></span>
+                                        </div>
+                                        <span data-valmsg-replace="true" class="field-validation-error" ng-show="groupFilter.ToDate.$error.required">Date range is not complete</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                        </form>
+                        <div class="btn-size">
+
+                            <button type="reset" ng-click="ClearUser()" data-target="#demo" data-toggle="collapse" class="btn btn-default">Clear</button>
+                            <button type="submit" ng-click="SearchUsers();" class="btn btn-primary">Search</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="container-fluid  dt-overflow">
+        <div class="table-responsive">
+            <div class="bg-primary">
+                <h4>User Details List </h4>
+            </div>
+            <table border="1" class="nowrap table table-bordered table-striped  display" id="UserList" cellspacing="0" width="100%"></table>
+        </div>
+    </div>
+
+</div>
+
+
+

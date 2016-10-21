@@ -1,0 +1,10 @@
+D:\Working\International\International.BusinessEntities\bin\Debug\International.BusinessEntities.dll.config
+D:\Working\International\International.BusinessEntities\bin\Debug\International.BusinessEntities.dll
+D:\Working\International\International.BusinessEntities\bin\Debug\International.BusinessEntities.pdb
+D:\Working\International\International.BusinessEntities\bin\Debug\EntityFramework.dll
+D:\Working\International\International.BusinessEntities\bin\Debug\EntityFramework.SqlServer.dll
+D:\Working\International\International.BusinessEntities\bin\Debug\EntityFramework.xml
+D:\Working\International\International.BusinessEntities\bin\Debug\EntityFramework.SqlServer.xml
+D:\Working\International\International.BusinessEntities\obj\Debug\International.BusinessEntities.dll
+D:\Working\International\International.BusinessEntities\obj\Debug\International.BusinessEntities.pdb
+D:\Working\International\International.BusinessEntities\obj\Debug\International.BusinessEntities.csprojResolveAssemblyReference.cache

@@ -1,0 +1,108 @@
+﻿@model GroupFilterModel
+
+@{
+    ViewBag.Title = "Groups";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+
+    <script src="~/Scripts/controllers/UserManagementController.js"></script>
+}
+
+
+<div id="manage-groups" class="wrapper" ng-controller="userManagementController" ng-init="getGroups();" ng-app="rootApplication">
+    <div class="container-fluid main-heading clearfix">
+        <h3>Manage Groups</h3> 
+        <div class="pull-right">
+            <a href="@Url.Action("Group", "UserManagement")">
+                <button type="button" class="btn btn-primary btn-lg add-button">Create New Group</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="container-fluid  dt-overflow">
+        <div class="table-responsive">
+            <form name="groupFilter">
+                <table border="1" class="table table-bordered">
+                    <tr class="main-color" id="abc">
+                        <th colspan="3">Filter<span class="pull-right" id="toggle" data-toggle="collapse" data-target="#demo"><i class="fa fa-chevron-down"></i></span></th>
+
+                    </tr>
+                    <tr id="demo" class="collapse">
+                        <td class="td-space">
+                           
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4" for="code">Group Name</label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(model => model.GroupName, new { @class = "form-control", placeholder = "Group Name", ng_model = "filterModel.GroupName", ng_trim = "true", maxlength = "50" })
+                                            @Html.ValidationMessageFor(model => model.GroupName)
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4" for="code">Group Status</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" id="name" ng-model="filterModel.Status">
+                                                <option>All</option>
+                                                <option value="1">Active</option>
+                                                <option value="0">Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4" for="code">Create Date</label>
+
+                                        <div class="col-sm-4">
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(model => model.FromDate, new { @class = "form-control", placeholder = "From Date", ng_model = "filterModel.FromDate", mindate = "Jan-01-2014",maxdate = "Dec-31-2040", date_time_picker = "", maxlength = "50", data_ng_required = "filterModel.ToDate" })
+                                                <span class="input-group-addon" id="basic-addon2" data-toggle="datepickerp"><i class="fa fa-calendar"></i></span>
+
+                                            </div>
+
+                                            <span data-valmsg-replace="true" class="field-validation-error" data-valmsg-for="CedantName" ng-show="groupFilter.FromDate.$error.required">Date range is not complete</span>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(model => model.ToDate, new { @class = "form-control", placeholder = "To Date", ng_model = "filterModel.ToDate", mindate = "{{filterModel.FromDate}}", date_time_picker = "", maxdate = "Dec-31-2040", maxlength = "50", data_ng_required = "filterModel.FromDate" })
+                                                <span class="input-group-addon" id="basic-addon2" data-toggle="datepickerp"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                            <span data-valmsg-replace="true" class="field-validation-error" ng-show="groupFilter.ToDate.$error.required">Date range is not complete</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+
+
+                                <div class="clearfix"></div>
+                           
+                            <div class="btn-size">
+
+                                <button type="reset" ng-click="ClearGroup()" data-target="#demo" data-toggle="collapse" class="btn btn-default">Clear</button>
+                                <button type="submit" ng-click="Search();" class="btn btn-primary">Search</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
+
+
+    <div class="container-fluid  dt-overflow">
+        <div class="table-responsive">
+            <div class="bg-primary">
+                <h4>Group Details List </h4>
+            </div>
+            <table border="1" class="nowrap table table-bordered table-striped  display" id="groupList" cellspacing="0" width="100%"></table>
+        </div>
+    </div>
+
+</div>
+
+
+

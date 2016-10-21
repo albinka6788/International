@@ -1,0 +1,210 @@
+﻿@model UserModel
+
+@{
+    var isView = (bool)ViewBag.isView;
+    ViewBag.Title = "User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section scripts{
+    <script src="~/Scripts/controllers/UserManagementController.js"></script>
+    <script data-semver="3.10.0" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"></script>
+}
+
+
+
+<h2></h2>
+@if (!isView)
+{
+    <div id="manage-Group" class="wrapper form-horizontal" ng-controller="userManagementController" ng-init="UserId = @Model.UserId; getUser()">
+
+        <div class="container-fluid  dt-overflow">
+            <div class="table-responsive">
+                <table border="1" class="table table-bordered">
+                    <tr class="main-color">
+                        @if (Model.UserId == 0)
+                        {
+                            <th ng-if="UserId==0" colspan="3">Create New User</th>
+                        }
+
+                        else
+                        {
+                            <th ng-if="UserId>0" colspan="3">Edit User</th>
+                        }
+                    </tr>
+                    <tr>
+                        <td class="td-space">
+
+
+                            @using (Html.BeginForm(new { id = "userForm" }))
+                            {
+                                <div class="clearfix">
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4" for="name">First Name</label>
+                                        <div class="col-sm-6">
+                                            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", placeholder = "First Name", ng_disabled = "UserId>0", data_ng_model = "userModel.FirstName", maxlength = "150" })
+
+                                            @Html.ValidationMessageFor(model => model.FirstName)
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4" for="name">Last Name</label>
+                                        <div class="col-sm-6">
+                                            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", placeholder = "Last Name", ng_disabled = "UserId>0", data_ng_model = "userModel.LastName", maxlength = "150" })
+                                            @Html.ValidationMessageFor(model => model.LastName)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4" for="code">Email</label>
+                                        <div class="col-sm-6">
+                                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email", autocomplete = "false", ng_disabled = "UserId>0", data_ng_model = "userModel.Email", maxlength = "150" })
+                                            @Html.ValidationMessageFor(model => model.Email)
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4" for="name"> Group</label>
+                                        <div class="col-sm-6">
+                                            <select ng-model="userModel.GroupNo" class="form-control"
+                                                    ng-options="option.Value as option.Text for option in userModel.GroupList"
+                                                    data-val="true" required
+                                                    data-val-required="Please select a Group"
+                                                    name="GroupId" id="GroupId">
+                                                <option value="">Select</option>
+                                            </select>
+                                            @Html.ValidationMessageFor(model => model.GroupId)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4" for="name"> Region</label>
+                                        <div class="col-sm-6">
+                                            <div ng-dropdown-multiselect="" options="userModel.RegionList" selected-model="userModel.UserRegionList" @*extra-settings="MultiselectDropdownSetting"*@></div>
+                                            <div ng-if="userModel.UserRegionList.length < 1" ng-show="submit">
+                                                <span class="field-validation-error" for="name">Please select Region</span>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6" ng-if="UserId==0">
+                                        <label class="col-sm-4" for="name">Password</label>
+                                        <div class="col-sm-6">
+                                            @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password", some_special_char = "", data_ng_model = "userModel.Password", autocomplete = "new-password", type = "password", maxlength = "150", match = "" })
+                                            @Html.ValidationMessageFor(model => model.Password)
+                                        </div>
+                                    </div>
+
+                                </div>
+                                @*<div class="clearfix">
+                                        <div class="form-group col-sm-6">
+                                            <label class="col-sm-4" for="name">Confirm Password</label>
+                                            <div class="col-sm-6">
+
+                                                @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password", data_ng_model = "userModel.ConfirmPassword", type = "password", maxlength = "150" })
+                                                @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                                            </div>
+                                        </div>
+                                    </div>*@
+                            }
+                            <div class="btn-size col-sm-12">
+
+                                <button type="reset" ng-click="CancelUser()" class="btn btn-default">Cancel</button>
+                                <button type="submit" ng-click="saveUser();" class="btn btn-primary">Submit</button>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div id="manage-Group" class="wrapper form-horizontal" ng-controller="userManagementController" ng-init="UserId = @Model.UserId; getUser()">
+
+        <div class="container-fluid  dt-overflow">
+            <div class="table-responsive">
+                <table border="1" class="table table-bordered">
+                    <tr class="main-color">
+
+                        <th ng-if="UserId>0" colspan="3">View User</th>
+                    </tr>
+                    <tr>
+                        <td class="td-space">
+
+
+                            @using (Html.BeginForm())
+                            {
+                                <div class="clearfix">
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4" for="name">First Name</label>
+                                        <div class="col-sm-6">
+                                            <label style="word-break:break-all">    {{userModel.FirstName}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4" for="name">Last Name</label>
+                                        <div class="col-sm-6">
+                                            <label style="word-break:break-all">    {{userModel.LastName}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4" for="code">Email</label>
+                                        <div class="col-sm-6">
+                                            <label style="word-break:break-all">      {{userModel.Email}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4" for="name"> Group</label>
+                                        <div class="col-sm-6">
+                                            <label style="word-break:break-all">      {{userModel.GroupName}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-4" for="name"> Region</label>
+                                        <div class="col-sm-6">
+                                            <div ng-repeat="option in userModel.RegionList track by option.id">
+                                                <label style="word-break:break-all">     {{option.label}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group col-sm-6" ng-if="UserId==0">
+                                            <label class="col-sm-4" for="name">Password</label>
+                                            <div class="col-sm-6">
+                                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password", data_ng_model = "userModel.Password",, type = "password", maxlength = "50", match = "" })
+                                                @Html.ValidationMessageFor(model => model.Password)
+                                            </div>
+                                        </div>*@
+
+                                </div>
+                                @*<div class="clearfix">
+                                        <div class="form-group col-sm-6">
+                                            <label class="col-sm-4" for="name">Confirm Password</label>
+                                            <div class="col-sm-6">
+
+                                                @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password", data_ng_model = "userModel.ConfirmPassword", type = "password", maxlength = "150" })
+                                                @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                                            </div>
+                                        </div>
+                                    </div>*@
+                            }
+                            @*<div class="btn-size col-sm-12">
+                                    <button type="reset" ng-if="UserId==0" onclick="$(this).MessageBox('User will not be created, do you want to proceed?','Users')" class="btn btn-default">Cancel</button>
+                                    <button type="reset" ng-if="UserId>0" onclick="$(this).MessageBox('User will not be updated, do you want to proceed?','Users')" class="btn btn-default">Cancel</button>
+                                    <button type="submit" ng-click="saveUser();" class="btn btn-primary">Submit</button>
+                                </div>*@
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+}

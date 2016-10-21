@@ -1,0 +1,98 @@
+﻿@model International.BusinessEntities.Models.SubmissionModel
+@{
+    var isView = (bool)ViewBag.isView;
+}
+
+@if (!isView)
+{
+    <div class="container-fluid  dt-overflow" ng-init="StatusDepInit()">
+        <div class="bg-primary">
+            <h4>Status Dependent Details</h4>
+        </div>
+        <form id="StatusDependentDetailForm" name="StatusDependentDetailForm">
+            <div class="td-space clearfix">
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Reason Code</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" ng-model="submissionModel.ReasonID"
+                                    ng-options="option.Value as option.Text for option in submissionListModel.ReasonList"
+                                    data-val="true"
+                                    data-val-required="Please select Reason"
+                                    name="ReasonID" id="ReasonID" ng-change="" validation_rules identifier="ReasonCode" status="{{submissionModel.CurrentStatusId}}">
+                                <option value="">- Select  -</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.ReasonID)
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Process Date</label>
+                        <div class="col-sm-6">
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.ProcessDate, new
+                                   {
+                                       @class = "form-control date",
+                                       date_time_picker = "",
+                                       placeholder = "Process Date",
+                                       data_ng_model = "submissionModel.ProcessDate",
+                                       mindate = "{{Mindate}}",
+                                       maxdate = "Dec-31-2040",
+                                       validation_rules = "",
+                                       status = "{{submissionModel.CurrentStatusId}}",
+                                       identifier = "ProcessDate",
+                                       ng_change = "ProcessDateChange()"
+                                   })
+                                <span class="input-group-addon" disabled="false" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ProcessDate)
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-sm-12 btn-size">
+                    <button class="btn btn-primary" ng-class="{disabled: !hasNextStep()}" ng-click="NextStatusDependent()">Next</button>
+                    <button class="btn btn-primary" ng-class="{disabled: !hasPreviousStep()}" ng-click="decrementStep();">Back</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+}
+
+else
+{
+
+    <div class="container-fluid  dt-overflow" ng-init="StatusDepInit()">
+        <div class="bg-primary">
+            <h4>Status Dependent Details</h4>
+        </div>
+        <form id="StatusDependentDetailForm" name="StatusDependentDetailForm">
+            <div class="td-space clearfix">
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Reason Code</label>
+                        <div class="col-sm-6">
+                          
+                            {{submissionListModel.ReasonList.getValue(submissionModel.ReasonID)}}
+
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Process Date</label>
+                        <div class="col-sm-6">
+                            <div class="input-group date">
+                                {{submissionModel.ProcessDate}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-sm-12 btn-size">
+                        <button class="btn btn-primary" ng-class="{disabled: !hasNextStep()}" ng-click="NextStatusDependent()">Next</button>
+                        <button class="btn btn-primary" ng-class="{disabled: !hasPreviousStep()}" ng-click="decrementStep();">Back</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+
+
+

@@ -1,0 +1,67 @@
+﻿@model International.BusinessEntities.Models.SubmissionModel
+@{
+
+    var isView = (bool)ViewBag.isView;
+}
+
+
+
+<div class="container-fluid  dt-overflow">
+    <div class="bg-primary">
+        <h4>QC Remarks</h4>
+    </div>
+    <style>
+        .my-disable {
+            pointer-events: none;
+        }
+    </style>
+    <form id="OtherDetailForm" name="OtherDetailForm">
+        <div class="td-space clearfix">
+           
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <div class="radio col-sm-3">
+                        <label><input type="radio" ng-disabled="submissionModel.IsUnclearAccount" ng-model="submissionModel.QCStatusId" checked="checked" value="14">QC Approved</label>
+                    </div>
+                    <div class="radio col-sm-3">
+                        <label><input type="radio" ng-model="submissionModel.QCStatusId" value="17">QC Rejected</label>
+                    </div>
+                    <div class="radio col-sm-3">
+                        <label><input type="radio" ng-model="submissionModel.QCStatusId" value="19">QC Unclear</label>
+                    </div>
+                    <div class="radio col-sm-3">
+                        <label><input type="radio" ng-model="submissionModel.QCStatusId" value="20">Void</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <span class="col-sm-1" >Remarks</span>
+                    <div class="col-sm-5">
+                        <div>
+                            @Html.TextAreaFor(model => model.QCRemark, new
+                                   {
+                                       @class = "form-control date",
+                                       placeholder = "QC Remark",
+                                       data_ng_model = "submissionModel.QCRemark",
+                                       maxlength = "250"
+                                   })
+
+                        </div>
+                        @Html.ValidationMessageFor(model => model.QCRemark)
+                    </div>
+                </div>
+            </div>
+
+
+            <div class=" col-sm-12 btn-size">
+                <button class="btn btn-primary" ng-click="BackToList()">Cancel</button>
+                <button class="btn btn-primary" ng-click="UpdateQCStatus()">Submit</button>
+                <button class="btn btn-primary" ng-class="{disabled: !hasPreviousStep()}" ng-click="decrementStep();">Back</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+

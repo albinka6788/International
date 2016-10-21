@@ -1,0 +1,1289 @@
+﻿@model International.BusinessEntities.Models.PremiumDetailModel
+@{
+    var isView = (bool)ViewBag.isView;
+}
+@if (!isView)
+    {
+<div class="container-fluid  dt-overflow">
+    <div class="bg-primary">
+        <h4>Premium Details</h4>
+    </div>
+
+    <!-- coverage Modal content-->
+    <div id="add-coverageModel" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Choose Coverage Type</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <div class="col-sm-6">
+                            <select class="form-control" name="SelectedCoverageM" id="SelectedCoverageM" data-val="true" ng-model="SelectedCoverageId" 
+                                    ng-options="option.Value as option.Text for option in submissionListModel.LayerLevelCoverageCodeList" ng-change="ChkIsCoverageExist(SelectedCoverageId)">
+                                <option value="">- Select  -</option>                               
+                            </select>
+                            <div class="field-validation-error" ng-show="IsCoverageIdExists">
+                                Selected Coverage already Exists !
+                            </div>                          
+                        </div>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="IsCoverageIdExists || SelectedCoverageId<1" ng-click="AddLayerAndCoverage(SelectedCoverageId)" data-dismiss="modal">Add</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="CancelAddCoverage()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add coverage popup finish-->
+
+
+    <form id="PremiumDetailCLForm" name="PremiumDetailCLForm">
+        <div class="wrapper-inside">
+            <div class="tab-content" ng-init="PremiumDetailCoverageLevelInit()">
+            <div class="container-fluid">
+                <div class="row">
+                    <ul class="nav nav-tabs">
+                        <li id="liSelected{{$index}}" ng-repeat="Layer in submissionModel.LayerDetails" ng-click="isActivetabLayer($index)" ng-class="{'active' : Layer.Selected, '' : !Layer.Selected}">
+                            <a>Layer {{$index+1}}</a>
+                        </li>
+                            <li class="pull-right mart05" ng-if="!(currentprocess == enums.SubmissionProcess.CreateAmendment  || currentprocess == enums.SubmissionProcess.EditAmendment)">
+                            <ul class="nav nav-pills">
+                                    <li><a ng-click="OnAddLayerClick()"><i class="fa fa-plus-circle"></i>&nbsp; Add Layer</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div ng-repeat="LayerList in submissionModel.LayerDetails" id="tab{{$index}}" ng-class="{'tab-pane fade in active' : LayerList.Selected, 'tab-pane fade' : !LayerList.Selected}">
+                <div class="tab-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <ul class="nav nav-pills pull-left m-vertical">
+                                <li id="CliSelected{{$parent.$index}}_{{$index}}" ng-repeat="coverage in LayerList.CoverageDetails" ng-click="isActivetabCoverage($parent.$index,$index)" ng-class="{'active' : coverage.Selected, '' : !coverage.Selected}"> <a data-toggle="tab">{{submissionListModel.LayerLevelCoverageCodeList.getValue(coverage.CoverageId)}}</a></li>
+                            </ul>
+                                <ul class="nav nav-pills pull-right m-vertical" ng-if="!(currentprocess == enums.SubmissionProcess.CreateAmendment  || currentprocess == enums.SubmissionProcess.EditAmendment)">
+                                <li><a ng-click="OnAddCoverageClick()"><i class="fa fa-plus-circle"></i>&nbsp; Add Coverage</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div ng-repeat="coverageList in LayerList.CoverageDetails" id="coverageTab{{$parent.$index}}_{{$index}}" ng-class="{'tab-pane fade in active' : coverageList.Selected, 'tab-pane fade' : !coverageList.Selected}">
+                            <fieldset id="PremiumDetailCLFields" ng-disabled="!coverageList.IsEndorse">
+                        <div class="bg-primary">
+                                    <h4>
+                                        Layer {{$parent.$index+1}} - {{submissionListModel.LayerLevelCoverageCodeList.getValue(coverageList.CoverageId)}} 
+                                        <span class="pull-right">
+                                            <i class="fa fa-pencil-square" ng-click="coverageList.IsEndorse = true" ng-if="currentprocess == enums.SubmissionProcess.CreateAmendment"></i> &nbsp;
+                                            <i class="fa fa-trash-o" ng-click="DeleteCoverage($parent.$parent.$index,$parent.$index)" ng-if="!(currentprocess == enums.SubmissionProcess.CreateAmendment  || currentprocess == enums.SubmissionProcess.EditAmendment)"></i>
+                                        </span>
+                                    </h4>
+                        </div>
+                            <div class="td-space clearfix">
+                                    <div ng-show="currentprocess == enums.SubmissionProcess.CreateAmendment || currentprocess == enums.SubmissionProcess.EditAmendment">
+                                <div class="row">
+                                            <div class="col-md-8 form-group"> 
+                                                <label class="col-md-4" for="name">Premium Type </label> 
+                                                <div class="col-md-7">
+                                                    <div class="input-group premimum">
+                                                        <span style="margin-right:50px;">
+                                                            <input type="radio" value="PT_AP"
+                                                                   id="PremimumType{{coverageList.uniqueControlKey}}" 
+                                                                   name="PremimumType{{coverageList.uniqueControlKey}}"
+                                                                   validation_rules=""
+                                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                                   identifier="PremimumType" data-ng-model="coverageList.PremiumDetail.PremiumType" ng_change="setLayerPremimumType($parent.$index,$index)">
+                                                            AP (Additional Premium) 
+                                                        </span>
+                                                        <span>
+                                                            <input type="radio" value="PT_RP"
+                                                                   id="PremimumType{{coverageList.uniqueControlKey}}"
+                                                                   name="PremimumType{{coverageList.uniqueControlKey}}"
+                                                                   validation_rules=""
+                                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                                   identifier="PremimumType" data-ng-model="coverageList.PremiumDetail.PremiumType" ng_change="setLayerPremimumType($parent.$index,$index);">
+                                                            RP (Return Premium)
+                                                        </span>
+
+                                                    </div>
+                                                 
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <hr>
+                                    </div>
+
+                                    <div class="row">
+
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Exchange rate as on </label>
+                                        <div class="col-md-5">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control"
+                                                       date_time_picker=""
+                                                       mindate="Jan-01-2014"
+                                                       maxdate="Dec-31-2040"
+                                                       ng-model="coverageList.PremiumDetail.ExchangeRateDate"
+                                                       data-val-required="Please enter Exchange Date" data-val="true"
+                                                       validation_rules=""
+                                                       status="{{submissionModel.CurrentStatusId}}"
+                                                       identifier="ExchangeRateDate"
+                                                       ng-change="ExchangeRateDateValid()" />
+                                                <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>                                                
+                                            </div> 
+                                            <div class="field-validation-error" ng-show="!coverageList.PremiumDetail.ValidExchangeRateDate">
+                                                Please Select Exchange rate as on
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">(%) of Layer</label>
+                                        <div class="col-md-5">
+                                            <input type="text" data_ng_model="coverageList.PremiumDetail.LayerPercent"
+                                                   id="LayerPercent{{coverageList.uniqueControlKey}}"
+                                                   name="LayerPercent{{coverageList.uniqueControlKey}}"
+                                                   maxlength=16 placeholder="(%) of Layer" valid_decimal_number2=""
+                                                   class="form-control" ng_change="CalcOriginalLimitCL($parent.$index,$index)"
+                                                   validation_rules=""
+                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                   identifier="LayerPercent" autocomplete="off" />
+                                            <span data-valmsg-replace="true" data-valmsg-for="LayerPercent{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Policy Commission (%)</label>
+                                        <div class="col-md-5">
+                                            <input type="text"
+                                                   id="PolicyCommissionPercent{{coverageList.uniqueControlKey}}"
+                                                   name="PolicyCommissionPercent{{coverageList.uniqueControlKey}}"
+                                                   data_ng_model="coverageList.PremiumDetail.PolicyCommissionPercent"
+                                                   valid_decimal_number2=""
+                                                   maxlength=16
+                                                   placeholder="Policy Commission"
+                                                   class="form-control"
+                                                   ng_change="CalcTransactionalPolicyCommissionCL($parent.$index,$index)"
+                                                   validation_rules=""
+                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                   identifier="PolicyCommissionPercent"
+                                                   autocomplete="off" />
+                                            <span data-valmsg-replace="true" data-valmsg-for="PolicyCommissionPercent{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span>
+                                                 
+                                    </div>
+                                </div>
+                                    </div>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Original Currency</label>
+                                        <div class="col-md-5">
+                                            <select class="form-control" ng-model="coverageList.PremiumDetail.OriginalCurrencyCode"
+                                                    ng-options="option.Value as option.Text for option in submissionListModel.OriginalCurrencyList"
+                                                    data-val="true"
+                                                    data-val-required="Please select Original Currency"
+                                                    id="OriginalCurrencyCode{{coverageList.uniqueControlKey}}"
+                                                    name="OriginalCurrencyCode{{coverageList.uniqueControlKey}}"
+                                                    validation_rules status="{{submissionModel.CurrentStatusId}}" identifier="OriginalCurrencyCode">
+                                                <option value="">- Select  -</option>
+                                            </select>
+                                            <span data-valmsg-replace="true" data-valmsg-for="OriginalCurrencyCode{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Instalments (Yes/No)</label>
+                                        <div class="col-md-5">
+                                            <select class="form-control" ng-model="coverageList.PremiumDetail.Installment"
+                                                    validation_rules identifier="Instalment" status="{{submissionModel.CurrentStatusId}}"
+                                                    data-val="true"
+                                                    data-val-required="Instalments (Yes/No) is required"
+                                                    id="Instalment{{coverageList.uniqueControlKey}}"
+                                                    name="Instalment{{coverageList.uniqueControlKey}}">
+                                                <option value="">-- Select --</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                            <span data-valmsg-replace="true" data-valmsg-for="Instalment{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Layer Limit in Original Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text"
+                                                   id="OriginalLayerLimit{{coverageList.uniqueControlKey}}"
+                                                   name="OriginalLayerLimit{{coverageList.uniqueControlKey}}"
+                                                   data_ng_model="coverageList.PremiumDetail.OriginalLayerLimit"
+                                                   valid_decimal_number2=""
+                                                       maxlength=16
+                                                   placeholder="Layer Limit in Original Currency"
+                                                   class="form-control"
+                                                   ng_change="OnOriginalLayerLimitChangeCL($parent.$index,$index)"
+                                                   validation_rules=""
+                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                   identifier="OriginalLayerLimit"
+                                                   autocomplete="off" />
+                                            <span data-valmsg-replace="true" data-valmsg-for="OriginalLayerLimit{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Limit in Original Currency &nbsp; </label>
+                                        <div class="col-md-5">
+                                            <input type="text" readonly placeholder="Limit in Original Currency" ng-model="coverageList.OriginalLimitCL"
+                                                   value="" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">
+                                            Attachment Point in Original Currency &nbsp;
+                                            <input type="checkbox" ng-change="coverageList.PremiumDetail.OriginalAttachmentPoint='0.00'" ng-model="coverageList.PremiumDetail.IsOriginalAttachmentPoint"
+                                                   validation_rules status="{{submissionModel.CurrentStatusId}}" identifier="OriginalAttachmentPoint">
+                                        </label>
+                                        <div class="col-md-5">
+                                            <input type="text"
+                                                   id="OriginalAttachmentPoint{{coverageList.uniqueControlKey}}"
+                                                   name="OriginalAttachmentPoint{{coverageList.uniqueControlKey}}"
+                                                   data_ng_model="coverageList.PremiumDetail.OriginalAttachmentPoint"
+                                                   valid_decimal_number2=""
+                                                   maxlength=16
+                                                   placeholder="Attachment Point in Original Currency"
+                                                   class="form-control"
+                                                   ng_change="CalcTransactionalAttachmentPointCL($parent.$index,$index)"
+                                                   ng_disabled="coverageList.PremiumDetail.IsOriginalAttachmentPoint"
+                                                   validation_rules=""
+                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                   identifier="OriginalAttachmentPoint"
+                                                   autocomplete="off"
+                                                   ng-show="!coverageList.PremiumDetail.IsOriginalAttachmentPoint" />
+                                            <span data-valmsg-replace="true" data-valmsg-for="OriginalAttachmentPoint{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span> 
+                                            <input type="text" class="form-control" readonly value="Not Available" ng-show="coverageList.PremiumDetail.IsOriginalAttachmentPoint" />                                               
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Transactional Currency</label>
+                                        <div class="col-md-5">
+                                            <select class="form-control"
+                                                    id="TransactionalCurrencyCode{{coverageList.uniqueControlKey}}"
+                                                    name="TransactionalCurrencyCode{{coverageList.uniqueControlKey}}"
+                                                    ng-model="coverageList.PremiumDetail.TransactionalCurrencyCode"
+                                                    ng-options="option.Value as option.Text for option in submissionListModel.TransactionalCurrencyList"
+                                                    data-val="true"
+                                                    data-val-required="Please select Transactional Currency"                                                   
+                                                    validation_rules status="{{submissionModel.CurrentStatusId}}" identifier="TransactionalCurrencyCode">
+                                                <option value="">- Select  -</option>
+                                            </select>
+                                            <span data-valmsg-replace="true" data-valmsg-for="TransactionalCurrencyCode{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Conversion Rate from Original Currency to Transactional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text"
+                                                   id="ConversionRateToTransactional{{coverageList.uniqueControlKey}}"
+                                                   name="ConversionRateToTransactional{{coverageList.uniqueControlKey}}"
+                                                   data_ng_model="coverageList.PremiumDetail.ConversionRateToTransactional"
+                                                   valid_decimal_number5=""
+                                                   maxlength=23
+                                                   placeholder="Conversion Rate from Original Currency to Transactional Currency"
+                                                   class="form-control"
+                                                   ng_change="OnConversionRateToTransactionalChangeCL($parent.$index,$index)"
+                                                   validation_rules=""
+                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                   identifier="ConversionRateToTransactional"
+                                                   autocomplete="off" />
+                                            <span data-valmsg-replace="true" data-valmsg-for="ConversionRateToTransactional{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Layer Limit in Transactional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" convert-nan readonly placeholder="Layer Limit in Transactional Currency" valid_decimal_number2 ng-model="coverageList.TransactionalLayerLimitCL" value="" class=" form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Limit in Transactional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" convert-nan readonly placeholder="Limit in Transactional Currency" valid_decimal_number2 ng-model="coverageList.TransactionalLimitCL" value="" class=" form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Attachment Point in Transactional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" convert-nan readonly placeholder="Attachment Point in Transactional Currency" valid_decimal_number2 ng-model="coverageList.TransactionalAttachmentPointCL" value="" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">SIR in Transactional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text"
+                                                   id="TransactionalSIR{{coverageList.uniqueControlKey}}"
+                                                   name="TransactionalSIR{{coverageList.uniqueControlKey}}"
+                                                   data_ng_model="coverageList.PremiumDetail.TransactionalSIR"
+                                                   valid_decimal_number2=""
+                                                   maxlength=20
+                                                   placeholder="SIR in Transactional Currency"
+                                                   class="form-control"
+                                                   validation_rules=""
+                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                   identifier="TransactionalSIR"
+                                                   autocomplete="off" />
+                                            <span data-valmsg-replace="true" data-valmsg-for="TransactionalSIR{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Deductible in Transactional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text"
+                                                   id="TransactionalDeductible{{coverageList.uniqueControlKey}}"
+                                                   name="TransactionalDeductible{{coverageList.uniqueControlKey}}"
+                                                   data_ng_model="coverageList.PremiumDetail.TransactionalDeductible"
+                                                   valid_decimal_number2=""
+                                                   maxlength=20
+                                                   placeholder="Deductible in Transactional Currency"
+                                                   class="form-control"
+                                                   validation_rules=""
+                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                   identifier="TransactionalDeductible"
+                                                   autocomplete="off" />
+                                            <span data-valmsg-replace="true" data-valmsg-for="TransactionalDeductible{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span>   
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Gross Premium in Transactional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text"
+                                                   id="TransactionalGrossPremium{{coverageList.uniqueControlKey}}"
+                                                   name="TransactionalGrossPremium{{coverageList.uniqueControlKey}}"
+                                                   data_ng_model="coverageList.PremiumDetail.TransactionalGrossPremium"
+                                                   valid_decimal_number2=""
+                                                   maxlength=20
+                                                   placeholder="Gross Premium in Transactional Currency"
+                                                   class="form-control"
+                                                   ng_change="OnTransactionalGrossPremiumChangeCL($parent.$index,$index)"
+                                                   validation_rules=""
+                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                   identifier="TransactionalGrossPremium"
+                                                       autocomplete="off"
+                                                       ng-blur="setLayerPremimumType($parent.$index,$index)" />
+                                            <span data-valmsg-replace="true" data-valmsg-for="TransactionalGrossPremium{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Policy Commission in Transactional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" convert-nan readonly placeholder="Policy Commission in Transactional Currency" valid_decimal_number2 ng-model="coverageList.TransactionalPolicyCommissionCL" value="" class=" form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Collections in Transactional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text"
+                                                   id="TransactionalCollections{{coverageList.uniqueControlKey}}"
+                                                   name="TransactionalCollections{{coverageList.uniqueControlKey}}"
+                                                   data_ng_model="coverageList.PremiumDetail.TransactionalCollections"
+                                                   valid_decimal_number2=""
+                                                   maxlength=20
+                                                   placeholder="Collections in Transactional Currency"
+                                                   class="form-control"
+                                                   ng_change="CalcTransactionalNetPremiumCL($parent.$index,$index)"
+                                                   validation_rules=""
+                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                   identifier="TransactionalCollections"
+                                                   autocomplete="off" />
+                                            <span data-valmsg-replace="true" data-valmsg-for="TransactionalCollections{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span> 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Deductions in Transactional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text"
+                                                   id="TransactionalDeductions{{coverageList.uniqueControlKey}}"
+                                                   name="TransactionalDeductions{{coverageList.uniqueControlKey}}"
+                                                   data_ng_model="coverageList.PremiumDetail.TransactionalDeductions"
+                                                   valid_decimal_number2=""
+                                                   maxlength=20
+                                                   placeholder="Deductions in Transactional Currency"
+                                                   class="form-control"
+                                                   ng_change="CalcTransactionalNetPremiumCL($parent.$index,$index)"
+                                                   validation_rules=""
+                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                   identifier="TransactionalDeductions"
+                                                   autocomplete="off" />
+                                            <span data-valmsg-replace="true" data-valmsg-for="TransactionalDeductions{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">GST (IN) (Transactional Currency)</label>
+                                        <div class="col-md-5">
+                                            <input type="text"
+                                                   id="TransactionalGSTIN{{coverageList.uniqueControlKey}}"
+                                                   name="TransactionalGSTIN{{coverageList.uniqueControlKey}}"
+                                                   data_ng_model="coverageList.PremiumDetail.TransactionalGSTIN"
+                                                   valid_decimal_number2=""
+                                                   maxlength=20
+                                                   placeholder="GST (IN) (Transactional Currency)"
+                                                   class="form-control"
+                                                   ng_change="CalcTransactionalNetPremiumFromBrokerCL($parent.$index,$index)"
+                                                   validation_rules=""
+                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                   identifier="TransactionalGSTIN"
+                                                   autocomplete="off" />
+                                            <span data-valmsg-replace="true" data-valmsg-for="TransactionalGSTIN{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span> 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">GST (OUT) (Transactional Currency)</label>
+                                        <div class="col-md-5">
+                                            <input type="text"
+                                                   id="TransactionalGSTOUT{{coverageList.uniqueControlKey}}"
+                                                   name="TransactionalGSTOUT{{coverageList.uniqueControlKey}}"
+                                                   data_ng_model="coverageList.PremiumDetail.TransactionalGSTOUT"
+                                                   valid_decimal_number2=""
+                                                   maxlength=20
+                                                   placeholder="GST (OUT) (Transactional Currency)"
+                                                   class="form-control"
+                                                   ng_change="CalcTransactionalNetPremiumFromBrokerCL($parent.$index,$index)"
+                                                   validation_rules=""
+                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                   identifier="TransactionalGSTOUT"
+                                                   autocomplete="off" />
+                                            <span data-valmsg-replace="true" data-valmsg-for="TransactionalGSTOUT{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span> 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">BHSI Net Premium in Transactional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" convert-nan readonly placeholder="Net Premium in Transactional Currency" valid_decimal_number2 ng-model="coverageList.TransactionalNetPremiumCL" value="" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Net Premium From Broker in Transactional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" convert-nan readonly placeholder="Net Premium From Broker in Transactional Currency" valid_decimal_number2 ng-model="coverageList.TransactionalNetPremiumFromBrokerCL" value="" class="form-control">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Total Insured Value (TIV) in Transactional currency &nbsp; <input type="checkbox" ng-change="coverageList.PremiumDetail.TransactionalTIV=0" ng-model="coverageList.PremiumDetail.IsTransactionalTIV"></label>
+                                        <div class="col-md-5">
+                                            <input type="text"
+                                                   id="TransactionalTIV{{coverageList.uniqueControlKey}}"
+                                                   name="TransactionalTIV{{coverageList.uniqueControlKey}}"
+                                                   data_ng_model="coverageList.PremiumDetail.TransactionalTIV"
+                                                   valid_decimal_number2=""
+                                                   maxlength=20
+                                                   placeholder="Total Insured Value (TIV) in Transactional currency"
+                                                   class="form-control"
+                                                   validation_rules=""
+                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                   product="{{submissionModel.ProductLineTypeId}}" 
+                                                   identifier="TransactionalTIV"                                                   
+                                                   ng_disabled="coverageList.PremiumDetail.IsTransactionalTIV"
+                                                   autocomplete="off"
+                                                   ng-show="!coverageList.PremiumDetail.IsTransactionalTIV" />
+                                                <input type="text" class="form-control" readonly value="Not Available" ng-show="coverageList.PremiumDetail.IsTransactionalTIV" />
+                                            <span ng-show="!coverageList.PremiumDetail.IsTransactionalTIV" data-valmsg-replace="true" data-valmsg-for="TransactionalTIV{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Jurisdictional Currency</label>
+                                        <div class="col-md-5">
+                                            <select class="form-control"
+                                                    id="JurCurrencyCode{{coverageList.uniqueControlKey}}"
+                                                    name="JurCurrencyCode{{coverageList.uniqueControlKey}}"
+                                                    ng-model="coverageList.PremiumDetail.JurCurrencyCode"
+                                                    ng-options="option.Value as option.Text for option in submissionListModel.JurCurrencyList"
+                                                    data-val="true"
+                                                    data-val-required="Please select Jurisdictional Currency"                                                    
+                                                    validation_rules status="{{submissionModel.CurrentStatusId}}" identifier="JurCurrencyCode">
+                                                <option value="">- Select  -</option>
+                                            </select>
+                                            <span data-valmsg-replace="true" data-valmsg-for="JurCurrencyCode{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span> 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Conversion Rate from Transactional to Jurisdictional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text"
+                                                   id="JurExchangeRate{{coverageList.uniqueControlKey}}"
+                                                   name="JurExchangeRate{{coverageList.uniqueControlKey}}"
+                                                   data_ng_model="coverageList.PremiumDetail.JurExchangeRate"
+                                                   valid_decimal_number5=""
+                                                   maxlength=23
+                                                   placeholder="Conversion Rate in Jurisdictional"
+                                                   class="form-control"
+                                                   ng_change="OnConversionRateJurChangeCL($parent.$index,$index)"
+                                                   validation_rules=""
+                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                       identifier="ConversionRateToJurisdictional"
+                                                   autocomplete="off" />
+                                            <span data-valmsg-replace="true" data-valmsg-for="JurExchangeRate{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Layer Limit in Jurisdictional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="JurisdictionalLayerLimit" convert-nan readonly placeholder="Layer Limit in Jurisdictional Currency" value="{{JurisdictionalLayerLimit=(coverageList.TransactionalLayerLimitCL*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Limit in Jurisdictional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="JurisdictionalLimit" convert-nan readonly placeholder="Limit in Jurisdictional Currency" value="{{JurisdictionalLimit=(coverageList.TransactionalLimitCL*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Attachment Point in Jurisdictional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="JurAttachmentPoint" convert-nan readonly placeholder="Attachment Point in Jurisdictional Currency" valid_decimal_number2 value="{{JurAttachmentPoint=(coverageList.TransactionalAttachmentPointCL*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">SIR in Jurisdictional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="JurSIR" convert-nan readonly placeholder="SIR in Jurisdictional Currency" valid_decimal_number2 value="{{JurSIR=(coverageList.PremiumDetail.TransactionalSIR*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Deductible in Jurisdictional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="JurDeductible" convert-nan readonly placeholder="Deductible in Jurisdictional Currency" valid_decimal_number2 value="{{JurDeductible=(coverageList.PremiumDetail.TransactionalDeductible*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Gross Premium in Jurisdictional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="JurGrossPremium" convert-nan readonly placeholder="Gross Premium in Jurisdictional Currency" valid_decimal_number2 value="{{JurGrossPremium=(coverageList.PremiumDetail.TransactionalGrossPremium*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Policy Commission in Jurisdictional Currency</label>
+                                        <div class="col-md-5">
+                                                <input type="text" ng-model="JurPolicyCommission" convert-nan readonly placeholder="Policy Commission in Jurisdictional Currency" valid_decimal_number2 value="{{JurPolicyCommission=(coverageList.TransactionalPolicyCommissionCL*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Collections in Jurisdictional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="JurCollections" convert-nan readonly placeholder="Collections in Jurisdictional Currency" valid_decimal_number2 value="{{JurCollections=(coverageList.PremiumDetail.TransactionalCollections*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Deductions in Jurisdictional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="JurDeductions" convert-nan readonly placeholder="Deductions in Jurisdictional Currency" valid_decimal_number2 value="{{JurDeductions=(coverageList.PremiumDetail.TransactionalDeductions*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">GST (IN) (Jurisdictional Currency)</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="JurGSTIN" convert-nan readonly placeholder="GST (IN) (Jurisdictional Currency)" valid_decimal_number2 value="{{JurGSTIN=(coverageList.PremiumDetail.TransactionalGSTIN*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">GST (OUT) (Jurisdictional Currency)</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="JurGSTOUT" convert-nan readonly placeholder="GST (OUT) (Jurisdictional Currency)" valid_decimal_number2 value="{{JurGSTOUT=(coverageList.PremiumDetail.TransactionalGSTOUT*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">BHSI Net Premium in Jurisdictional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="JurNetPremium" convert-nan readonly placeholder="Net Premium in Jurisdictional Currency" valid_decimal_number2 value="{{JurNetPremium=(coverageList.TransactionalNetPremiumCL*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                   
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Net Premium From Broker in Jurisdictional Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" convert-nan readonly placeholder="Net Premium in Jur Currency From Broker" valid_decimal_number2 ng-model="JurNetPremiumFromBroker" value="{{JurNetPremiumFromBroker=(coverageList.TransactionalNetPremiumFromBrokerCL*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Total Insured Value (TIV) in Jurisdictional currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="JurTIV" convert-nan readonly placeholder="Total Insured Value (TIV) in Jurisdictional currency" valid_decimal_number2 value="{{JurTIV=(coverageList.PremiumDetail.TransactionalTIV*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                            <label class="col-md-7" for="name">Conversion Rate from Transactional Currency to USD</label>
+                                        <div class="col-md-5">
+                                            <input type="text"
+                                                   id="USDExchangeRate{{coverageList.uniqueControlKey}}"
+                                                   name="USDExchangeRate{{coverageList.uniqueControlKey}}"
+                                                   data_ng_model="coverageList.PremiumDetail.USDExchangeRate"
+                                                   valid_decimal_number5=""
+                                                   maxlength=23
+                                                   placeholder="Conversation Rate in USD"
+                                                   class="form-control"
+                                                   ng_change="OnConversionRateUSDChangeCL($parent.$index,$index)"
+                                                   validation_rules=""
+                                                   status="{{submissionModel.CurrentStatusId}}"
+                                                       identifier="ConversionRateToUSD"
+                                                   autocomplete="off" />
+                                            <span data-valmsg-replace="true" data-valmsg-for="USDExchangeRate{{coverageList.uniqueControlKey}}" class="field-validation-valid"></span> 
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Layer Limit in USD Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="USDLayerLimit" convert-nan readonly placeholder="Layer Limit in USD Currency" valid_decimal_number2 value="{{USDLayerLimit=(coverageList.TransactionalLayerLimitCL*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Limit in USD Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="USDLimit" convert-nan readonly placeholder="Limit in USD Currency" valid_decimal_number2 value="{{USDLimit=(coverageList.TransactionalLimitCL*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Attachment Point in USD Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="USDAttachmentPoint" convert-nan readonly placeholder="Attachment Point in USD Currency" valid_decimal_number2 value="{{USDAttachmentPoint=(coverageList.TransactionalAttachmentPointCL*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">SIR in USD Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="USDSIR" convert-nan readonly placeholder="SIR in USD Currency" valid_decimal_number2 value="{{USDSIR=(coverageList.PremiumDetail.TransactionalSIR*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Deductible in USD Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="USDDeductible" convert-nan readonly placeholder="Deductible in USD Currency" valid_decimal_number2 value="{{USDDeductible=(coverageList.PremiumDetail.TransactionalDeductible*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Gross Premium in USD Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="USDGrossPremium" convert-nan readonly placeholder="Gross Premium in USD Currency" valid_decimal_number2 value="{{USDGrossPremium=(coverageList.PremiumDetail.TransactionalGrossPremium*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Policy Commission in USD Currency</label>
+                                        <div class="col-md-5">
+                                                <input type="text" ng-model="USDPolicyCommission" convert-nan readonly placeholder="Policy Commission in USD Currency" valid_decimal_number2 value="{{USDPolicyCommission=(coverageList.TransactionalPolicyCommissionCL*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">  
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Collections in USD Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="USDCollections" convert-nan readonly placeholder="Collections in USD Currency" valid_decimal_number2 value="{{USDCollections=(coverageList.PremiumDetail.TransactionalCollections*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Deductions in USD Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="USDDeductions" convert-nan readonly placeholder="Deductions in USD Currency" valid_decimal_number2 value="{{USDDeductions=(coverageList.PremiumDetail.TransactionalDeductions*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">GST (IN) (USD Currency)</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="USDGSTIN" convert-nan readonly placeholder="GST (IN) (USD Currency)" valid_decimal_number2 value="{{USDGSTIN=(coverageList.PremiumDetail.TransactionalGSTIN*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">GST (OUT) (USD Currency)</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="USDGSTOUT" convert-nan readonly placeholder="GST (OUT) (USD Currency)" valid_decimal_number2 value="{{USDGSTOUT=(coverageList.PremiumDetail.TransactionalGSTOUT*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">BHSI Net Premium in USD Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="USDNetPremium" convert-nan readonly placeholder="Net Premium in USD Currency" valid_decimal_number2 value="{{USDNetPremium=(coverageList.TransactionalNetPremiumCL*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                   
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Net Premium From Broker in USD Currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" convert-nan readonly placeholder="Net Premium From Broker in USD Currency" valid_decimal_number2 ng-model="USDNetPremiumFromBroker" value="{{USDNetPremiumFromBroker=(coverageList.TransactionalNetPremiumFromBrokerCL*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-7" for="name">Total Insured Value (TIV) in USD currency</label>
+                                        <div class="col-md-5">
+                                            <input type="text" ng-model="USDTIV" convert-nan readonly placeholder="Total Insured Value (TIV) in USD currency" valid_decimal_number2 value="{{USDTIV=(coverageList.PremiumDetail.TransactionalTIV*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            </fieldset>
+                        </div>
+                </div>
+
+            </div>
+
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-12 btn-size">
+            <button class="btn btn-primary" ng-class="{disabled: !hasPreviousStep()}" ng-click="OnNext_PremiumDetailCoverageLevel()">Next</button>
+            <button class="btn btn-primary" ng-class="{disabled: !hasNextStep()}" ng-click="decrementStep();">Back</button>
+        </div>
+        </div>
+
+
+    </form>
+
+</div>
+
+    }
+
+else
+{
+    <div class="container-fluid  dt-overflow">
+        <div class="bg-primary">
+            <h4>Premium Details</h4>
+        </div>
+            
+        <form id="PremiumDetailCLForm" name="PremiumDetailCLForm">
+
+            <div class="wrapper-inside">
+                <div class="tab-content" ng-init="PremiumDetailCoverageLevelInit()">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <ul class="nav nav-tabs">
+                                <li id="liSelected{{$index}}" ng-repeat="Layer in submissionModel.LayerDetails" ng-click="isActivetabLayer($index)" ng-class="{'active' : Layer.Selected, '' : !Layer.Selected}">
+                                    <a>Layer {{$index+1}}</a>
+                                </li>
+                              
+                            </ul>
+                        </div>
+                    </div>
+                    <div ng-repeat="LayerList in submissionModel.LayerDetails" id="tab{{$index}}" ng-class="{'tab-pane fade in active' : LayerList.Selected, 'tab-pane fade' : !LayerList.Selected}">
+                        <div class="tab-content">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <ul class="nav nav-pills pull-left m-vertical">
+                                        <li id="CliSelected{{$parent.$index}}_{{$index}}" ng-repeat="coverage in LayerList.CoverageDetails" ng-click="isActivetabCoverage($parent.$index,$index)" ng-class="{'active' : coverage.Selected, '' : !coverage.Selected}"> <a data-toggle="tab">{{submissionListModel.LayerLevelCoverageCodeList.getValue(coverage.CoverageId)}}</a></li>
+                                    </ul>
+                                    <ul class="nav nav-pills pull-right m-vertical" ng-if="!(currentprocess == enums.SubmissionProcess.CreateAmendment  || currentprocess == enums.SubmissionProcess.EditAmendment)">
+                                        <li>@*<a ng-click="OnAddCoverageClick()"><i class="fa fa-plus-circle"></i>&nbsp; Add Coverage</a>*@</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div ng-repeat="coverageList in LayerList.CoverageDetails" id="coverageTab{{$parent.$index}}_{{$index}}" ng-class="{'tab-pane fade in active' : coverageList.Selected, 'tab-pane fade' : !coverageList.Selected}">
+                                <fieldset id="PremiumDetailCLFields" ng-disabled="!coverageList.IsEndorse">
+                                    <div class="bg-primary">
+                                        <h4>
+                                            Layer {{$parent.$index+1}} - {{submissionListModel.LayerLevelCoverageCodeList.getValue(coverageList.CoverageId)}}
+                                            @*<span class="pull-right">
+                                                <i class="fa fa-pencil-square" ng-click="coverageList.IsEndorse = true" ng-if="currentprocess == enums.SubmissionProcess.CreateAmendment"></i> &nbsp;
+                                                <i class="fa fa-trash-o" ng-click="DeleteCoverage($parent.$index,$index)" ng-if="!(currentprocess == enums.SubmissionProcess.CreateAmendment  || currentprocess == enums.SubmissionProcess.EditAmendment)"></i>
+                                            </span>*@
+                                        </h4>
+                                    </div>
+                                    <div class="td-space clearfix">
+                                        <div ng-show="currentprocess == enums.SubmissionProcess.CreateAmendment || currentprocess == enums.SubmissionProcess.EditAmendment">
+                                            <div class="row">
+                                                <div class="col-md-8 form-group">
+                                                    <label class="col-md-4" for="name">Premium Type </label> {{coverageList.PremiumDetail.PremiumType}}
+                                                    <div class="col-md-7">
+                                                        <div class="input-group premimum">
+                                                            <span style="margin-right:50px;">
+                                                                <input type="radio" value="PT_AP"
+                                                                       id="PremimumType{{coverageList.uniqueControlKey}}"
+                                                                       name="PremimumType{{coverageList.uniqueControlKey}}"
+                                                                       validation_rules=""
+                                                                       status="{{submissionModel.CurrentStatusId}}"
+                                                                       identifier="PremimumType" data-ng-model="coverageList.PremiumDetail.PremiumType" disabled>
+                                                                AP (Additional Premium)
+                                                            </span>
+                                                            <span>
+                                                                <input type="radio" value="PT_RP"
+                                                                       id="PremimumType{{coverageList.uniqueControlKey}}"
+                                                                       name="PremimumType{{coverageList.uniqueControlKey}}"
+                                                                       validation_rules=""
+                                                                       status="{{submissionModel.CurrentStatusId}}"
+                                                                       identifier="PremimumType" data-ng-model="coverageList.PremiumDetail.PremiumType" disabled>
+                                                                RP (Return Premium)
+                                                            </span>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                            <hr>
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Exchange rate as on </label>
+                                                <div class="col-md-5">
+                                                    <div class="input-group date">
+                                                      {{coverageList.PremiumDetail.ExchangeRateDate}}
+                                                    </div>
+                                         
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">(%) of Layer</label>
+                                                <div class="col-md-5">
+                                                {{coverageList.PremiumDetail.LayerPercent.toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Policy Commission (%)</label>
+                                                <div class="col-md-5">
+                                                {{coverageList.PremiumDetail.PolicyCommissionPercent.toFixed(2)}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Original Currency</label>
+                                                <div class="col-md-5">
+                                                  
+
+                                                    {{submissionListModel.OriginalCurrencyList.getValue(coverageList.PremiumDetail.OriginalCurrencyCode)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Instalments (Yes/No)</label>
+                                                <div class="col-md-5">
+                                                {{coverageList.PremiumDetail.Installment}}    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Layer Limit in Original Currency</label>
+                                                <div class="col-md-5">
+                                                  {{coverageList.PremiumDetail.OriginalLayerLimit.toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Limit in Original Currency &nbsp; </label>
+                                                <div class="col-md-5">
+                                                 {{coverageList.OriginalLimitCL.toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">
+                                                    Attachment Point in Original Currency 
+                                                </label>
+                                                <div class="col-md-5">
+                                                  {{coverageList.PremiumDetail.OriginalLayerLimit.toFixed(2)}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Transactional Currency</label>
+                                                <div class="col-md-5">
+                                                    {{submissionListModel.TransactionalCurrencyList.getValue(coverageList.PremiumDetail.TransactionalCurrencyCode)}}
+                                                </div>
+                                                </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Conversion Rate from Original Currency to Transactional Currency</label>
+                                                <div class="col-md-5">
+                                                        {{coverageList.PremiumDetail.ConversionRateToTransactional | NumFilter:5}}                                                  
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Layer Limit in Transactional Currency</label>
+                                                <div class="col-md-5">
+                                                 {{coverageList.TransactionalLayerLimitCL}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Limit in Transactional Currency</label>
+                                                <div class="col-md-5">
+                                                   {{coverageList.TransactionalLimitCL}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Attachment Point in Transactional Currency</label>
+                                                <div class="col-md-5">
+                                                  {{coverageList.TransactionalAttachmentPointCL}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">SIR in Transactional Currency</label>
+                                                <div class="col-md-5">
+                                                   {{coverageList.PremiumDetail.TransactionalSIR.toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Deductible in Transactional Currency</label>
+                                                <div class="col-md-5">
+                                                   {{coverageList.PremiumDetail.TransactionalDeductible.toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Gross Premium in Transactional Currency</label>
+                                                <div class="col-md-5">
+                                                    {{coverageList.PremiumDetail.TransactionalGrossPremium.toFixed(2)}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Policy Commission in Transactional Currency</label>
+                                                <div class="col-md-5">
+                                                    {{coverageList.TransactionalPolicyCommissionCL}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Collections in Transactional Currency</label>
+                                                <div class="col-md-5">
+                                                    {{coverageList.PremiumDetail.TransactionalCollections.toFixed(2)}}
+                                                </div>
+                                                </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Deductions in Transactional Currency</label>
+                                                <div class="col-md-5">
+                                               {{coverageList.PremiumDetail.TransactionalDeductions.toFixed(2)}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">GST (IN) (Transactional Currency)</label>
+                                                <div class="col-md-5">
+                                                 {{coverageList.PremiumDetail.TransactionalGSTIN.toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">GST (OUT) (Transactional Currency)</label>
+                                                <div class="col-md-5">
+                                                {{coverageList.PremiumDetail.TransactionalGSTOUT.toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">BHSI Net Premium in Transactional Currency</label>
+                                                <div class="col-md-5">
+                                                   {{coverageList.TransactionalNetPremiumCL}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Net Premium From Broker in Transactional Currency</label>
+                                                <div class="col-md-5">
+                                                    {{coverageList.TransactionalNetPremiumFromBrokerCL}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Total Insured Value (TIV) in Transactional currency</label>
+                                                <div class="col-md-5">
+                                                  {{coverageList.PremiumDetail.TransactionalTIV.toFixed(2)}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Jurisdictional Currency</label>
+                                                <div class="col-md-5">
+                                                    {{submissionListModel.JurCurrencyList.getValue(coverageList.PremiumDetail.JurCurrencyCode)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Conversion Rate from Transactional to Jurisdictional Currency</label>
+                                                <div class="col-md-5">
+                                                  {{coverageList.PremiumDetail.JurExchangeRate | NumFilter:5}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Layer Limit in Jurisdictional Currency</label>
+                                                <div class="col-md-5">
+                                                   {{JurisdictionalLayerLimit=(coverageList.TransactionalLayerLimitCL*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Limit in Jurisdictional Currency</label>
+                                                <div class="col-md-5">
+                                                    {{JurisdictionalLimit=(coverageList.TransactionalLimitCL*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Attachment Point in Jurisdictional Currency</label>
+                                                <div class="col-md-5">
+                                                    {{JurAttachmentPoint=(coverageList.TransactionalAttachmentPointCL*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">SIR in Jurisdictional Currency</label>
+                                                <div class="col-md-5">
+                                                    {{JurSIR=(coverageList.PremiumDetail.TransactionalSIR*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Deductible in Jurisdictional Currency</label>
+                                                <div class="col-md-5">
+                                                    {{JurDeductible=(coverageList.PremiumDetail.TransactionalDeductible*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Gross Premium in Jurisdictional Currency</label>
+                                                <div class="col-md-5">
+                                                   {{JurGrossPremium=(coverageList.PremiumDetail.TransactionalGrossPremium*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Policy Commission in Jurisdictional Currency</label>
+                                                <div class="col-md-5">
+                                                    {{JurPolicyCommission=(coverageList.TransactionalPolicyCommissionCL*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Collections in Jurisdictional Currency</label>
+                                                <div class="col-md-5">
+                                                   {{JurCollections=(coverageList.PremiumDetail.TransactionalCollections*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Deductions in Jurisdictional Currency</label>
+                                                <div class="col-md-5">
+                                                   {{JurDeductions=(coverageList.PremiumDetail.TransactionalDeductions*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">GST (IN) (Jurisdictional Currency)</label>
+                                                <div class="col-md-5">
+                                                   {{JurGSTIN=(coverageList.PremiumDetail.TransactionalGSTIN*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">GST (OUT) (Jurisdictional Currency)</label>
+                                                <div class="col-md-5">
+                                                    {{JurGSTOUT=(coverageList.PremiumDetail.TransactionalGSTOUT*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">BHSI Net Premium in Jurisdictional Currency</label>
+                                                <div class="col-md-5">
+                                                    {{JurNetPremium=(coverageList.TransactionalNetPremiumCL*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                           
+                                           
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Net Premium From Broker in Jurisdictional Currency</label>
+                                                <div class="col-md-5">
+                                                    {{JurNetPremiumFromBroker=(coverageList.TransactionalNetPremiumFromBrokerCL*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Total Insured Value (TIV) in Jurisdictional currency</label>
+                                                <div class="col-md-5">
+                                                    {{JurTIV=(coverageList.PremiumDetail.TransactionalTIV*coverageList.PremiumDetail.JurExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Conversion Rate from Transactional Currency to USD</label>
+                                                <div class="col-md-5">
+                                                    {{coverageList.PremiumDetail.USDExchangeRate | NumFilter:5}}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Layer Limit in USD Currency</label>
+                                                <div class="col-md-5">
+                                                    {{USDLayerLimit=(coverageList.TransactionalLayerLimitCL*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Limit in USD Currency</label>
+                                                <div class="col-md-5">
+                                                    {{USDLimit=(coverageList.TransactionalLimitCL*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Attachment Point in USD Currency</label>
+                                                <div class="col-md-5">
+                                                    {{USDAttachmentPoint=(coverageList.TransactionalAttachmentPointCL*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">SIR in USD Currency</label>
+                                                <div class="col-md-5">
+                                                   {{USDSIR=(coverageList.PremiumDetail.TransactionalSIR*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Deductible in USD Currency</label>
+                                                <div class="col-md-5">
+                                                   {{USDDeductible=(coverageList.PremiumDetail.TransactionalDeductible*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Gross Premium in USD Currency</label>
+                                                <div class="col-md-5">
+                                                    {{USDGrossPremium=(coverageList.PremiumDetail.TransactionalGrossPremium*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Policy Commission in USD Currency</label>
+                                                <div class="col-md-5">
+                                                   {{USDPolicyCommission=(coverageList.TransactionalPolicyCommissionCL*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Collections in USD Currency</label>
+                                                <div class="col-md-5">
+                                                   {{USDCollections=(coverageList.PremiumDetail.TransactionalCollections*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Deductions in USD Currency</label>
+                                                <div class="col-md-5">
+                                                    {{USDDeductions=(coverageList.PremiumDetail.TransactionalDeductions*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">GST (IN) (USD Currency)</label>
+                                                <div class="col-md-5">
+                                                    {{USDGSTIN=(coverageList.PremiumDetail.TransactionalGSTIN*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">GST (OUT) (USD Currency)</label>
+                                                <div class="col-md-5">
+                                                    {{USDGSTOUT=(coverageList.PremiumDetail.TransactionalGSTOUT*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">BHSI Net Premium in USD Currency</label>
+                                                <div class="col-md-5">
+                                                    {{USDNetPremium=(coverageList.TransactionalNetPremiumCL*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            
+                                           
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Net Premium From Broker in USD Currency</label>
+                                                <div class="col-md-5">
+                                                    {{USDNetPremiumFromBroker=(coverageList.TransactionalNetPremiumFromBrokerCL*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label class="col-md-7" for="name">Total Insured Value (TIV) in USD currency</label>
+                                                <div class="col-md-5">
+                                                    {{USDTIV=(coverageList.PremiumDetail.TransactionalTIV*coverageList.PremiumDetail.USDExchangeRate).toFixed(2)}}
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </fieldset>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 btn-size">
+                    <button class="btn btn-primary" ng-class="{disabled: !hasPreviousStep()}" ng-click="OnNext_PremiumDetailCoverageLevel()">Next</button>
+                    <button class="btn btn-primary" ng-class="{disabled: !hasNextStep()}" ng-click="decrementStep();">Back</button>
+                </div>
+            </div>
+
+
+        </form>
+
+    </div>
+
+}

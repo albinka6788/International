@@ -1,0 +1,883 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MDMModelStoreContainer" CdmEntityContainer="MDMEntities">
+    <EntitySetMapping Name="Brokers">
+      <EntityTypeMapping TypeName="MDMModel.Broker">
+        <MappingFragment StoreEntitySet="Broker">
+          <ScalarProperty Name="BrokerName" ColumnName="BrokerName" />
+          <ScalarProperty Name="BrokerDescription" ColumnName="BrokerDescription" />
+          <ScalarProperty Name="BrokerCode" ColumnName="BrokerCode" />
+          <ScalarProperty Name="ParentBrokerId" ColumnName="ParentBrokerId" />
+          <ScalarProperty Name="AdvisenId" ColumnName="AdvisenId" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="SourceSystemId" ColumnName="SourceSystemId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="BrokerId" ColumnName="BrokerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BrokerAddresses">
+      <EntityTypeMapping TypeName="MDMModel.BrokerAddress">
+        <MappingFragment StoreEntitySet="BrokerAddress">
+          <ScalarProperty Name="Partyid" ColumnName="Partyid" />
+          <ScalarProperty Name="Addressline1" ColumnName="Addressline1" />
+          <ScalarProperty Name="Addressline2" ColumnName="Addressline2" />
+          <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="AddressType" ColumnName="AddressType" />
+          <ScalarProperty Name="IsPrimaryAddress" ColumnName="IsPrimaryAddress" />
+          <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+          <ScalarProperty Name="Addressline3" ColumnName="Addressline3" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="SourceSystemId" ColumnName="SourceSystemId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="brokeraddressid" ColumnName="brokeraddressid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BrokerParties">
+      <EntityTypeMapping TypeName="MDMModel.BrokerParty">
+        <MappingFragment StoreEntitySet="BrokerParty">
+          <ScalarProperty Name="BrokerPartyId" ColumnName="BrokerPartyId" />
+          <ScalarProperty Name="Cityid" ColumnName="Cityid" />
+          <ScalarProperty Name="BrokerEntityName" ColumnName="BrokerEntityName" />
+          <ScalarProperty Name="BrokerEntityDescription" ColumnName="BrokerEntityDescription" />
+          <ScalarProperty Name="BrokerFullCode" ColumnName="BrokerFullCode" />
+          <ScalarProperty Name="BrokerStreetAddressLine1" ColumnName="BrokerStreetAddressLine1" />
+          <ScalarProperty Name="BrokerStreetAddressLine2" ColumnName="BrokerStreetAddressLine2" />
+          <ScalarProperty Name="BrokerZipCode" ColumnName="BrokerZipCode" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="SourceSystemId" ColumnName="SourceSystemId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="brokerid" ColumnName="brokerid" />
+          <ScalarProperty Name="BrokerType" ColumnName="BrokerType" />
+          <ScalarProperty Name="Wholesaler" ColumnName="Wholesaler" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cities">
+      <EntityTypeMapping TypeName="MDMModel.City">
+        <MappingFragment StoreEntitySet="City">
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="CityCode" ColumnName="CityCode" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContactPersonBrokers">
+      <EntityTypeMapping TypeName="MDMModel.ContactPersonBroker">
+        <MappingFragment StoreEntitySet="ContactPersonBroker">
+          <ScalarProperty Name="ContactPersonId" ColumnName="ContactPersonId" />
+          <ScalarProperty Name="BrokerPartyId" ColumnName="BrokerPartyId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="PartyFunction" ColumnName="PartyFunction" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Countries">
+      <EntityTypeMapping TypeName="MDMModel.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="CountryDescription" ColumnName="CountryDescription" />
+          <ScalarProperty Name="CountryNumericCode" ColumnName="CountryNumericCode" />
+          <ScalarProperty Name="ISOCountry3Code" ColumnName="ISOCountry3Code" />
+          <ScalarProperty Name="ISOCountry2Code" ColumnName="ISOCountry2Code" />
+          <ScalarProperty Name="LocalCurrencyCode" ColumnName="LocalCurrencyCode" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Currencies">
+      <EntityTypeMapping TypeName="MDMModel.Currency">
+        <MappingFragment StoreEntitySet="Currency">
+          <ScalarProperty Name="CurrencyId" ColumnName="CurrencyId" />
+          <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
+          <ScalarProperty Name="CurrencyName" ColumnName="CurrencyName" />
+          <ScalarProperty Name="CurrencyDescription" ColumnName="CurrencyDescription" />
+          <ScalarProperty Name="CurrencyNumericCode" ColumnName="CurrencyNumericCode" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InsuredAddresses">
+      <EntityTypeMapping TypeName="MDMModel.InsuredAddress">
+        <MappingFragment StoreEntitySet="InsuredAddress">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Partyid" ColumnName="Partyid" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="Addressline1" ColumnName="Addressline1" />
+          <ScalarProperty Name="Addressline2" ColumnName="Addressline2" />
+          <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="AddressTypeId" ColumnName="AddressTypeId" />
+          <ScalarProperty Name="IsPrimaryAddress" ColumnName="IsPrimaryAddress" />
+          <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+          <ScalarProperty Name="Addressline3" ColumnName="Addressline3" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="AdvisenID" ColumnName="AdvisenID" />
+          <ScalarProperty Name="DBNumber" ColumnName="DBNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InsuredParties">
+      <EntityTypeMapping TypeName="MDMModel.InsuredParty">
+        <MappingFragment StoreEntitySet="InsuredParty">
+          <ScalarProperty Name="PartyId" ColumnName="PartyId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="AdvisenId" ColumnName="AdvisenId" />
+          <ScalarProperty Name="DBNumber" ColumnName="DBNumber" />
+          <ScalarProperty Name="InActivationDate" ColumnName="InActivationDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ParentInsuredId" ColumnName="ParentInsuredId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="SourceSystemId" ColumnName="SourceSystemId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="NAICCode" ColumnName="NAICCode" />
+          <ScalarProperty Name="SICCode" ColumnName="SICCode" />
+          <ScalarProperty Name="GUPAdvisenID" ColumnName="GUPAdvisenID" />
+          <ScalarProperty Name="GUPId" ColumnName="GUPId" />
+          <ScalarProperty Name="IsGUP" ColumnName="IsGUP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MasterInsureds">
+      <EntityTypeMapping TypeName="MDMModel.MasterInsured">
+        <MappingFragment StoreEntitySet="MasterInsureds">
+          <ScalarProperty Name="MasterInsuredID" ColumnName="MasterInsuredID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Ticker" ColumnName="Ticker" />
+          <ScalarProperty Name="Revenue" ColumnName="Revenue" />
+          <ScalarProperty Name="AdvisenID" ColumnName="AdvisenID" />
+          <ScalarProperty Name="GUPAdvisenID" ColumnName="GUPAdvisenID" />
+          <ScalarProperty Name="IsGUP" ColumnName="IsGUP" />
+          <ScalarProperty Name="GUPInsuredID" ColumnName="GUPInsuredID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NAICs">
+      <EntityTypeMapping TypeName="MDMModel.NAIC">
+        <MappingFragment StoreEntitySet="NAIC">
+          <ScalarProperty Name="NaicId" ColumnName="NaicId" />
+          <ScalarProperty Name="NAICCode" ColumnName="NAICCode" />
+          <ScalarProperty Name="NAICTitle" ColumnName="NAICTitle" />
+          <ScalarProperty Name="NAICDescription" ColumnName="NAICDescription" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="SourceSystemNAICCode" ColumnName="SourceSystemNAICCode" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="EffectiveStartDate" ColumnName="EffectiveStartDate" />
+          <ScalarProperty Name="EffectiveEndDate" ColumnName="EffectiveEndDate" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PolicyTypes">
+      <EntityTypeMapping TypeName="MDMModel.PolicyType">
+        <MappingFragment StoreEntitySet="PolicyTypes">
+          <ScalarProperty Name="PolicyTypeId" ColumnName="PolicyTypeId" />
+          <ScalarProperty Name="AttachmentType" ColumnName="AttachmentType" />
+          <ScalarProperty Name="PolicyType1" ColumnName="PolicyType" />
+          <ScalarProperty Name="CoverageVersion" ColumnName="CoverageVersion" />
+          <ScalarProperty Name="PolicySymbol" ColumnName="PolicySymbol" />
+          <ScalarProperty Name="PolicySymbolDescription" ColumnName="PolicySymbolDescription" />
+          <ScalarProperty Name="PolicyCode" ColumnName="PolicyCode" />
+          <ScalarProperty Name="IsDirect" ColumnName="IsDirect" />
+          <ScalarProperty Name="ProductLineId" ColumnName="ProductLineId" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductLines">
+      <EntityTypeMapping TypeName="MDMModel.ProductLine">
+        <MappingFragment StoreEntitySet="ProductLine">
+          <ScalarProperty Name="ProductLineId" ColumnName="ProductLineId" />
+          <ScalarProperty Name="ProductLineName" ColumnName="ProductLineName" />
+          <ScalarProperty Name="ProductLineDescription" ColumnName="ProductLineDescription" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductLineSubTypes">
+      <EntityTypeMapping TypeName="MDMModel.ProductLineSubType">
+        <MappingFragment StoreEntitySet="ProductLineSubType">
+          <ScalarProperty Name="ProductLineSubTypeId" ColumnName="ProductLineSubTypeId" />
+          <ScalarProperty Name="ProductLineSubTypeName" ColumnName="ProductLineSubTypeName" />
+          <ScalarProperty Name="ProductLineSubTypeDescription" ColumnName="ProductLineSubTypeDescription" />
+          <ScalarProperty Name="ProductLineId" ColumnName="ProductLineId" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProfitCodes">
+      <EntityTypeMapping TypeName="MDMModel.ProfitCode">
+        <MappingFragment StoreEntitySet="ProfitCode">
+          <ScalarProperty Name="ProfitCodeId" ColumnName="ProfitCodeId" />
+          <ScalarProperty Name="ProfitCodeName" ColumnName="ProfitCodeName" />
+          <ScalarProperty Name="ProfitCodeDescription" ColumnName="ProfitCodeDescription" />
+          <ScalarProperty Name="SourceSystemId" ColumnName="SourceSystemId" />
+          <ScalarProperty Name="ISOCGName" ColumnName="ISOCGName" />
+          <ScalarProperty Name="SectionCodeId" ColumnName="SectionCodeId" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Regions">
+      <EntityTypeMapping TypeName="MDMModel.Region">
+        <MappingFragment StoreEntitySet="Region">
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+          <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+          <ScalarProperty Name="RegionDescription" ColumnName="RegionDescription" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="States">
+      <EntityTypeMapping TypeName="MDMModel.State">
+        <MappingFragment StoreEntitySet="State">
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="StateCode" ColumnName="StateCode" />
+          <ScalarProperty Name="StateDescription" ColumnName="StateDescription" />
+          <ScalarProperty Name="StateAbreviationCode" ColumnName="StateAbreviationCode" />
+          <ScalarProperty Name="ProjectStateCode" ColumnName="ProjectStateCode" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Status">
+      <EntityTypeMapping TypeName="MDMModel.Status">
+        <MappingFragment StoreEntitySet="Status">
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+          <ScalarProperty Name="StatusDescription" ColumnName="StatusDescription" />
+          <ScalarProperty Name="StatusCategory" ColumnName="StatusCategory" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Underwriters">
+      <EntityTypeMapping TypeName="MDMModel.Underwriter">
+        <MappingFragment StoreEntitySet="Underwriter">
+          <ScalarProperty Name="UnderwriterId" ColumnName="UnderwriterId" />
+          <ScalarProperty Name="UnderwriterName" ColumnName="UnderwriterName" />
+          <ScalarProperty Name="UnderwriterDescription" ColumnName="UnderwriterDescription" />
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="SourceSystemId" ColumnName="SourceSystemId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="WindowsLogin" ColumnName="WindowsLogin" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnderwriterProductLines">
+      <EntityTypeMapping TypeName="MDMModel.UnderwriterProductLine">
+        <MappingFragment StoreEntitySet="UnderwriterProductLine">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductLineId" ColumnName="ProductLineId" />
+          <ScalarProperty Name="UnderwriterId" ColumnName="UnderwriterId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnderwriterProductSubLines">
+      <EntityTypeMapping TypeName="MDMModel.UnderwriterProductSubLine">
+        <MappingFragment StoreEntitySet="UnderwriterProductSubLine">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductLineSubTypeId" ColumnName="ProductLineSubTypeId" />
+          <ScalarProperty Name="UnderwriterId" ColumnName="UnderwriterId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="MDMModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TypeMasters">
+      <EntityTypeMapping TypeName="MDMModel.TypeMaster">
+        <MappingFragment StoreEntitySet="TypeMaster">
+          <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="EffectiveEndDate" ColumnName="EffectiveEndDate" />
+          <ScalarProperty Name="EffectiveStartDate" ColumnName="EffectiveStartDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SourceSystemTypeId" ColumnName="SourceSystemTypeId" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="TypeCategory" ColumnName="TypeCategory" />
+          <ScalarProperty Name="TypeDescription" ColumnName="TypeDescription" />
+          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+          <ScalarProperty Name="TypeCode" ColumnName="TypeCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Coverages">
+      <EntityTypeMapping TypeName="MDMModel.Coverage">
+        <MappingFragment StoreEntitySet="Coverage">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="ProductLineId" ColumnName="ProductLineId" />
+          <ScalarProperty Name="CoverageDescription" ColumnName="CoverageDescription" />
+          <ScalarProperty Name="CoverageName" ColumnName="CoverageName" />
+          <ScalarProperty Name="CoverageCode" ColumnName="CoverageCode" />
+          <ScalarProperty Name="CoverageId" ColumnName="CoverageId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Branches">
+      <EntityTypeMapping TypeName="MDMModel.Branch">
+        <MappingFragment StoreEntitySet="Branch">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SourceSystemId" ColumnName="SourceSystemId" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+          <ScalarProperty Name="BranchDescription" ColumnName="BranchDescription" />
+          <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+          <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+          <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BrokerProductLines">
+      <EntityTypeMapping TypeName="MDMModel.BrokerProductLine">
+        <MappingFragment StoreEntitySet="BrokerProductLine">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="BrokerPartyId" ColumnName="BrokerPartyId" />
+          <ScalarProperty Name="ProductLineId" ColumnName="ProductLineId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BrokerProductLineSubTypes">
+      <EntityTypeMapping TypeName="MDMModel.BrokerProductLineSubType">
+        <MappingFragment StoreEntitySet="BrokerProductLineSubType">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="BrokerPartyID" ColumnName="BrokerPartyID" />
+          <ScalarProperty Name="ProductLineSubTypeId" ColumnName="ProductLineSubTypeId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContactPersonInsureds">
+      <EntityTypeMapping TypeName="MDMModel.ContactPersonInsured">
+        <MappingFragment StoreEntitySet="ContactPersonInsured">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PartyFunction" ColumnName="PartyFunction" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="InsuredPartyId" ColumnName="InsuredPartyId" />
+          <ScalarProperty Name="ContactPersonId" ColumnName="ContactPersonId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IndustryCodes">
+      <EntityTypeMapping TypeName="MDMModel.IndustryCode">
+        <MappingFragment StoreEntitySet="IndustryCode">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="EffectiveEndDate" ColumnName="EffectiveEndDate" />
+          <ScalarProperty Name="EffectiveStartDate" ColumnName="EffectiveStartDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SourceSystemSICCode" ColumnName="SourceSystemSICCode" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="SICDescription" ColumnName="SICDescription" />
+          <ScalarProperty Name="SICTitle" ColumnName="SICTitle" />
+          <ScalarProperty Name="SICCode" ColumnName="SICCode" />
+          <ScalarProperty Name="SICId" ColumnName="SICId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InsuredAlias">
+      <EntityTypeMapping TypeName="MDMModel.InsuredAlia">
+        <MappingFragment StoreEntitySet="InsuredAlias">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+          <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="InsuredId" ColumnName="InsuredId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Projects">
+      <EntityTypeMapping TypeName="MDMModel.Project">
+        <MappingFragment StoreEntitySet="Project">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ProjectAddressLine2" ColumnName="ProjectAddressLine2" />
+          <ScalarProperty Name="ProjectAddressLine1" ColumnName="ProjectAddressLine1" />
+          <ScalarProperty Name="BidSituationStatusCode" ColumnName="BidSituationStatusCode" />
+          <ScalarProperty Name="ProjectCityId" ColumnName="ProjectCityId" />
+          <ScalarProperty Name="ProjectOwnerName" ColumnName="ProjectOwnerName" />
+          <ScalarProperty Name="ProjectContractorName" ColumnName="ProjectContractorName" />
+          <ScalarProperty Name="ProjectDescription" ColumnName="ProjectDescription" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reasoncodes">
+      <EntityTypeMapping TypeName="MDMModel.Reasoncode">
+        <MappingFragment StoreEntitySet="Reasoncode">
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="Renewal" ColumnName="Renewal" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SourceSystemId" ColumnName="SourceSystemId" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="ReasonDescription" ColumnName="ReasonDescription" />
+          <ScalarProperty Name="ReasonCode1" ColumnName="ReasonCode" />
+          <ScalarProperty Name="ReasonID" ColumnName="ReasonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SectionCodes">
+      <EntityTypeMapping TypeName="MDMModel.SectionCode">
+        <MappingFragment StoreEntitySet="SectionCode">
+          <ScalarProperty Name="SourceSystemId" ColumnName="SourceSystemId" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="SectionCodeLookupId" ColumnName="SectionCodeLookupId" />
+          <ScalarProperty Name="ProductLineSubTypeId" ColumnName="ProductLineSubTypeId" />
+          <ScalarProperty Name="SectionCodeDescription" ColumnName="SectionCodeDescription" />
+          <ScalarProperty Name="SectionCodeName" ColumnName="SectionCodeName" />
+          <ScalarProperty Name="SectionCodeId" ColumnName="SectionCodeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="BrokerGetList" FunctionName="MDMModel.Store.BrokerGetList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MDMModel.BrokerGetList_Result">
+          <ScalarProperty Name="BrokerName" ColumnName="BrokerName" />
+          <ScalarProperty Name="BrokerId" ColumnName="BrokerId" />
+          <ScalarProperty Name="BrokerCode" ColumnName="BrokerCode" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="BrokerFullCode" ColumnName="BrokerFullCode" />
+          <ScalarProperty Name="BrokerPartyId" ColumnName="BrokerPartyId" />
+          <ScalarProperty Name="BrokerEntityName" ColumnName="BrokerEntityName" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="BrokerType" ColumnName="BrokerType" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetBrokerContactFilters" FunctionName="MDMModel.Store.GetBrokerContactFilters">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MDMModel.GetBrokerContactFilters_Result">
+          <ScalarProperty Name="FilterValue" ColumnName="FilterValue" />
+          <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetBrokerContacts" FunctionName="MDMModel.Store.GetBrokerContacts">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MDMModel.GetBrokerContacts_Result">
+          <ScalarProperty Name="RecordCount" ColumnName="RecordCount" />
+          <ScalarProperty Name="ContactPersonId" ColumnName="ContactPersonId" />
+          <ScalarProperty Name="Broker" ColumnName="Broker" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetBrokerFilters" FunctionName="MDMModel.Store.GetBrokerFilters">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MDMModel.GetBrokerFilters_Result">
+          <ScalarProperty Name="FilterValue" ColumnName="FilterValue" />
+          <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetBrokers" FunctionName="MDMModel.Store.GetBrokers">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MDMModel.GetBrokers_Result">
+          <ScalarProperty Name="RecordCount" ColumnName="RecordCount" />
+          <ScalarProperty Name="BrokerId" ColumnName="BrokerId" />
+          <ScalarProperty Name="BrokerName" ColumnName="BrokerName" />
+          <ScalarProperty Name="BrokerType" ColumnName="BrokerType" />
+          <ScalarProperty Name="BrokerPartyId" ColumnName="BrokerPartyId" />
+          <ScalarProperty Name="BrokerEntityName" ColumnName="BrokerEntityName" />
+          <ScalarProperty Name="BrokerCode" ColumnName="BrokerCode" />
+          <ScalarProperty Name="ProductLineName" ColumnName="ProductLineName" />
+          <ScalarProperty Name="ProductLineSubTypeName" ColumnName="ProductLineSubTypeName" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Addressline1" ColumnName="Addressline1" />
+          <ScalarProperty Name="Addressline2" ColumnName="Addressline2" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetInsuredContactFilters" FunctionName="MDMModel.Store.GetInsuredContactFilters">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MDMModel.GetInsuredContactFilters_Result">
+          <ScalarProperty Name="FilterValue" ColumnName="FilterValue" />
+          <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetInsuredContacts" FunctionName="MDMModel.Store.GetInsuredContacts">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MDMModel.GetInsuredContacts_Result">
+          <ScalarProperty Name="RecordCount" ColumnName="RecordCount" />
+          <ScalarProperty Name="ContactPersonId" ColumnName="ContactPersonId" />
+          <ScalarProperty Name="Insured" ColumnName="Insured" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetPolicyTypeList" FunctionName="MDMModel.Store.GetPolicyTypeList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MDMModel.GetPolicyTypeList_Result">
+          <ScalarProperty Name="PolicyTypeId" ColumnName="PolicyTypeId" />
+          <ScalarProperty Name="AttachmentType" ColumnName="AttachmentType" />
+          <ScalarProperty Name="PolicyType" ColumnName="PolicyType" />
+          <ScalarProperty Name="CoverageVersion" ColumnName="CoverageVersion" />
+          <ScalarProperty Name="PolicySymbol" ColumnName="PolicySymbol" />
+          <ScalarProperty Name="PolicyCode" ColumnName="PolicyCode" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetUnderwriterFilters" FunctionName="MDMModel.Store.GetUnderwriterFilters">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MDMModel.GetUnderwriterFilters_Result">
+          <ScalarProperty Name="FilterValue" ColumnName="FilterValue" />
+          <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetUnderwriterList" FunctionName="MDMModel.Store.GetUnderwriterList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MDMModel.GetUnderwriterList_Result">
+          <ScalarProperty Name="UnderwriterName" ColumnName="UnderwriterName" />
+          <ScalarProperty Name="UnderwriterId" ColumnName="UnderwriterId" />
+          <ScalarProperty Name="ProductLineId" ColumnName="ProductLineId" />
+          <ScalarProperty Name="ProductLineName" ColumnName="ProductLineName" />
+          <ScalarProperty Name="ProductLineSubTypeId" ColumnName="ProductLineSubTypeId" />
+          <ScalarProperty Name="ProductLineSubTypeName" ColumnName="ProductLineSubTypeName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetUnderwriters" FunctionName="MDMModel.Store.GetUnderwriters">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MDMModel.GetUnderwriters_Result">
+          <ScalarProperty Name="RecordCount" ColumnName="RecordCount" />
+          <ScalarProperty Name="UnderwriterName" ColumnName="UnderwriterName" />
+          <ScalarProperty Name="UnderwriterId" ColumnName="UnderwriterId" />
+          <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+          <ScalarProperty Name="ProductLineName" ColumnName="ProductLineName" />
+          <ScalarProperty Name="ProductLineSubTypeName" ColumnName="ProductLineSubTypeName" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsuredGetList" FunctionName="MDMModel.Store.InsuredGetList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MDMModel.InsuredGetList_Result">
+          <ScalarProperty Name="Partyid" ColumnName="Partyid" />
+          <ScalarProperty Name="AdvisenId" ColumnName="AdvisenId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ParentInsuredId" ColumnName="ParentInsuredId" />
+          <ScalarProperty Name="Addressline1" ColumnName="Addressline1" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Split" FunctionName="MDMModel.Store.Split" />
+    <FunctionImportMapping FunctionImportName="SearchBrokerByProductLine" FunctionName="MDMModel.Store.SearchBrokerByProductLine">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MDMModel.SearchBrokerByProductLine_Result">
+          <ScalarProperty Name="BrokerName" ColumnName="BrokerName" />
+          <ScalarProperty Name="BrokerId" ColumnName="BrokerId" />
+          <ScalarProperty Name="BrokerCode" ColumnName="BrokerCode" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SearchBrokerContact" FunctionName="MDMModel.Store.SearchBrokerContact">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MDMModel.SearchBrokerContact_Result">
+          <ScalarProperty Name="ContactPersonId" ColumnName="ContactPersonId" />
+          <ScalarProperty Name="BrokerPartyId" ColumnName="BrokerPartyId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="PartyFunction" ColumnName="PartyFunction" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SearchBrokerEntityByProductLine" FunctionName="MDMModel.Store.SearchBrokerEntityByProductLine">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MDMModel.SearchBrokerEntityByProductLine_Result">
+          <ScalarProperty Name="BrokerName" ColumnName="BrokerName" />
+          <ScalarProperty Name="BrokerId" ColumnName="BrokerId" />
+          <ScalarProperty Name="BrokerCode" ColumnName="BrokerCode" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="BrokerFullCode" ColumnName="BrokerFullCode" />
+          <ScalarProperty Name="BrokerPartyId" ColumnName="BrokerPartyId" />
+          <ScalarProperty Name="BrokerEntityName" ColumnName="BrokerEntityName" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="BrokerType" ColumnName="BrokerType" />
+          <ScalarProperty Name="BrokerSubType" ColumnName="BrokerSubType" />
+          <ScalarProperty Name="ProductLineId" ColumnName="ProductLineId" />
+          <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SearchInsuredList" FunctionName="MDMModel.Store.SearchInsuredList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MDMModel.SearchInsuredList_Result">
+          <ScalarProperty Name="PartyId" ColumnName="PartyId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="AdvisenId" ColumnName="AdvisenId" />
+          <ScalarProperty Name="DBNumber" ColumnName="DBNumber" />
+          <ScalarProperty Name="NAICCode" ColumnName="NAICCode" />
+          <ScalarProperty Name="SICCode" ColumnName="SICCode" />
+          <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+          <ScalarProperty Name="Addressline1" ColumnName="Addressline1" />
+          <ScalarProperty Name="Addressline2" ColumnName="Addressline2" />
+          <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+          <ScalarProperty Name="IsPrimaryAddress" ColumnName="IsPrimaryAddress" />
+          <ScalarProperty Name="AddressType" ColumnName="AddressType" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

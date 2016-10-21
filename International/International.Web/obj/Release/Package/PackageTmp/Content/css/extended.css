@@ -1,0 +1,98 @@
+﻿#throbber-image-1 {
+    position: absolute;
+    z-index: 100;
+    display: none;
+}
+
+#throbber-curtain {
+    opacity: 0.3;
+    background-color: #fff;
+    position: fixed;
+    z-index: 101;
+}
+a:focus, a:hover{
+    text-decoration:none;
+}
+
+.field-validation-error{color:red;  font-size: 12px;}
+.ui-autocomplete{z-index:99!important;overflow:auto;max-height:300px;font-size:12px;}
+
+.dropdown-toggle, .dropdown-multiselect{
+    width:100%;
+}
+.dropdown-toggle{
+    text-align:left;
+}
+.caret{
+    float: right;
+    margin-top: 9px;
+}
+.dropdown-multiselect .dropdown-menu{
+    min-width:266px;
+    overflow:auto!important;
+    height:150px !important;
+}
+.dropdown-multiselect .btn{
+        background: #fff;
+    border: 1px solid #CCC;
+}
+.dropdown-multiselect .dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover{
+    background-color: #05a09a;
+    background-image:none;
+    color:#fff;
+}
+.dt-overflow .dt-wrapper{
+    overflow:auto;
+}
+.ui-widget-header{
+    color:#666;
+    font-weight:normal;
+}
+.td-space{
+    background-color:#fff;
+}
+.form-control[readonly]{
+    background-color:#f9f9f9;
+}
+.ui-dialog-title{
+    color:#fff;
+}
+
+.vis-hidden{
+     visibility: hidden;
+  }
+.premimum span input{
+   margin-right: 5px;
+}
+a, .fa{
+    cursor: pointer;
+}
+.btn-info{
+    margin-top:3px;
+    background-color:#fff;
+    color: rgb(5, 160, 154);
+    text-shadow:none;
+    background-image:none;
+}
+.btn-info:hover {
+    border:1px solid #fff;
+    background-color: #fff;
+     color: rgb(5, 160, 154);   
+}
+@media (min-width: 768px) {
+    .grp-body {
+        background-color: rgba(5,160,154,.1) !important;
+    }
+}
+
+
+div.tooltip-inner {
+    max-width: 300px;
+    word-break: break-all;
+}
+.wrapper-inside{
+    margin-bottom:20px;
+}
+.mart05{
+    margin-top:5px;
+}

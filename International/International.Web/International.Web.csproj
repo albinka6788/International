@@ -1,0 +1,455 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AA90DC16-3896-48CA-B626-2E5ED8B7BE02}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>International.Web</RootNamespace>
+    <AssemblyName>International.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.0\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.30506.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.30506.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.30506.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Providers">
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.1.2\lib\net40\System.Web.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Tracing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Tracing.4.0.30506\lib\net40\System.Web.Http.Tracing.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.OData, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.4.0.30506\lib\net40\System.Web.Http.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Edm, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.2.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Data.OData.5.2.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Spatial, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\System.Spatial.5.2.0\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.3.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.3.0\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Classes\Attributes.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MasterController.cs" />
+    <Compile Include="Controllers\SubmissionController.cs" />
+    <Compile Include="Controllers\UserManagementController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\NotificationResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotificationResource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\css\bootstrap-theme.min.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\datepicker.css" />
+    <Content Include="Content\css\extended.css" />
+    <Content Include="Content\css\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Content\css\images\ui-bg_glass_85_ffffff_1x400.png" />
+    <Content Include="Content\css\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\css\images\ui-bg_gloss-wave_55_05a09a_500x100.png" />
+    <Content Include="Content\css\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Content\css\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Content\css\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Content\css\jquery-ui-1.10.4.custom.min.css" />
+    <Content Include="Content\css\jquery-ui-1.9.2.custom.min.css" />
+    <Content Include="Content\css\jquery.datatable.min.css" />
+    <Content Include="Content\css\style - Copy.css" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\font-awesome-4.5.0\css\font-awesome.css" />
+    <Content Include="Content\font-awesome-4.5.0\css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome-4.5.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\font-awesome-4.5.0\HELP-US-OUT.txt" />
+    <Content Include="Content\images\ajax-loader-1.gif" />
+    <Content Include="Content\img\logo.png" />
+    <Content Include="Content\plugin\datetimepicker-master\build\jquery.datetimepicker.full.js" />
+    <Content Include="Content\plugin\datetimepicker-master\build\jquery.datetimepicker.full.min.js" />
+    <Content Include="Content\plugin\datetimepicker-master\build\jquery.datetimepicker.min.css" />
+    <Content Include="Content\plugin\datetimepicker-master\build\jquery.datetimepicker.min.js" />
+    <Content Include="Content\plugin\datetimepicker-master\index.html" />
+    <Content Include="Content\plugin\datetimepicker-master\jquery.datetimepicker.css" />
+    <Content Include="Content\plugin\datetimepicker-master\jquery.datetimepicker.js" />
+    <Content Include="Content\plugin\datetimepicker-master\jquery.datetimepicker.min.js" />
+    <Content Include="Content\plugin\datetimepicker-master\jquery.js" />
+    <Content Include="Content\plugin\datetimepicker-master\MIT-LICENSE.txt" />
+    <Content Include="Content\plugin\datetimepicker-master\screen\1.png" />
+    <Content Include="Content\plugin\datetimepicker-master\screen\2.png" />
+    <Content Include="Content\plugin\datetimepicker-master\screen\3.1.png" />
+    <Content Include="Content\plugin\datetimepicker-master\screen\3.png" />
+    <Content Include="Content\plugin\datetimepicker-master\screen\4.png" />
+    <Content Include="Content\plugin\datetimepicker-master\screen\5.png" />
+    <Content Include="Content\plugin\datetimepicker-master\screen\6.png" />
+    <Content Include="Content\plugin\datetimepicker-master\tests\input_in_container_fixed_to_bottom_of_viewport.html" />
+    <Content Include="Content\plugin\datetimepicker-master\tests\input_in_container_fixed_to_top_of_viewport.html" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\css\font-awesome.css" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\css\font-awesome.min.css" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\HELP-US-OUT.txt" />
+    <Content Include="Content\plugin\jquery-ui-datetimepicker\jquery-ui-timepicker-addon.css" />
+    <Content Include="Content\plugin\jquery-ui-datetimepicker\jquery-ui-timepicker-addon.js" />
+    <Content Include="Content\plugin\toastr-2.1.2\toastr.css" />
+    <Content Include="Content\plugin\toastr-2.1.2\toastr.min.css" />
+    <Content Include="Content\plugin\toastr-2.1.2\toastr.min.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\plugin\toastr-2.1.2\toastr.js.map" />
+    <Content Include="Content\font-awesome-4.5.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\font-awesome-4.5.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\font-awesome-4.5.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font-awesome-4.5.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\font-awesome-4.5.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\font-awesome-4.5.0\less\animated.less" />
+    <Content Include="Content\font-awesome-4.5.0\less\bordered-pulled.less" />
+    <Content Include="Content\font-awesome-4.5.0\less\core.less" />
+    <Content Include="Content\font-awesome-4.5.0\less\fixed-width.less" />
+    <Content Include="Content\font-awesome-4.5.0\less\font-awesome.less" />
+    <Content Include="Content\font-awesome-4.5.0\less\icons.less" />
+    <Content Include="Content\font-awesome-4.5.0\less\larger.less" />
+    <Content Include="Content\font-awesome-4.5.0\less\list.less" />
+    <Content Include="Content\font-awesome-4.5.0\less\mixins.less" />
+    <Content Include="Content\font-awesome-4.5.0\less\path.less" />
+    <Content Include="Content\font-awesome-4.5.0\less\rotated-flipped.less" />
+    <Content Include="Content\font-awesome-4.5.0\less\stacked.less" />
+    <Content Include="Content\font-awesome-4.5.0\less\variables.less" />
+    <Content Include="Content\font-awesome-4.5.0\scss\font-awesome.scss" />
+    <Content Include="Content\font-awesome-4.5.0\scss\_animated.scss" />
+    <Content Include="Content\font-awesome-4.5.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\font-awesome-4.5.0\scss\_core.scss" />
+    <Content Include="Content\font-awesome-4.5.0\scss\_fixed-width.scss" />
+    <Content Include="Content\font-awesome-4.5.0\scss\_icons.scss" />
+    <Content Include="Content\font-awesome-4.5.0\scss\_larger.scss" />
+    <Content Include="Content\font-awesome-4.5.0\scss\_list.scss" />
+    <Content Include="Content\font-awesome-4.5.0\scss\_mixins.scss" />
+    <Content Include="Content\font-awesome-4.5.0\scss\_path.scss" />
+    <Content Include="Content\font-awesome-4.5.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\font-awesome-4.5.0\scss\_stacked.scss" />
+    <Content Include="Content\font-awesome-4.5.0\scss\_variables.scss" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\less\animated.less" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\less\bordered-pulled.less" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\less\core.less" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\less\fixed-width.less" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\less\font-awesome.less" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\less\icons.less" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\less\larger.less" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\less\list.less" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\less\mixins.less" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\less\path.less" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\less\rotated-flipped.less" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\less\stacked.less" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\less\variables.less" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\scss\font-awesome.scss" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\scss\_animated.scss" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\scss\_core.scss" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\scss\_fixed-width.scss" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\scss\_icons.scss" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\scss\_larger.scss" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\scss\_list.scss" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\scss\_mixins.scss" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\scss\_path.scss" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\scss\_stacked.scss" />
+    <Content Include="Content\plugin\font-awesome-4.5.0\scss\_variables.scss" />
+    <Content Include="Content\plugin\datetimepicker-master\.gitignore" />
+    <Content Include="Content\plugin\datetimepicker-master\bower.json" />
+    <Content Include="Content\plugin\datetimepicker-master\datetimepicker.jquery.json" />
+    <Content Include="Content\plugin\datetimepicker-master\doc.tpl" />
+    <Content Include="Content\plugin\datetimepicker-master\package.json" />
+    <Content Include="Content\plugin\datetimepicker-master\README.md" />
+    <None Include="Properties\PublishProfiles\International.pubxml" />
+    <None Include="Properties\PublishProfiles\InternationalUAT.pubxml" />
+    <None Include="Scripts\js-system\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\controllers\basicDetailController.js" />
+    <Content Include="Scripts\controllers\brokerController.js" />
+    <Content Include="Scripts\controllers\CoverageLevelPremiumController.js" />
+    <Content Include="Scripts\controllers\insuredController.js" />
+    <Content Include="Scripts\controllers\otherDetailController.js" />
+    <Content Include="Scripts\controllers\policyDetailController.js" />
+    <Content Include="Scripts\controllers\premiumController.js" />
+    <Content Include="Scripts\controllers\projectDetailController.js" />
+    <Content Include="Scripts\controllers\QCController.js" />
+    <Content Include="Scripts\controllers\submissionController.js" />
+    <Content Include="Scripts\controllers\submissionListingController.js" />
+    <Content Include="Scripts\controllers\UserManagementController.js" />
+    <Content Include="Scripts\directives\commonDirective.js" />
+    <Content Include="Scripts\filters\commonFilter.js" />
+    <Content Include="Scripts\js-application\common.js" />
+    <Content Include="Scripts\js-application\extensions.js" />
+    <Content Include="Scripts\js-application\jquery.datatables.ext.js" />
+    <Content Include="Scripts\js-application\jquery.dataTables.min.js" />
+    <Content Include="Scripts\js-application\multi-select-ddl.js" />
+    <Content Include="Scripts\js-application\validation.js" />
+    <Content Include="Scripts\js-system\bootbox.min.js" />
+    <Content Include="Scripts\js-system\bootstrap.min.js" />
+    <Content Include="Scripts\js-system\bootstrap\bootstrap-datepicker.js" />
+    <Content Include="Scripts\js-system\bootstrap\bootstrap.js" />
+    <Content Include="Scripts\js-system\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\js-system\bootstrap\ui-bootstrap-0.12.0.js" />
+    <Content Include="Scripts\js-system\datables.js" />
+    <Content Include="Scripts\js-system\jquery-1.10.2.js" />
+    <Content Include="Scripts\js-system\jquery-1.12.0.min.js" />
+    <Content Include="Scripts\js-system\jquery-1.4.4.min.js" />
+    <Content Include="Scripts\js-system\jquery-2.2.0.min.js" />
+    <Content Include="Scripts\js-system\jquery-datatable-1.10.10.min.js" />
+    <Content Include="Scripts\js-system\jquery-ui-1.10.4.custom.min.js" />
+    <Content Include="Scripts\js-system\jquery.dataTables.min.js" />
+    <Content Include="Scripts\js-system\jquery.ui.datepicker.validation.min.js" />
+    <Content Include="Scripts\js-system\moment-2.11.2.js" />
+    <Content Include="Scripts\js-system\ui-bootstrap-tpls-1.3.2.min.js" />
+    <Content Include="Scripts\rootApplication.js" />
+    <Content Include="Scripts\controllers\indexController.js" />
+    <Content Include="Scripts\js-system\angular-1.4.8.js" />
+    <Content Include="Scripts\js-system\jquery-1.8.2.js" />
+    <Content Include="Scripts\js-system\jquery-1.8.2.min.js" />
+    <None Include="Scripts\js-system\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\js-system\jquery-ui-1.8.24.js" />
+    <Content Include="Scripts\js-system\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\js-system\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\js-system\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\js-system\jquery.validate.js" />
+    <Content Include="Scripts\js-system\jquery.validate.min.js" />
+    <Content Include="Scripts\js-system\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\js-system\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js-system\knockout-2.2.0.debug.js" />
+    <Content Include="Scripts\js-system\knockout-2.2.0.js" />
+    <Content Include="Scripts\js-system\modernizr-2.6.2.js" />
+    <Content Include="Scripts\services\utilities.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\js-system\_references.js" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\Login.cshtml" />
+    <Content Include="Views\UserManagement\User.cshtml" />
+    <Content Include="Views\Submission\CreateSubmission.cshtml" />
+    <Content Include="Views\UserManagement\Group.cshtml" />
+    <Content Include="Views\UserManagement\Groups.cshtml" />
+    <Content Include="Views\Home\ForgotPassword.cshtml" />
+    <Content Include="Views\Home\Welcome.cshtml" />
+    <Content Include="Views\Dashboard\Welcome.cshtml" />
+    <Content Include="Views\UserManagement\Users.cshtml" />
+    <Content Include="Views\Submission\_projectDetail.cshtml" />
+    <Content Include="Views\Submission\_premiumDetails.cshtml" />
+    <Content Include="Views\Submission\_insuredDetail.cshtml" />
+    <Content Include="Views\Submission\_basicDetail.cshtml" />
+    <Content Include="Views\Submission\_AddAdditionalInsured.cshtml" />
+    <Content Include="Views\Submission\_AddAdditionalCedent.cshtml" />
+    <Content Include="Views\Submission\_brokerDetails.cshtml" />
+    <Content Include="Views\Submission\_statusDependentDetail.cshtml" />
+    <Content Include="Views\Submission\_policyDetail.cshtml" />
+    <Content Include="Views\Submission\_otherDetail.cshtml" />
+    <Content Include="Views\Submission\Submissions.cshtml" />
+    <Content Include="Views\Submission\ChooseRegion.cshtml" />
+    <Content Include="Views\Submission\QCSubmission.cshtml" />
+    <Content Include="Views\Submission\QCAmendment.cshtml" />
+    <Content Include="Views\Submission\_QCApproval.cshtml" />
+    <Content Include="Views\Submission\_premiumDetailsCoverageLevel.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\International.BusinessEntities\International.BusinessEntities.csproj">
+      <Project>{e0e878c0-2deb-4daf-ba55-8bbab66738b3}</Project>
+      <Name>International.BusinessEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\International.BusinessLogic\International.BusinessLogic.csproj">
+      <Project>{ad8c9ee7-4119-4a5a-8da1-219284d3b3f3}</Project>
+      <Name>International.BusinessLogic</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\NotificationResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>NotificationResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>59269</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:59268/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

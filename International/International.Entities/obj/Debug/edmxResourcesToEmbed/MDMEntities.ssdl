@@ -1,0 +1,1175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MDMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="RightsToRole">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="ModuleId" Type="int" Nullable="false" />
+    <Property Name="Rights" Type="smallint" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="150" />
+    <Property Name="LastName" Type="varchar" MaxLength="150" />
+    <Property Name="Email" Type="varchar" MaxLength="255" />
+    <Property Name="Password" Type="nvarchar" MaxLength="100" />
+    <Property Name="GroupId" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="Branch">
+    <Key>
+      <PropertyRef Name="BranchId" />
+    </Key>
+    <Property Name="BranchId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BranchName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="BranchCode" Type="char" MaxLength="3" />
+    <Property Name="BranchDescription" Type="varchar" MaxLength="256" />
+    <Property Name="RegionId" Type="smallint" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="SourceSystemId" Type="varchar" MaxLength="32" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="Broker">
+    <Key>
+      <PropertyRef Name="BrokerId" />
+    </Key>
+    <Property Name="BrokerName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="BrokerDescription" Type="varchar" MaxLength="256" />
+    <Property Name="BrokerCode" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="ParentBrokerId" Type="int" />
+    <Property Name="AdvisenId" Type="int" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" />
+    <Property Name="SourceSystemId" Type="varchar" MaxLength="32" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+    <Property Name="BrokerId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BrokerAddress">
+    <Key>
+      <PropertyRef Name="Partyid" />
+      <PropertyRef Name="IsPrimaryAddress" />
+    </Key>
+    <Property Name="Partyid" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Addressline1" Type="nvarchar" MaxLength="150" />
+    <Property Name="Addressline2" Type="nvarchar" MaxLength="150" />
+    <Property Name="Zipcode" Type="varchar" MaxLength="15" />
+    <Property Name="Email" Type="nvarchar" MaxLength="63" />
+    <Property Name="Phone" Type="varchar" MaxLength="15" />
+    <Property Name="Mobile" Type="varchar" MaxLength="15" />
+    <Property Name="Fax" Type="varchar" MaxLength="15" />
+    <Property Name="AddressType" Type="varchar" MaxLength="15" />
+    <Property Name="IsPrimaryAddress" Type="bit" Nullable="false" />
+    <Property Name="HomePhone" Type="varchar" MaxLength="15" />
+    <Property Name="Addressline3" Type="nvarchar" MaxLength="127" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" />
+    <Property Name="SourceSystemId" Type="varchar" MaxLength="20" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+    <Property Name="brokeraddressid" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="BrokerParty">
+    <Key>
+      <PropertyRef Name="BrokerPartyId" />
+    </Key>
+    <Property Name="BrokerPartyId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Cityid" Type="int" Nullable="false" />
+    <Property Name="BrokerEntityName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="BrokerEntityDescription" Type="varchar" MaxLength="256" />
+    <Property Name="BrokerFullCode" Type="varchar" MaxLength="18" />
+    <Property Name="BrokerStreetAddressLine1" Type="varchar" MaxLength="256" />
+    <Property Name="BrokerStreetAddressLine2" Type="varchar" MaxLength="256" />
+    <Property Name="BrokerZipCode" Type="varchar" MaxLength="50" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" />
+    <Property Name="SourceSystemId" Type="varchar" MaxLength="32" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+    <Property Name="brokerid" Type="uniqueidentifier" />
+    <Property Name="BrokerType" Type="uniqueidentifier" />
+    <Property Name="Wholesaler" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="BrokerProductLine">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductLineId" Type="smallint" Nullable="false" />
+    <Property Name="BrokerPartyId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="TypeId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="StartDate" Type="smalldatetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="EndDate" Type="smalldatetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="BrokerProductLineSubType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductLineSubTypeId" Type="smallint" Nullable="false" />
+    <Property Name="BrokerPartyID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CityName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="CityCode" Type="char" MaxLength="4" Nullable="false" />
+    <Property Name="StateId" Type="smallint" Nullable="false" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+    <Property Name="RegionId" Type="int" />
+  </EntityType>
+  <EntityType Name="ContactPersonBroker">
+    <Key>
+      <PropertyRef Name="ContactPersonId" />
+    </Key>
+    <Property Name="ContactPersonId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="BrokerPartyId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="250" />
+    <Property Name="FirstName" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="PartyFunction" Type="varchar" MaxLength="250" />
+    <Property Name="Email" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="MobileNumber" Type="varchar" MaxLength="250" />
+    <Property Name="Fax" Type="varchar" MaxLength="250" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="ContactPersonInsured">
+    <Key>
+      <PropertyRef Name="ContactPersonId" />
+    </Key>
+    <Property Name="ContactPersonId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="InsuredPartyId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="250" />
+    <Property Name="FirstName" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="PartyFunction" Type="varchar" MaxLength="250" />
+    <Property Name="Email" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="MobileNumber" Type="varchar" MaxLength="250" />
+    <Property Name="Fax" Type="varchar" MaxLength="250" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryId" />
+    </Key>
+    <Property Name="CountryId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="CountryDescription" Type="varchar" MaxLength="256" />
+    <Property Name="CountryNumericCode" Type="char" MaxLength="3" Nullable="false" />
+    <Property Name="ISOCountry3Code" Type="char" MaxLength="3" />
+    <Property Name="ISOCountry2Code" Type="char" MaxLength="2" />
+    <Property Name="LocalCurrencyCode" Type="char" MaxLength="3" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="Coverage">
+    <Key>
+      <PropertyRef Name="CoverageId" />
+    </Key>
+    <Property Name="CoverageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CoverageCode" Type="char" MaxLength="6" Nullable="false" />
+    <Property Name="CoverageName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CoverageDescription" Type="varchar" MaxLength="256" />
+    <Property Name="ProductLineId" Type="smallint" Nullable="false" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="Currency">
+    <Key>
+      <PropertyRef Name="CurrencyId" />
+    </Key>
+    <Property Name="CurrencyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CurrencyCode" Type="char" MaxLength="3" Nullable="false" />
+    <Property Name="CurrencyName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CurrencyDescription" Type="varchar" MaxLength="256" />
+    <Property Name="CurrencyNumericCode" Type="char" MaxLength="3" Nullable="false" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="varchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="IndustryCode">
+    <Key>
+      <PropertyRef Name="SICId" />
+    </Key>
+    <Property Name="SICId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SICCode" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="SICTitle" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="SICDescription" Type="varchar" MaxLength="256" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="SourceSystemSICCode" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="EffectiveStartDate" Type="smalldatetime" />
+    <Property Name="EffectiveEndDate" Type="smalldatetime" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="InsuredAddress">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Partyid" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CityId" Type="int" Nullable="false" />
+    <Property Name="Addressline1" Type="nvarchar" MaxLength="150" />
+    <Property Name="Addressline2" Type="nvarchar" MaxLength="150" />
+    <Property Name="Zipcode" Type="varchar" MaxLength="15" />
+    <Property Name="Email" Type="nvarchar" MaxLength="63" />
+    <Property Name="Phone" Type="varchar" MaxLength="15" />
+    <Property Name="Mobile" Type="varchar" MaxLength="15" />
+    <Property Name="Fax" Type="varchar" MaxLength="15" />
+    <Property Name="AddressTypeId" Type="varchar" MaxLength="50" />
+    <Property Name="IsPrimaryAddress" Type="bit" />
+    <Property Name="HomePhone" Type="varchar" MaxLength="15" />
+    <Property Name="Addressline3" Type="nvarchar" MaxLength="150" />
+    <Property Name="LastUpdatedDate" Type="datetime" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+    <Property Name="AdvisenID" Type="int" />
+    <Property Name="DBNumber" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="InsuredAlias">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InsuredId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="300" />
+    <Property Name="DateFrom" Type="datetime" Nullable="false" />
+    <Property Name="DateTo" Type="datetime" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="InsuredParty">
+    <Key>
+      <PropertyRef Name="PartyId" />
+    </Key>
+    <Property Name="PartyId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="AdvisenId" Type="int" />
+    <Property Name="DBNumber" Type="varchar" MaxLength="50" />
+    <Property Name="InActivationDate" Type="datetime" />
+    <Property Name="Status" Type="char" MaxLength="10" />
+    <Property Name="ParentInsuredId" Type="bigint" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" />
+    <Property Name="SourceSystemId" Type="varchar" MaxLength="32" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+    <Property Name="NAICCode" Type="varchar" MaxLength="20" />
+    <Property Name="SICCode" Type="varchar" MaxLength="20" />
+    <Property Name="GUPAdvisenID" Type="int" />
+    <Property Name="GUPId" Type="uniqueidentifier" />
+    <Property Name="IsGUP" Type="bit" />
+  </EntityType>
+  <EntityType Name="MasterInsureds">
+    <Key>
+      <PropertyRef Name="MasterInsuredID" />
+    </Key>
+    <Property Name="MasterInsuredID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Ticker" Type="varchar" MaxLength="4" />
+    <Property Name="Revenue" Type="bigint" />
+    <Property Name="AdvisenID" Type="bigint" />
+    <Property Name="GUPAdvisenID" Type="bigint" />
+    <Property Name="IsGUP" Type="bit" Nullable="false" />
+    <Property Name="GUPInsuredID" Type="uniqueidentifier" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="NAIC">
+    <Key>
+      <PropertyRef Name="NaicId" />
+    </Key>
+    <Property Name="NaicId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAICCode" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="NAICTitle" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="NAICDescription" Type="varchar" MaxLength="256" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="SourceSystemNAICCode" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="EffectiveStartDate" Type="smalldatetime" />
+    <Property Name="EffectiveEndDate" Type="smalldatetime" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="PolicyTypes">
+    <Key>
+      <PropertyRef Name="PolicyTypeId" />
+    </Key>
+    <Property Name="PolicyTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AttachmentType" Type="varchar" MaxLength="50" />
+    <Property Name="PolicyType" Type="varchar" MaxLength="50" />
+    <Property Name="CoverageVersion" Type="varchar" MaxLength="50" />
+    <Property Name="PolicySymbol" Type="char" MaxLength="3" />
+    <Property Name="PolicySymbolDescription" Type="varchar" MaxLength="63" />
+    <Property Name="PolicyCode" Type="varchar" MaxLength="30" />
+    <Property Name="IsDirect" Type="bit" />
+    <Property Name="ProductLineId" Type="smallint" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="ProductLine">
+    <Key>
+      <PropertyRef Name="ProductLineId" />
+    </Key>
+    <Property Name="ProductLineId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductLineName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ProductLineDescription" Type="varchar" MaxLength="256" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="ProductLineSubType">
+    <Key>
+      <PropertyRef Name="ProductLineSubTypeId" />
+    </Key>
+    <Property Name="ProductLineSubTypeId" Type="smallint" Nullable="false" />
+    <Property Name="ProductLineSubTypeName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ProductLineSubTypeDescription" Type="varchar" MaxLength="256" />
+    <Property Name="ProductLineId" Type="smallint" Nullable="false" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="ProfitCode">
+    <Key>
+      <PropertyRef Name="ProfitCodeId" />
+    </Key>
+    <Property Name="ProfitCodeId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProfitCodeName" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="ProfitCodeDescription" Type="varchar" MaxLength="256" />
+    <Property Name="SourceSystemId" Type="smallint" />
+    <Property Name="ISOCGName" Type="varchar" MaxLength="100" />
+    <Property Name="SectionCodeId" Type="smallint" Nullable="false" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="ProjectId" />
+    </Key>
+    <Property Name="ProjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectName" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="ProjectDescription" Type="varchar" MaxLength="2000" />
+    <Property Name="ProjectContractorName" Type="varchar" MaxLength="256" />
+    <Property Name="ProjectOwnerName" Type="varchar" MaxLength="256" />
+    <Property Name="ProjectCityId" Type="int" Nullable="false" />
+    <Property Name="BidSituationStatusCode" Type="char" MaxLength="20" Nullable="false" />
+    <Property Name="ProjectAddressLine1" Type="varchar" MaxLength="256" />
+    <Property Name="ProjectAddressLine2" Type="varchar" MaxLength="256" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="Reasoncode">
+    <Key>
+      <PropertyRef Name="ReasonID" />
+    </Key>
+    <Property Name="ReasonID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ReasonCode" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="ReasonDescription" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="SourceSystemId" Type="smallint" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="LastModifiedByUserId" Type="int" Nullable="false" />
+    <Property Name="Renewal" Type="bit" Nullable="false" />
+    <Property Name="StatusId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Region">
+    <Key>
+      <PropertyRef Name="RegionId" />
+    </Key>
+    <Property Name="RegionId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RegionName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="RegionDescription" Type="varchar" MaxLength="256" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="SectionCode">
+    <Key>
+      <PropertyRef Name="SectionCodeId" />
+    </Key>
+    <Property Name="SectionCodeId" Type="smallint" Nullable="false" />
+    <Property Name="SectionCodeName" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="SectionCodeDescription" Type="varchar" MaxLength="500" />
+    <Property Name="ProductLineSubTypeId" Type="smallint" Nullable="false" />
+    <Property Name="SectionCodeLookupId" Type="smallint" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="varchar" MaxLength="10" />
+    <Property Name="SourceSystemId" Type="int" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateId" />
+    </Key>
+    <Property Name="StateId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StateName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="StateCode" Type="char" MaxLength="3" Nullable="false" />
+    <Property Name="StateDescription" Type="varchar" MaxLength="256" />
+    <Property Name="StateAbreviationCode" Type="char" MaxLength="5" />
+    <Property Name="ProjectStateCode" Type="char" MaxLength="3" />
+    <Property Name="CountryId" Type="smallint" Nullable="false" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="StatusId" />
+    </Key>
+    <Property Name="StatusId" Type="int" Nullable="false" />
+    <Property Name="StatusName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="StatusDescription" Type="varchar" MaxLength="256" />
+    <Property Name="StatusCategory" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="TypeMaster">
+    <Key>
+      <PropertyRef Name="TypeCode" />
+    </Key>
+    <Property Name="TypeCode" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="TypeName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="TypeDescription" Type="varchar" MaxLength="256" />
+    <Property Name="TypeCategory" Type="varchar" MaxLength="20" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="SourceSystemTypeId" Type="smallint" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="EffectiveStartDate" Type="datetime" Nullable="false" />
+    <Property Name="EffectiveEndDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+    <Property Name="TypeId" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="Underwriter">
+    <Key>
+      <PropertyRef Name="UnderwriterId" />
+    </Key>
+    <Property Name="UnderwriterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UnderwriterName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="UnderwriterDescription" Type="varchar" MaxLength="256" />
+    <Property Name="RegionId" Type="smallint" Nullable="false" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" />
+    <Property Name="SourceSystemId" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="EmailId" Type="varchar" MaxLength="50" />
+    <Property Name="WindowsLogin" Type="varchar" MaxLength="20" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="UnderwriterProductLine">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductLineId" Type="smallint" Nullable="false" />
+    <Property Name="UnderwriterId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="UnderwriterProductSubLine">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductLineSubTypeId" Type="smallint" Nullable="false" />
+    <Property Name="UnderwriterId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <Association Name="FK__BC_CityId">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="BrokerParty" Type="Self.BrokerParty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="BrokerParty">
+        <PropertyRef Name="Cityid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BrokerPar__broke__3D491139">
+    <End Role="Broker" Type="Self.Broker" Multiplicity="0..1" />
+    <End Role="BrokerParty" Type="Self.BrokerParty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Broker">
+        <PropertyRef Name="BrokerId" />
+      </Principal>
+      <Dependent Role="BrokerParty">
+        <PropertyRef Name="brokerid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BrokerProduct_BrokerPartyID">
+    <End Role="BrokerParty" Type="Self.BrokerParty" Multiplicity="1" />
+    <End Role="BrokerProductLine" Type="Self.BrokerProductLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BrokerParty">
+        <PropertyRef Name="BrokerPartyId" />
+      </Principal>
+      <Dependent Role="BrokerProductLine">
+        <PropertyRef Name="BrokerPartyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BrokerProduct_ProductLineId">
+    <End Role="ProductLine" Type="Self.ProductLine" Multiplicity="1" />
+    <End Role="BrokerProductLine" Type="Self.BrokerProductLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductLine">
+        <PropertyRef Name="ProductLineId" />
+      </Principal>
+      <Dependent Role="BrokerProductLine">
+        <PropertyRef Name="ProductLineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BrokerProductSubType_BrokerPartyID">
+    <End Role="BrokerParty" Type="Self.BrokerParty" Multiplicity="1" />
+    <End Role="BrokerProductLineSubType" Type="Self.BrokerProductLineSubType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BrokerParty">
+        <PropertyRef Name="BrokerPartyId" />
+      </Principal>
+      <Dependent Role="BrokerProductLineSubType">
+        <PropertyRef Name="BrokerPartyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BrokerProductSubType_ProductLineSubTypeId">
+    <End Role="ProductLineSubType" Type="Self.ProductLineSubType" Multiplicity="1" />
+    <End Role="BrokerProductLineSubType" Type="Self.BrokerProductLineSubType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductLineSubType">
+        <PropertyRef Name="ProductLineSubTypeId" />
+      </Principal>
+      <Dependent Role="BrokerProductLineSubType">
+        <PropertyRef Name="ProductLineSubTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CityId">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Branch" Type="Self.Branch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="Branch">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CityId_Proj">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="Project" Type="Self.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="ProjectCityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CountryId">
+    <End Role="Country" Type="Self.Country" Multiplicity="1" />
+    <End Role="State" Type="Self.State" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="State">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ProductLineId">
+    <End Role="ProductLine" Type="Self.ProductLine" Multiplicity="1" />
+    <End Role="ProductLineSubType" Type="Self.ProductLineSubType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductLine">
+        <PropertyRef Name="ProductLineId" />
+      </Principal>
+      <Dependent Role="ProductLineSubType">
+        <PropertyRef Name="ProductLineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ProductLineSubTypeId">
+    <End Role="ProductLineSubType" Type="Self.ProductLineSubType" Multiplicity="1" />
+    <End Role="UnderwriterProductSubLine" Type="Self.UnderwriterProductSubLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductLineSubType">
+        <PropertyRef Name="ProductLineSubTypeId" />
+      </Principal>
+      <Dependent Role="UnderwriterProductSubLine">
+        <PropertyRef Name="ProductLineSubTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UP_ProductLineId">
+    <End Role="ProductLine" Type="Self.ProductLine" Multiplicity="1" />
+    <End Role="UnderwriterProductLine" Type="Self.UnderwriterProductLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductLine">
+        <PropertyRef Name="ProductLineId" />
+      </Principal>
+      <Dependent Role="UnderwriterProductLine">
+        <PropertyRef Name="ProductLineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UP_UnderwriterId">
+    <End Role="Underwriter" Type="Self.Underwriter" Multiplicity="1" />
+    <End Role="UnderwriterProductLine" Type="Self.UnderwriterProductLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Underwriter">
+        <PropertyRef Name="UnderwriterId" />
+      </Principal>
+      <Dependent Role="UnderwriterProductLine">
+        <PropertyRef Name="UnderwriterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UProSub_UnderwriterId">
+    <End Role="Underwriter" Type="Self.Underwriter" Multiplicity="1" />
+    <End Role="UnderwriterProductSubLine" Type="Self.UnderwriterProductSubLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Underwriter">
+        <PropertyRef Name="UnderwriterId" />
+      </Principal>
+      <Dependent Role="UnderwriterProductSubLine">
+        <PropertyRef Name="UnderwriterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BrokerParty_BrokerAddress">
+    <End Role="BrokerParty" Type="Self.BrokerParty" Multiplicity="1" />
+    <End Role="BrokerAddress" Type="Self.BrokerAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BrokerParty">
+        <PropertyRef Name="BrokerPartyId" />
+      </Principal>
+      <Dependent Role="BrokerAddress">
+        <PropertyRef Name="Partyid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_City_State">
+    <End Role="State" Type="Self.State" Multiplicity="1" />
+    <End Role="City" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContactPersonInsured_InsuredParty_InsuredPartyId">
+    <End Role="InsuredParty" Type="Self.InsuredParty" Multiplicity="1" />
+    <End Role="ContactPersonInsured" Type="Self.ContactPersonInsured" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InsuredParty">
+        <PropertyRef Name="PartyId" />
+      </Principal>
+      <Dependent Role="ContactPersonInsured">
+        <PropertyRef Name="InsuredPartyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Coverage_ProductLine">
+    <End Role="ProductLine" Type="Self.ProductLine" Multiplicity="1" />
+    <End Role="Coverage" Type="Self.Coverage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductLine">
+        <PropertyRef Name="ProductLineId" />
+      </Principal>
+      <Dependent Role="Coverage">
+        <PropertyRef Name="ProductLineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InsuredAddress_City">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="InsuredAddress" Type="Self.InsuredAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="InsuredAddress">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InsuredAlias_InsuredParty">
+    <End Role="InsuredParty" Type="Self.InsuredParty" Multiplicity="1" />
+    <End Role="InsuredAlias" Type="Self.InsuredAlias" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InsuredParty">
+        <PropertyRef Name="PartyId" />
+      </Principal>
+      <Dependent Role="InsuredAlias">
+        <PropertyRef Name="InsuredId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PolicyTypes">
+    <End Role="ProductLine" Type="Self.ProductLine" Multiplicity="0..1" />
+    <End Role="PolicyTypes" Type="Self.PolicyTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductLine">
+        <PropertyRef Name="ProductLineId" />
+      </Principal>
+      <Dependent Role="PolicyTypes">
+        <PropertyRef Name="ProductLineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductLineSubTypeId">
+    <End Role="ProductLineSubType" Type="Self.ProductLineSubType" Multiplicity="1" />
+    <End Role="SectionCode" Type="Self.SectionCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductLineSubType">
+        <PropertyRef Name="ProductLineSubTypeId" />
+      </Principal>
+      <Dependent Role="SectionCode">
+        <PropertyRef Name="ProductLineSubTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RegionId">
+    <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
+    <End Role="Branch" Type="Self.Branch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionId" />
+      </Principal>
+      <Dependent Role="Branch">
+        <PropertyRef Name="RegionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SectionCodeId">
+    <End Role="SectionCode" Type="Self.SectionCode" Multiplicity="1" />
+    <End Role="ProfitCode" Type="Self.ProfitCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SectionCode">
+        <PropertyRef Name="SectionCodeId" />
+      </Principal>
+      <Dependent Role="ProfitCode">
+        <PropertyRef Name="SectionCodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Underwriter_Region">
+    <End Role="Region" Type="Self.Region" Multiplicity="1" />
+    <End Role="Underwriter" Type="Self.Underwriter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionId" />
+      </Principal>
+      <Dependent Role="Underwriter">
+        <PropertyRef Name="RegionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="BrokerGetList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="broker" Type="varchar" Mode="In" />
+    <Parameter Name="brokerPartyId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="brokerId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="isBrokerEntity" Type="bit" Mode="In" />
+    <Parameter Name="brokerTypeId" Type="uniqueidentifier" Mode="In" />
+  </Function>
+  <Function Name="GetBrokerContactFilters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="key" Type="varchar" Mode="In" />
+    <Parameter Name="fieldName" Type="varchar" Mode="In" />
+    <Parameter Name="sortDirection" Type="char" Mode="In" />
+  </Function>
+  <Function Name="GetBrokerContacts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="companyNameKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="firstNameKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="lastNameKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="emailKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="phoneKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="mobileKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="faxKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="SourceKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="StatusKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="startRecord" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="orderBy" Type="varchar" Mode="In" />
+    <Parameter Name="orderByDirection" Type="char" Mode="In" />
+  </Function>
+  <Function Name="GetBrokerFilters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="key" Type="varchar" Mode="In" />
+    <Parameter Name="fieldName" Type="varchar" Mode="In" />
+    <Parameter Name="sortDirection" Type="char" Mode="In" />
+  </Function>
+  <Function Name="GetBrokers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="BrokerNameKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="BrokerTypeKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="BrokerCodeKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="EntityNameKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="CityKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="StateKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="CountryKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="SubTypeKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="productLineNameKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="productLineSubTypeNameKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="SourceKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="StatusKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="startRecord" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="orderBy" Type="varchar" Mode="In" />
+    <Parameter Name="orderByDirection" Type="char" Mode="In" />
+  </Function>
+  <Function Name="GetInsuredContactFilters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="key" Type="varchar" Mode="In" />
+    <Parameter Name="fieldName" Type="varchar" Mode="In" />
+    <Parameter Name="sortDirection" Type="char" Mode="In" />
+  </Function>
+  <Function Name="GetInsuredContacts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="companyNameKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="firstNameKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="lastNameKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="emailKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="phoneKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="mobileKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="faxKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="SourceKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="StatusKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="startRecord" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="orderBy" Type="varchar" Mode="In" />
+    <Parameter Name="orderByDirection" Type="char" Mode="In" />
+  </Function>
+  <Function Name="GetPolicyTypeList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="productLineid" Type="int" Mode="In" />
+    <Parameter Name="attachment" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="GetUnderwriterFilters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="key" Type="varchar" Mode="In" />
+    <Parameter Name="fieldName" Type="varchar" Mode="In" />
+    <Parameter Name="sortDirection" Type="char" Mode="In" />
+  </Function>
+  <Function Name="GetUnderwriterList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="key" Type="varchar" Mode="In" />
+    <Parameter Name="regionId" Type="int" Mode="In" />
+    <Parameter Name="underWriterId" Type="int" Mode="In" />
+    <Parameter Name="productLineId" Type="smallint" Mode="In" />
+  </Function>
+  <Function Name="GetUnderwriters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="UnderwriterNameKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="regionNameKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="productLineNameKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="productLineSubTypeNameKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="SourceKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="StatusKeys" Type="varchar(max)" Mode="In" />
+    <Parameter Name="startRecord" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="orderBy" Type="varchar" Mode="In" />
+    <Parameter Name="orderByDirection" Type="char" Mode="In" />
+  </Function>
+  <Function Name="InsuredGetList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="insured" Type="varchar" Mode="In" />
+    <Parameter Name="insuredPartyId" Type="uniqueidentifier" Mode="In" />
+  </Function>
+  <Function Name="SearchBrokerByProductLine" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="Brokerkey" Type="varchar" Mode="In" />
+    <Parameter Name="BrokerId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="ProductlineId" Type="smallint" Mode="In" />
+    <Parameter Name="ProductlineSubTypeid" Type="smallint" Mode="In" />
+    <Parameter Name="EffectiveDate" Type="datetime" Mode="In" />
+    <Parameter Name="ExpiryDate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="SearchBrokerContact" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="key" Type="varchar" Mode="In" />
+    <Parameter Name="BrokerEntityId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="ContactPersonId" Type="uniqueidentifier" Mode="In" />
+  </Function>
+  <Function Name="SearchBrokerEntityByProductLine" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="BrokerId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="BrokerEntitykey" Type="varchar" Mode="In" />
+    <Parameter Name="BrokerEntityId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="ProductlineId" Type="smallint" Mode="In" />
+    <Parameter Name="ProductlineSubTypeid" Type="smallint" Mode="In" />
+    <Parameter Name="isBrokerEntity" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="SearchInsuredList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="insured" Type="varchar" Mode="In" />
+    <Parameter Name="insuredPartyId" Type="uniqueidentifier" Mode="In" />
+  </Function>
+  <Function Name="Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="masterdata">
+    <Parameter Name="Input" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Character" Type="char" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="Item" Type="nvarchar" MaxLength="4000" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <EntityContainer Name="MDMModelStoreContainer">
+    <EntitySet Name="RightsToRole" EntityType="Self.RightsToRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Branch" EntityType="Self.Branch" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="Broker" EntityType="Self.Broker" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="BrokerAddress" EntityType="Self.BrokerAddress" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="BrokerParty" EntityType="Self.BrokerParty" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="BrokerProductLine" EntityType="Self.BrokerProductLine" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="BrokerProductLineSubType" EntityType="Self.BrokerProductLineSubType" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="City" EntityType="Self.City" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="ContactPersonBroker" EntityType="Self.ContactPersonBroker" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="ContactPersonInsured" EntityType="Self.ContactPersonInsured" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="Country" EntityType="Self.Country" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="Coverage" EntityType="Self.Coverage" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="Currency" EntityType="Self.Currency" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="IndustryCode" EntityType="Self.IndustryCode" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="InsuredAddress" EntityType="Self.InsuredAddress" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="InsuredAlias" EntityType="Self.InsuredAlias" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="InsuredParty" EntityType="Self.InsuredParty" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="MasterInsureds" EntityType="Self.MasterInsureds" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="NAIC" EntityType="Self.NAIC" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="PolicyTypes" EntityType="Self.PolicyTypes" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="ProductLine" EntityType="Self.ProductLine" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="ProductLineSubType" EntityType="Self.ProductLineSubType" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="ProfitCode" EntityType="Self.ProfitCode" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="Project" EntityType="Self.Project" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="Reasoncode" EntityType="Self.Reasoncode" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="Region" EntityType="Self.Region" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="SectionCode" EntityType="Self.SectionCode" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="State" EntityType="Self.State" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="Status" EntityType="Self.Status" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="TypeMaster" EntityType="Self.TypeMaster" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="Underwriter" EntityType="Self.Underwriter" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="UnderwriterProductLine" EntityType="Self.UnderwriterProductLine" Schema="masterdata" store:Type="Tables" />
+    <EntitySet Name="UnderwriterProductSubLine" EntityType="Self.UnderwriterProductSubLine" Schema="masterdata" store:Type="Tables" />
+    <AssociationSet Name="FK__BC_CityId" Association="Self.FK__BC_CityId">
+      <End Role="City" EntitySet="City" />
+      <End Role="BrokerParty" EntitySet="BrokerParty" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BrokerPar__broke__3D491139" Association="Self.FK__BrokerPar__broke__3D491139">
+      <End Role="Broker" EntitySet="Broker" />
+      <End Role="BrokerParty" EntitySet="BrokerParty" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BrokerProduct_BrokerPartyID" Association="Self.FK__BrokerProduct_BrokerPartyID">
+      <End Role="BrokerParty" EntitySet="BrokerParty" />
+      <End Role="BrokerProductLine" EntitySet="BrokerProductLine" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BrokerProduct_ProductLineId" Association="Self.FK__BrokerProduct_ProductLineId">
+      <End Role="ProductLine" EntitySet="ProductLine" />
+      <End Role="BrokerProductLine" EntitySet="BrokerProductLine" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BrokerProductSubType_BrokerPartyID" Association="Self.FK__BrokerProductSubType_BrokerPartyID">
+      <End Role="BrokerParty" EntitySet="BrokerParty" />
+      <End Role="BrokerProductLineSubType" EntitySet="BrokerProductLineSubType" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BrokerProductSubType_ProductLineSubTypeId" Association="Self.FK__BrokerProductSubType_ProductLineSubTypeId">
+      <End Role="ProductLineSubType" EntitySet="ProductLineSubType" />
+      <End Role="BrokerProductLineSubType" EntitySet="BrokerProductLineSubType" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CityId" Association="Self.FK__CityId">
+      <End Role="City" EntitySet="City" />
+      <End Role="Branch" EntitySet="Branch" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CityId_Proj" Association="Self.FK__CityId_Proj">
+      <End Role="City" EntitySet="City" />
+      <End Role="Project" EntitySet="Project" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CountryId" Association="Self.FK__CountryId">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="State" EntitySet="State" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ProductLineId" Association="Self.FK__ProductLineId">
+      <End Role="ProductLine" EntitySet="ProductLine" />
+      <End Role="ProductLineSubType" EntitySet="ProductLineSubType" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ProductLineSubTypeId" Association="Self.FK__ProductLineSubTypeId">
+      <End Role="ProductLineSubType" EntitySet="ProductLineSubType" />
+      <End Role="UnderwriterProductSubLine" EntitySet="UnderwriterProductSubLine" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UP_ProductLineId" Association="Self.FK__UP_ProductLineId">
+      <End Role="ProductLine" EntitySet="ProductLine" />
+      <End Role="UnderwriterProductLine" EntitySet="UnderwriterProductLine" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UP_UnderwriterId" Association="Self.FK__UP_UnderwriterId">
+      <End Role="Underwriter" EntitySet="Underwriter" />
+      <End Role="UnderwriterProductLine" EntitySet="UnderwriterProductLine" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UProSub_UnderwriterId" Association="Self.FK__UProSub_UnderwriterId">
+      <End Role="Underwriter" EntitySet="Underwriter" />
+      <End Role="UnderwriterProductSubLine" EntitySet="UnderwriterProductSubLine" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BrokerParty_BrokerAddress" Association="Self.FK_BrokerParty_BrokerAddress">
+      <End Role="BrokerParty" EntitySet="BrokerParty" />
+      <End Role="BrokerAddress" EntitySet="BrokerAddress" />
+    </AssociationSet>
+    <AssociationSet Name="FK_City_State" Association="Self.FK_City_State">
+      <End Role="State" EntitySet="State" />
+      <End Role="City" EntitySet="City" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContactPersonInsured_InsuredParty_InsuredPartyId" Association="Self.FK_ContactPersonInsured_InsuredParty_InsuredPartyId">
+      <End Role="InsuredParty" EntitySet="InsuredParty" />
+      <End Role="ContactPersonInsured" EntitySet="ContactPersonInsured" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Coverage_ProductLine" Association="Self.FK_Coverage_ProductLine">
+      <End Role="ProductLine" EntitySet="ProductLine" />
+      <End Role="Coverage" EntitySet="Coverage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InsuredAddress_City" Association="Self.FK_InsuredAddress_City">
+      <End Role="City" EntitySet="City" />
+      <End Role="InsuredAddress" EntitySet="InsuredAddress" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InsuredAlias_InsuredParty" Association="Self.FK_InsuredAlias_InsuredParty">
+      <End Role="InsuredParty" EntitySet="InsuredParty" />
+      <End Role="InsuredAlias" EntitySet="InsuredAlias" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PolicyTypes" Association="Self.FK_PolicyTypes">
+      <End Role="ProductLine" EntitySet="ProductLine" />
+      <End Role="PolicyTypes" EntitySet="PolicyTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductLineSubTypeId" Association="Self.FK_ProductLineSubTypeId">
+      <End Role="ProductLineSubType" EntitySet="ProductLineSubType" />
+      <End Role="SectionCode" EntitySet="SectionCode" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RegionId" Association="Self.FK_RegionId">
+      <End Role="Region" EntitySet="Region" />
+      <End Role="Branch" EntitySet="Branch" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SectionCodeId" Association="Self.FK_SectionCodeId">
+      <End Role="SectionCode" EntitySet="SectionCode" />
+      <End Role="ProfitCode" EntitySet="ProfitCode" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Underwriter_Region" Association="Self.FK_Underwriter_Region">
+      <End Role="Region" EntitySet="Region" />
+      <End Role="Underwriter" EntitySet="Underwriter" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

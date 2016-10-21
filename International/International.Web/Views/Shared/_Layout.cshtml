@@ -1,0 +1,356 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/css/jquery.datatable.min.css" rel="stylesheet" />
+    <link href="~/Content/plugin/toastr-2.1.2/toastr.min.css" rel="stylesheet" />
+    <script data-semver="3.10.0" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"></script>
+
+   
+
+
+    <link href="~/Content/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+
+
+    <link href="~/Content/plugin/jquery-ui-datetimepicker/jquery-ui-timepicker-addon.css" rel="stylesheet" />
+
+    <link href="~/Content/css/style.css" rel="stylesheet">
+    <link href="~/Content/css/extended.css" rel="stylesheet" />
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    @*ng-swich ref..*@
+
+
+
+</head>
+
+<body>
+    <div class="header">
+        <div class="container-fluid tb-color">
+            <div class="top-bar clearfix">
+                <div class="col-sm-4 clearfix">
+                    <img class="pull-left" src="~/Content/img/logo.png" alt="Logo">
+
+                </div>
+                <div class="col-sm-8">
+                    <h1 class="pull-right text-uppercase">Submission System</h1>
+                </div>
+
+            </div>
+        </div>
+        <div class="clearfix">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid  dt-overflow">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Menu</a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+
+
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-left">
+
+                            @{var user = (LoggedInUser)ViewBag.LoggedInUser;
+                            var currentModule = "";
+                            if (!user.IsAuthenticated)
+                            {
+                                Response.Redirect("~/Home/Login");
+                            }
+                            }
+
+
+                            @if (user.UserMenu != null)
+                            {
+                                var amendment = false;
+                                var reversal = false;
+                                foreach (var module in user.UserMenu)
+                                {
+                                    if (module.ModuleName != currentModule)
+                                    {
+                                        currentModule = module.ModuleName;
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@module.ModuleName<span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                @foreach (var menu in user.UserMenu)
+                                                {
+                                                    if (menu.ModuleName == currentModule)
+                                                    {
+
+                                                        <li><a href="@Url.Action(menu.Action, menu.Controller)">@menu.SubModuleName</a></li>
+                                                    }
+                                                }
+                                               
+
+
+                                            </ul>
+                                        </li>
+                                    }
+                                }
+                                //UAT
+                                @*<li><a href="http://uat.mdm.berksi.com" target="_blank">MDM</a></li>*@
+                                
+                                //Production
+                               <li><a href="http://mdm.berksi.com/home/login" target="_blank">MDM</a></li>
+                                
+                                //QA
+                                  @*<li><a href="http://qa.mdm.berksi.com/home/login" target="_blank">MDM</a></li>*@
+
+                                foreach (var right in user.UserRights)
+                                {
+
+
+                                    if (right.Controller == "Submission" && right.Action == "Amendment" && right.Rights > 0)
+                                    {
+                                        amendment = true;
+                                    }
+                                    else if (right.Controller == "Submission" && right.Action == "CreateReversal" && right.Rights > 0)
+                                    {
+                                        reversal = true;
+                                    }
+
+
+                                }
+                                if (!amendment)
+                                {
+                                    <style>
+                                        .amendment {
+                                            display: none;
+                                        }
+                                    </style>
+                                }
+                               
+
+                                if (!reversal)
+                                {
+                                    <style>
+                                        .reversal {
+                                            display: none;
+                                        }
+                                    </style>
+                                }
+                                
+                            }
+
+
+
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown pull-right">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <span class="fa fa-user"></span>&nbsp;&nbsp;@ViewBag.UserName @if (user.SubmissionRegion != null && user.SubmissionRegion.RegionName != null)
+                                    {<span>(@user.SubmissionRegion.RegionName)</span>}  &nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    @*<li><a href="#"><span class="fa fa-user"></span> &nbsp;&nbsp;Profile Details</a></li>*@
+                                    <li><a href="@Url.Action("SignOut", "Home")"><span class="fa fa-sign-out"></span> &nbsp;&nbsp;Sign Out</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+                <!-- /.container-fluid -->
+            </nav>
+        </div>
+    </div>
+    <div ng-app="rootApplication" class="wrapper">
+        @{
+            string controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+            string action = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+            var isView = Convert.ToString(Request.QueryString["IsView"]);
+        }
+        @if (isView != null)
+        {
+            @*if (isView.ToUpper() == "TRUE")
+                {
+                    <style>
+                        div.form-group select {
+
+                            background-color: transparent /* This hides the background */;
+                            background-image: none;
+                            -webkit-appearance: none /* Webkit Fix */;
+                            border: none;
+                            box-shadow: none;
+                            padding: 0.3em 0.5em;
+
+
+                        }
+
+                        div.form-group input {
+
+                            background-color: none; /* This hides the background */
+
+                            background-image: none;
+                            -webkit-appearance: none /* Webkit Fix */;
+                            border: none;
+                            box-shadow: none;
+                            padding: 0.3em 0.5em;
+
+                        }
+
+                        .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+                            background-color: #fff;
+                        }
+
+                        .input-group-addon {
+                            display: none;
+
+                        }
+                    </style>
+
+                }*@
+        }
+
+        @if (user.UserRights != null)
+        {
+            foreach (var right in user.UserRights)
+            {
+                if (right.Controller == controller && right.Action == action)
+                {
+                    if (right.Rights == 1)
+                    {
+                        <style>
+                            /*.eye-link {
+                                display: block;
+
+                            }*/
+
+                            .eye-edit {
+                                display: none;
+                            }
+
+                            .eye-trash {
+                                display: none;
+                            }
+
+                            .eye-undo {
+                                display: none;
+                            }
+
+                            .add-button {
+                                display: none;
+                            }
+                        </style>
+                    }
+                    else if (right.Rights == 2)
+                    {
+                        <style>
+                            /*.eye-link {
+                                display: block;
+
+                            }
+
+                            .eye-edit {
+                                display: block;
+
+                            }*/
+
+                            .eye-trash {
+                                display: none;
+                            }
+
+                            .eye-undo {
+                                display: none;
+                            }
+
+                            /*.btn-success {
+                                display: block;
+
+                            }*/
+                        </style>
+                    }
+                    else if (right.Rights == 3)
+                    {
+                        @*<style>
+                                .eye-link {
+                                    display: block;
+
+                                }
+
+                                .eye-edit {
+                                    display: block;
+
+                                }
+
+                                .eye-trash {
+                                    display: block;
+
+                                }
+
+                                .eye-undo {
+                                    display: block;
+
+                                }
+
+                                .btn-success {
+                                    display: block;
+
+                                }
+                            </style>*@
+                    }
+                }
+            }
+        }
+        @RenderBody()
+        <img id="throbber-image-1" src="@Url.Content("~/Content/images/ajax-loader-1.gif")" alt="" />
+        <div id="throbber-curtain"></div>
+    </div>
+
+    <footer class="f-inner"><p>Powered by <a href="http://xceedance.com" target="_blank">Xceedance</a></p></footer>
+    <script type="text/javascript" src="~/Scripts/js-system/moment-2.11.2.js"></script>
+
+    <script src="~/Scripts/js-system/jquery-2.2.0.min.js"></script>
+
+    <script type="text/javascript" src="~/Scripts/js-system/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/js-system/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/js-system/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/js-system/angular-1.4.8.js"></script>
+
+    <script type="text/javascript" src="~/Scripts/js-application/extensions.js"></script>
+    <script src="~/Scripts/js-system/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/js-application/jquery.datatables.ext.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
+
+    <script type="text/javascript" src="~/Scripts/js-system/bootstrap.min.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
+    <script src="~/Scripts/js-application/multi-select-ddl.js"></script>
+    <script src="~/Scripts/js-system/bootbox.min.js"></script>
+
+
+
+
+    <script type="text/javascript" src="~/Content/plugin/toastr-2.1.2/toastr.min.js"></script>
+    <script src="~/Scripts/js-application/common.js"></script>
+    <script type="text/javascript" src="~/Scripts/directives/commonDirective.js"></script>
+    <script type="text/javascript" src="~/Scripts/rootApplication.js"></script>
+    <script type="text/javascript" src="~/Scripts/services/utilities.js"></script>
+    <script type="text/javascript" src="~/Scripts/controllers/indexController.js"></script>
+    <script type="text/javascript" src="~/Scripts/controllers/submissionController.js"></script>
+
+    <script src="~/Content/plugin/jquery-ui-datetimepicker/jquery-ui-timepicker-addon.js"></script>
+    <script src="~/Scripts/filters/commonFilter.js"></script>
+    @RenderSection("scripts", false)
+
+
+
+</body>
+</html>

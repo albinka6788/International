@@ -1,0 +1,161 @@
+﻿@model GroupModel
+
+@{
+    var isView = (bool)ViewBag.isView;
+    ViewBag.Title = "Group";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section scripts{
+
+    <script src="~/Scripts/controllers/UserManagementController.js"></script>
+}
+
+
+
+@if (!isView)
+{
+    <div id="manage-Group" class="wrapper form-horizontal" ng-controller="userManagementController" ng-init="GroupId = @Model.Id; getGroup()">
+
+
+        <div class="container-fluid  dt-overflow">
+            <div class="table-responsive">
+                <table border="1" class="table table-bordered">
+                    <tr class="main-color">
+                        <h2></h2><h4></h4>
+                        @if (Model.Id == 0)
+                        {
+                            <th ng-if="UserId==0" colspan="3">Create New Group</th>
+                        }
+
+                        else
+                        {
+                            <th ng-if="UserId>0" colspan="3">Edit Group</th>
+                        }
+                       
+                    </tr>
+                    <tr>
+                        <td class="td-space">
+                            <form class="" role="form">
+                                @using (Html.BeginForm())
+                                {
+                                    <div class="form-group">
+                                        <label class="col-sm-2" for="code">Group Name</label>
+                                        <div class="col-sm-3">
+                                            @Html.TextBoxFor(model => model.GroupName, new { @class = "form-control", placeholder = "Group Name", ng_disabled = "GroupId!=0", ng_model = "group.GroupName", ng_trim = "true", maxlength = "50" })
+                                            @Html.ValidationMessageFor(model => model.GroupName)
+                                        </div>
+                                    </div>
+                                    <div>
+
+                                        <div class="table-responsive">
+                                            <table border="1" class="table table-bordered table-striped role-mod" id="clist" class="display" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th colspan="4">Permissions</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Module</th>
+                                                        <th>None</th>
+                                                        <th>View</th>
+                                                        <th>View/Edit</th>
+                                                        <th>Delete/Restore</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody ng-repeat="item in group.RightsToRoleList">
+                                                    <tr>
+                                                        <td>{{item.ModuleName}}</td>
+                                                        <td><div class="radio"><label><input type="radio" ng-model="item.Rights" name="{{item.ModuleName}}" value="0"></label></div></td>
+                                                        <td><div class="radio"><label><input type="radio" ng-model="item.Rights" name="{{item.ModuleName}}" value="1"></label></div></td>
+                                                        <td><div class="radio"><label><input type="radio" ng-model="item.Rights" name="{{item.ModuleName}}" value="2"></label></div></td>
+                                                        <td><div class="radio"><label><input type="radio" ng-model="item.Rights" name="{{item.ModuleName}}" value="3"></label></div></td>
+
+                                                    </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="btn-size">
+                                    @*<button type="reset" ng-if="GroupId==0" onclick="" class="btn btn-default">Cancel</button>*@
+                                    <button type="reset" ng-click="CancelGroup()" class="btn btn-default">Cancel</button>
+                                    <button type="submit" ng-click="saveGroup();" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div id="manage-Group" class="wrapper form-horizontal" ng-controller="userManagementController" ng-init="GroupId = @Model.Id; getGroup()">
+
+
+        <div class="container-fluid  dt-overflow">
+            <div class="table-responsive">
+                <table border="1" class="table table-bordered">
+                    <tr class="main-color">
+                        <h2></h2>
+                        <h4></h4>
+                        <th colspan="3">View Group</th>
+                    </tr>
+                    <tr>
+                        <td class="td-space">
+                            <form class="" role="form">
+                                @using (Html.BeginForm())
+                                {
+                                    <div class="form-group">
+                                        <label class="col-sm-2" for="code">Group Name</label>
+                                        <div class="col-sm-3">
+                                            @Html.TextBoxFor(model => model.GroupName, new { @class = "form-control", placeholder = "Group Name", ng_disabled = "GroupId!=0", ng_model = "group.GroupName", ng_trim = "true", maxlength = "50" })
+                                            @Html.ValidationMessageFor(model => model.GroupName)
+                                        </div>
+                                    </div>
+                                    <div>
+
+                                        <div class="table-responsive">
+                                            <table border="1" class="table table-bordered table-striped role-mod" id="clist" class="display" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th colspan="4">Permissions</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Module</th>
+                                                        <th>None</th>
+                                                        <th>View</th>
+                                                        <th>View/Edit</th>
+                                                        <th>Delete/Restore</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody ng-repeat="item in group.RightsToRoleList">
+                                                    <tr>
+                                                        <td>{{item.ModuleName}}</td>
+                                                        <td><div class="radio"><label><input type="radio" disabled="disabled" ng-model="item.Rights" name="{{item.ModuleName}}" value="0"></label></div></td>
+                                                        <td><div class="radio"><label><input type="radio" disabled="disabled" ng-model="item.Rights" name="{{item.ModuleName}}" value="1"></label></div></td>
+                                                        <td><div class="radio"><label><input type="radio" disabled="disabled" ng-model="item.Rights" name="{{item.ModuleName}}" value="2"></label></div></td>
+                                                        <td><div class="radio"><label><input type="radio" disabled="disabled" ng-model="item.Rights" name="{{item.ModuleName}}" value="3"></label></div></td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                }
+
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+}

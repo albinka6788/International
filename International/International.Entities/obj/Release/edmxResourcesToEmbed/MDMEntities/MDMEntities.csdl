@@ -1,0 +1,1360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MDMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BrokerAddress">
+    <Key>
+      <PropertyRef Name="Partyid" />
+      <PropertyRef Name="IsPrimaryAddress" />
+    </Key>
+    <Property Name="Partyid" Type="Guid" Nullable="false" />
+    <Property Name="Addressline1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Addressline2" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Zipcode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="63" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Fax" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="AddressType" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="IsPrimaryAddress" Type="Boolean" Nullable="false" />
+    <Property Name="HomePhone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Addressline3" Type="String" MaxLength="127" FixedLength="false" Unicode="true" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="brokeraddressid" Type="Guid" />
+    <NavigationProperty Name="BrokerParty" Relationship="MDMModel.FK_BrokerParty_BrokerAddress" FromRole="BrokerAddress" ToRole="BrokerParty" />
+  </EntityType>
+  <EntityType Name="BrokerProductLine">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductLineId" Type="Int16" Nullable="false" />
+    <Property Name="BrokerPartyId" Type="Guid" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="TypeId" Type="Guid" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="BrokerParty" Relationship="MDMModel.FK__BrokerProduct_BrokerPartyID" FromRole="BrokerProductLine" ToRole="BrokerParty" />
+    <NavigationProperty Name="ProductLine" Relationship="MDMModel.FK__BrokerProduct_ProductLineId" FromRole="BrokerProductLine" ToRole="ProductLine" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CityName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CityCode" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="StateId" Type="Int16" Nullable="false" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="RegionId" Type="Int32" />
+    <NavigationProperty Name="Projects" Relationship="Self.FK__CityId_Proj" FromRole="City" ToRole="Project" />
+    <NavigationProperty Name="State" Relationship="Self.FK_City_State" FromRole="City" ToRole="State" />
+    <NavigationProperty Name="InsuredAddresses" Relationship="Self.FK_InsuredAddress_City" FromRole="City" ToRole="InsuredAddress" />
+    <NavigationProperty Name="Branches" Relationship="MDMModel.FK__CityId" FromRole="City" ToRole="Branch" />
+    <NavigationProperty Name="BrokerParties" Relationship="MDMModel.FK__BC_CityId" FromRole="City" ToRole="BrokerParty" />
+  </EntityType>
+  <EntityType Name="ContactPersonBroker">
+    <Key>
+      <PropertyRef Name="ContactPersonId" />
+    </Key>
+    <Property Name="ContactPersonId" Type="Guid" Nullable="false" />
+    <Property Name="BrokerPartyId" Type="Guid" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PartyFunction" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MobileNumber" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Fax" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="ContactPersonInsured">
+    <Key>
+      <PropertyRef Name="ContactPersonId" />
+    </Key>
+    <Property Name="ContactPersonId" Type="Guid" Nullable="false" />
+    <Property Name="InsuredPartyId" Type="Guid" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PartyFunction" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MobileNumber" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Fax" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="InsuredParty" Relationship="Self.FK_ContactPersonInsured_InsuredParty_InsuredPartyId" FromRole="ContactPersonInsured" ToRole="InsuredParty" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryId" />
+    </Key>
+    <Property Name="CountryId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CountryDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="CountryNumericCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="ISOCountry3Code" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="ISOCountry2Code" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+    <Property Name="LocalCurrencyCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="CreatedOnDate" Type="DateTime" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="States" Relationship="Self.FK__CountryId" FromRole="Country" ToRole="State" />
+  </EntityType>
+  <EntityType Name="Currency">
+    <Key>
+      <PropertyRef Name="CurrencyId" />
+    </Key>
+    <Property Name="CurrencyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CurrencyCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="CurrencyName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CurrencyDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="CurrencyNumericCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CurrencyRegions" Relationship="MDMModel.FK_CurrencyRegion_Currency" FromRole="Currency" ToRole="CurrencyRegion" />
+  </EntityType>
+  <EntityType Name="IndustryCode">
+    <Key>
+      <PropertyRef Name="SICId" />
+    </Key>
+    <Property Name="SICId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SICCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SICTitle" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SICDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SourceSystemSICCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="EffectiveStartDate" Type="DateTime" Precision="0" />
+    <Property Name="EffectiveEndDate" Type="DateTime" Precision="0" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="InsuredAddress">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Partyid" Type="Guid" Nullable="false" />
+    <Property Name="CityId" Type="Int32" Nullable="false" />
+    <Property Name="Addressline1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Addressline2" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Zipcode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="63" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Fax" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="AddressTypeId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsPrimaryAddress" Type="Boolean" />
+    <Property Name="HomePhone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Addressline3" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="AdvisenID" Type="Int32" />
+    <Property Name="DBNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="City" Relationship="Self.FK_InsuredAddress_City" FromRole="InsuredAddress" ToRole="City" />
+  </EntityType>
+  <EntityType Name="InsuredAlia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InsuredId" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DateTo" Type="DateTime" Precision="3" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="InsuredParty" Relationship="Self.FK_InsuredAlias_InsuredParty" FromRole="InsuredAlias" ToRole="InsuredParty" />
+  </EntityType>
+  <EntityType Name="InsuredParty">
+    <Key>
+      <PropertyRef Name="PartyId" />
+    </Key>
+    <Property Name="PartyId" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AdvisenId" Type="Int32" />
+    <Property Name="DBNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InActivationDate" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="ParentInsuredId" Type="Int64" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="NAICCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SICCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="GUPAdvisenID" Type="Int32" />
+    <Property Name="GUPId" Type="Guid" />
+    <Property Name="IsGUP" Type="Boolean" />
+    <NavigationProperty Name="ContactPersonInsureds" Relationship="Self.FK_ContactPersonInsured_InsuredParty_InsuredPartyId" FromRole="InsuredParty" ToRole="ContactPersonInsured" />
+    <NavigationProperty Name="InsuredAlias" Relationship="Self.FK_InsuredAlias_InsuredParty" FromRole="InsuredParty" ToRole="InsuredAlias" />
+  </EntityType>
+  <EntityType Name="MasterInsured">
+    <Key>
+      <PropertyRef Name="MasterInsuredID" />
+    </Key>
+    <Property Name="MasterInsuredID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Ticker" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="Revenue" Type="Int64" />
+    <Property Name="AdvisenID" Type="Int64" />
+    <Property Name="GUPAdvisenID" Type="Int64" />
+    <Property Name="IsGUP" Type="Boolean" Nullable="false" />
+    <Property Name="GUPInsuredID" Type="Guid" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="NAIC">
+    <Key>
+      <PropertyRef Name="NaicId" />
+    </Key>
+    <Property Name="NaicId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NAICCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NAICTitle" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NAICDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SourceSystemNAICCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="EffectiveStartDate" Type="DateTime" Precision="0" />
+    <Property Name="EffectiveEndDate" Type="DateTime" Precision="0" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="ProjectId" />
+    </Key>
+    <Property Name="ProjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ProjectDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <Property Name="ProjectContractorName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ProjectOwnerName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ProjectCityId" Type="Int32" Nullable="false" />
+    <Property Name="BidSituationStatusCode" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="ProjectAddressLine1" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ProjectAddressLine2" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="City" Relationship="Self.FK__CityId_Proj" FromRole="Project" ToRole="City" />
+  </EntityType>
+  <EntityType Name="Region">
+    <Key>
+      <PropertyRef Name="RegionId" />
+    </Key>
+    <Property Name="RegionId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RegionName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RegionDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="RegionCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CurrencyRegions" Relationship="MDMModel.FK_CurrencyRegion_Region" FromRole="Region" ToRole="CurrencyRegion" />
+    <NavigationProperty Name="Branches" Relationship="MDMModel.FK_RegionId" FromRole="Region" ToRole="Branch" />
+    <NavigationProperty Name="PolicySymbols" Relationship="MDMModel.FK__PolicySym__Regio__613C58EC" FromRole="Region" ToRole="PolicySymbol" />
+    <NavigationProperty Name="Underwriters" Relationship="MDMModel.FK_Underwriter_Region" FromRole="Region" ToRole="Underwriter" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateId" />
+    </Key>
+    <Property Name="StateId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StateName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="StateCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="StateDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="StateAbreviationCode" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Name="ProjectStateCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="CountryId" Type="Int16" Nullable="false" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="Cities" Relationship="Self.FK_City_State" FromRole="State" ToRole="City" />
+    <NavigationProperty Name="Country" Relationship="Self.FK__CountryId" FromRole="State" ToRole="Country" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="StatusId" />
+    </Key>
+    <Property Name="StatusId" Type="Int32" Nullable="false" />
+    <Property Name="StatusName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="StatusDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="StatusCategory" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Reasoncodes" Relationship="MDMModel.FK__Reasoncod__Statu__57E7F8DC" FromRole="Status" ToRole="Reasoncode" />
+    <NavigationProperty Name="Reasoncodes1" Relationship="MDMModel.fk_ReasonStatuscode" FromRole="Status" ToRole="Reasoncode" />
+  </EntityType>
+  <EntityType Name="TypeMaster">
+    <Key>
+      <PropertyRef Name="TypeCode" />
+    </Key>
+    <Property Name="TypeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TypeDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="TypeCategory" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SourceSystemTypeId" Type="Int16" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="EffectiveStartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EffectiveEndDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="TypeId" Type="Guid" />
+  </EntityType>
+  <EntityType Name="UnderwriterProductLine">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductLineId" Type="Int16" Nullable="false" />
+    <Property Name="UnderwriterId" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="CreatedOnDate" Type="DateTime" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="Underwriter" Relationship="MDMModel.FK__UP_UnderwriterId" FromRole="UnderwriterProductLine" ToRole="Underwriter" />
+    <NavigationProperty Name="ProductLine" Relationship="MDMModel.FK__UP_ProductLineId" FromRole="UnderwriterProductLine" ToRole="ProductLine" />
+  </EntityType>
+  <EntityType Name="InsuredParty_Backup_2802016">
+    <Key>
+      <PropertyRef Name="PartyId" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="CreatedOnDate" />
+      <PropertyRef Name="CreatedByUserId" />
+    </Key>
+    <Property Name="PartyId" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AdvisenId" Type="Int32" />
+    <Property Name="DBNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InActivationDate" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="ParentInsuredId" Type="Int64" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="NAICCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SICCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="GUPAdvisenID" Type="Int32" />
+    <Property Name="GUPId" Type="Guid" />
+    <Property Name="IsGUP" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="MasterInsureds_Backup_2802016">
+    <Key>
+      <PropertyRef Name="MasterInsuredID" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="IsGUP" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="CreatedOnDate" />
+      <PropertyRef Name="CreatedByUserId" />
+    </Key>
+    <Property Name="MasterInsuredID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Ticker" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="Revenue" Type="Int64" />
+    <Property Name="AdvisenID" Type="Int64" />
+    <Property Name="GUPAdvisenID" Type="Int64" />
+    <Property Name="IsGUP" Type="Boolean" Nullable="false" />
+    <Property Name="GUPInsuredID" Type="Guid" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+  </EntityType>
+  <Association Name="FK__CityId_Proj">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="Project" Type="Self.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="ProjectCityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_City_State">
+    <End Role="State" Type="Self.State" Multiplicity="1" />
+    <End Role="City" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InsuredAddress_City">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="InsuredAddress" Type="Self.InsuredAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="InsuredAddress">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContactPersonInsured_InsuredParty_InsuredPartyId">
+    <End Role="InsuredParty" Type="Self.InsuredParty" Multiplicity="1" />
+    <End Role="ContactPersonInsured" Type="Self.ContactPersonInsured" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InsuredParty">
+        <PropertyRef Name="PartyId" />
+      </Principal>
+      <Dependent Role="ContactPersonInsured">
+        <PropertyRef Name="InsuredPartyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CountryId">
+    <End Role="Country" Type="Self.Country" Multiplicity="1" />
+    <End Role="State" Type="Self.State" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="State">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InsuredAlias_InsuredParty">
+    <End Role="InsuredParty" Type="Self.InsuredParty" Multiplicity="1" />
+    <End Role="InsuredAlias" Type="Self.InsuredAlia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InsuredParty">
+        <PropertyRef Name="PartyId" />
+      </Principal>
+      <Dependent Role="InsuredAlias">
+        <PropertyRef Name="InsuredId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MDMEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BrokerAddresses" EntityType="Self.BrokerAddress" />
+    <EntitySet Name="BrokerProductLines" EntityType="Self.BrokerProductLine" />
+    <EntitySet Name="Cities" EntityType="Self.City" />
+    <EntitySet Name="ContactPersonBrokers" EntityType="Self.ContactPersonBroker" />
+    <EntitySet Name="ContactPersonInsureds" EntityType="Self.ContactPersonInsured" />
+    <EntitySet Name="Countries" EntityType="Self.Country" />
+    <EntitySet Name="Currencies" EntityType="Self.Currency" />
+    <EntitySet Name="IndustryCodes" EntityType="Self.IndustryCode" />
+    <EntitySet Name="InsuredAddresses" EntityType="Self.InsuredAddress" />
+    <EntitySet Name="InsuredAlias" EntityType="Self.InsuredAlia" />
+    <EntitySet Name="InsuredParties" EntityType="Self.InsuredParty" />
+    <EntitySet Name="MasterInsureds" EntityType="Self.MasterInsured" />
+    <EntitySet Name="NAICs" EntityType="Self.NAIC" />
+    <EntitySet Name="Projects" EntityType="Self.Project" />
+    <EntitySet Name="Regions" EntityType="Self.Region" />
+    <EntitySet Name="States" EntityType="Self.State" />
+    <EntitySet Name="Status" EntityType="Self.Status" />
+    <EntitySet Name="TypeMasters" EntityType="Self.TypeMaster" />
+    <EntitySet Name="UnderwriterProductLines" EntityType="Self.UnderwriterProductLine" />
+    <EntitySet Name="InsuredParty_Backup_2802016" EntityType="Self.InsuredParty_Backup_2802016" />
+    <EntitySet Name="MasterInsureds_Backup_2802016" EntityType="Self.MasterInsureds_Backup_2802016" />
+    <AssociationSet Name="FK__CityId_Proj" Association="Self.FK__CityId_Proj">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="Project" EntitySet="Projects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_City_State" Association="Self.FK_City_State">
+      <End Role="State" EntitySet="States" />
+      <End Role="City" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InsuredAddress_City" Association="Self.FK_InsuredAddress_City">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="InsuredAddress" EntitySet="InsuredAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContactPersonInsured_InsuredParty_InsuredPartyId" Association="Self.FK_ContactPersonInsured_InsuredParty_InsuredPartyId">
+      <End Role="InsuredParty" EntitySet="InsuredParties" />
+      <End Role="ContactPersonInsured" EntitySet="ContactPersonInsureds" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CountryId" Association="Self.FK__CountryId">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="State" EntitySet="States" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InsuredAlias_InsuredParty" Association="Self.FK_InsuredAlias_InsuredParty">
+      <End Role="InsuredParty" EntitySet="InsuredParties" />
+      <End Role="InsuredAlias" EntitySet="InsuredAlias" />
+    </AssociationSet>
+    <FunctionImport Name="SearchBrokerByProductLine" ReturnType="Collection(MDMModel.SearchBrokerByProductLine_Result)">
+      <Parameter Name="Brokerkey" Mode="In" Type="String" />
+      <Parameter Name="BrokerId" Mode="In" Type="Guid" />
+      <Parameter Name="ProductlineId" Mode="In" Type="Int16" />
+      <Parameter Name="ProductlineSubTypeid" Mode="In" Type="Int16" />
+      <Parameter Name="EffectiveDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ExpiryDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="SearchBrokerContact" ReturnType="Collection(MDMModel.SearchBrokerContact_Result)">
+      <Parameter Name="key" Mode="In" Type="String" />
+      <Parameter Name="BrokerEntityId" Mode="In" Type="Guid" />
+      <Parameter Name="ContactPersonId" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="SearchBrokerEntityByProductLine" ReturnType="Collection(MDMModel.SearchBrokerEntityByProductLine_Result)">
+      <Parameter Name="BrokerId" Mode="In" Type="Guid" />
+      <Parameter Name="BrokerEntitykey" Mode="In" Type="String" />
+      <Parameter Name="BrokerEntityId" Mode="In" Type="Guid" />
+      <Parameter Name="ProductlineId" Mode="In" Type="Int16" />
+      <Parameter Name="ProductlineSubTypeid" Mode="In" Type="Int16" />
+      <Parameter Name="isBrokerEntity" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="GetPolicyTypeList" ReturnType="Collection(MDMModel.GetPolicyTypeList_Result)">
+      <Parameter Name="productLineid" Mode="In" Type="Int32" />
+      <Parameter Name="productLineSubTypeId" Mode="In" Type="Int32" />
+      <Parameter Name="attachment" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="Reasoncodes" EntityType="MDMModel.Reasoncode" />
+    <AssociationSet Name="FK__Reasoncod__Statu__57E7F8DC" Association="MDMModel.FK__Reasoncod__Statu__57E7F8DC">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Reasoncode" EntitySet="Reasoncodes" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ReasonStatuscode" Association="MDMModel.fk_ReasonStatuscode">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Reasoncode" EntitySet="Reasoncodes" />
+    </AssociationSet>
+    <EntitySet Name="Coverages" EntityType="MDMModel.Coverage" />
+    <EntitySet Name="PolicyTypes" EntityType="MDMModel.PolicyType" />
+    <EntitySet Name="CurrencyRegions" EntityType="MDMModel.CurrencyRegion" />
+    <AssociationSet Name="FK_CurrencyRegion_Currency" Association="MDMModel.FK_CurrencyRegion_Currency">
+      <End Role="Currency" EntitySet="Currencies" />
+      <End Role="CurrencyRegion" EntitySet="CurrencyRegions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CurrencyRegion_Region" Association="MDMModel.FK_CurrencyRegion_Region">
+      <End Role="Region" EntitySet="Regions" />
+      <End Role="CurrencyRegion" EntitySet="CurrencyRegions" />
+    </AssociationSet>
+    <EntitySet Name="FormTypes" EntityType="MDMModel.FormType" />
+    <FunctionImport Name="SearchInsuredList" ReturnType="Collection(MDMModel.SearchInsuredList_Result)">
+      <Parameter Name="insured" Mode="In" Type="String" />
+      <Parameter Name="insuredPartyId" Mode="In" Type="Guid" />
+      <Parameter Name="type" Mode="In" Type="Int32" />
+      <Parameter Name="childInsuredId" Mode="In" Type="Int32" />
+      <Parameter Name="AddressId" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <EntitySet Name="Branches" EntityType="MDMModel.Branch" />
+    <AssociationSet Name="FK__CityId" Association="MDMModel.FK__CityId">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="Branch" EntitySet="Branches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RegionId" Association="MDMModel.FK_RegionId">
+      <End Role="Region" EntitySet="Regions" />
+      <End Role="Branch" EntitySet="Branches" />
+    </AssociationSet>
+    <EntitySet Name="PolicySymbols" EntityType="MDMModel.PolicySymbol" />
+    <AssociationSet Name="FK__PolicySym__Regio__613C58EC" Association="MDMModel.FK__PolicySym__Regio__613C58EC">
+      <End Role="Region" EntitySet="Regions" />
+      <End Role="PolicySymbol" EntitySet="PolicySymbols" />
+    </AssociationSet>
+    <EntitySet Name="Brokers" EntityType="MDMModel.Broker" />
+    <EntitySet Name="BrokerParties" EntityType="MDMModel.BrokerParty" />
+    <EntitySet Name="BrokerProductLineSubTypes" EntityType="MDMModel.BrokerProductLineSubType" />
+    <AssociationSet Name="FK__BrokerPar__broke__3D491139" Association="MDMModel.FK__BrokerPar__broke__3D491139">
+      <End Role="Broker" EntitySet="Brokers" />
+      <End Role="BrokerParty" EntitySet="BrokerParties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BrokerParty_BrokerAddress" Association="MDMModel.FK_BrokerParty_BrokerAddress">
+      <End Role="BrokerParty" EntitySet="BrokerParties" />
+      <End Role="BrokerAddress" EntitySet="BrokerAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BC_CityId" Association="MDMModel.FK__BC_CityId">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="BrokerParty" EntitySet="BrokerParties" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BrokerProduct_BrokerPartyID" Association="MDMModel.FK__BrokerProduct_BrokerPartyID">
+      <End Role="BrokerParty" EntitySet="BrokerParties" />
+      <End Role="BrokerProductLine" EntitySet="BrokerProductLines" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BrokerProductSubType_BrokerPartyID" Association="MDMModel.FK__BrokerProductSubType_BrokerPartyID">
+      <End Role="BrokerParty" EntitySet="BrokerParties" />
+      <End Role="BrokerProductLineSubType" EntitySet="BrokerProductLineSubTypes" />
+    </AssociationSet>
+    <EntitySet Name="ProductLineSubTypes" EntityType="MDMModel.ProductLineSubType" />
+    <EntitySet Name="Underwriters" EntityType="MDMModel.Underwriter" />
+    <EntitySet Name="UnderwriterProductSubLines" EntityType="MDMModel.UnderwriterProductSubLine" />
+    <AssociationSet Name="FK__BrokerProductSubType_ProductLineSubTypeId" Association="MDMModel.FK__BrokerProductSubType_ProductLineSubTypeId">
+      <End Role="ProductLineSubType" EntitySet="ProductLineSubTypes" />
+      <End Role="BrokerProductLineSubType" EntitySet="BrokerProductLineSubTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ProductLineSubTypeId" Association="MDMModel.FK__ProductLineSubTypeId">
+      <End Role="ProductLineSubType" EntitySet="ProductLineSubTypes" />
+      <End Role="UnderwriterProductSubLine" EntitySet="UnderwriterProductSubLines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Underwriter_Region" Association="MDMModel.FK_Underwriter_Region">
+      <End Role="Region" EntitySet="Regions" />
+      <End Role="Underwriter" EntitySet="Underwriters" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UP_UnderwriterId" Association="MDMModel.FK__UP_UnderwriterId">
+      <End Role="Underwriter" EntitySet="Underwriters" />
+      <End Role="UnderwriterProductLine" EntitySet="UnderwriterProductLines" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UProSub_UnderwriterId" Association="MDMModel.FK__UProSub_UnderwriterId">
+      <End Role="Underwriter" EntitySet="Underwriters" />
+      <End Role="UnderwriterProductSubLine" EntitySet="UnderwriterProductSubLines" />
+    </AssociationSet>
+    <FunctionImport Name="SearchUnderwriterByProductLine" ReturnType="Collection(MDMModel.SearchUnderwriterByProductLine_Result)">
+      <Parameter Name="key" Mode="In" Type="String" />
+      <Parameter Name="regionId" Mode="In" Type="Int32" />
+      <Parameter Name="underWriterId" Mode="In" Type="Int32" />
+      <Parameter Name="productLineId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="ProductLines" EntityType="MDMModel.ProductLine" />
+    <AssociationSet Name="FK__BrokerProduct_ProductLineId" Association="MDMModel.FK__BrokerProduct_ProductLineId">
+      <End Role="ProductLine" EntitySet="ProductLines" />
+      <End Role="BrokerProductLine" EntitySet="BrokerProductLines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Coverage_ProductLine" Association="MDMModel.FK_Coverage_ProductLine">
+      <End Role="ProductLine" EntitySet="ProductLines" />
+      <End Role="Coverage" EntitySet="Coverages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PolicyTypes" Association="MDMModel.FK_PolicyTypes">
+      <End Role="ProductLine" EntitySet="ProductLines" />
+      <End Role="PolicyType" EntitySet="PolicyTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ProductLineId" Association="MDMModel.FK__ProductLineId">
+      <End Role="ProductLine" EntitySet="ProductLines" />
+      <End Role="ProductLineSubType" EntitySet="ProductLineSubTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UP_ProductLineId" Association="MDMModel.FK__UP_ProductLineId">
+      <End Role="ProductLine" EntitySet="ProductLines" />
+      <End Role="UnderwriterProductLine" EntitySet="UnderwriterProductLines" />
+    </AssociationSet>
+    <EntitySet Name="ProfitCodes" EntityType="MDMModel.ProfitCode" />
+    <EntitySet Name="SectionCodes" EntityType="MDMModel.SectionCode" />
+    <AssociationSet Name="FK_ProductLineSubTypeId" Association="MDMModel.FK_ProductLineSubTypeId">
+      <End Role="ProductLineSubType" EntitySet="ProductLineSubTypes" />
+      <End Role="SectionCode" EntitySet="SectionCodes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SectionCodeId" Association="MDMModel.FK_SectionCodeId">
+      <End Role="SectionCode" EntitySet="SectionCodes" />
+      <End Role="ProfitCode" EntitySet="ProfitCodes" />
+    </AssociationSet>
+  </EntityContainer>
+  <ComplexType Name="SearchBrokerByProductLine_Result">
+    <Property Type="String" Name="BrokerName" Nullable="false" MaxLength="100" />
+    <Property Type="Guid" Name="BrokerId" Nullable="false" />
+    <Property Type="String" Name="BrokerCode" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="SourceSystemName" Nullable="true" MaxLength="20" />
+  </ComplexType>
+  <ComplexType Name="SearchBrokerContact_Result">
+    <Property Type="Guid" Name="ContactPersonId" Nullable="false" />
+    <Property Type="Guid" Name="BrokerPartyId" Nullable="false" />
+    <Property Type="String" Name="Title" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="FirstName" Nullable="false" MaxLength="250" />
+    <Property Type="String" Name="LastName" Nullable="false" MaxLength="250" />
+    <Property Type="String" Name="PartyFunction" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="Email" Nullable="false" MaxLength="250" />
+    <Property Type="String" Name="PhoneNumber" Nullable="false" MaxLength="250" />
+    <Property Type="String" Name="MobileNumber" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="Fax" Nullable="true" MaxLength="250" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="String" Name="SourceSystemName" Nullable="true" MaxLength="20" />
+    <Property Type="DateTime" Name="CreatedOnDate" Nullable="false" Precision="16" />
+    <Property Type="Int32" Name="CreatedByUserId" Nullable="false" />
+    <Property Type="DateTime" Name="LastModifedOnDate" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="LastModifiedByUserId" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SearchBrokerEntityByProductLine_Result">
+    <Property Type="String" Name="BrokerName" Nullable="false" MaxLength="100" />
+    <Property Type="Guid" Name="BrokerId" Nullable="false" />
+    <Property Type="String" Name="BrokerCode" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="CityName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="BrokerFullCode" Nullable="true" MaxLength="18" />
+    <Property Type="Guid" Name="BrokerPartyId" Nullable="true" />
+    <Property Type="String" Name="BrokerEntityName" Nullable="true" MaxLength="100" />
+    <Property Type="Int16" Name="StateId" Nullable="true" />
+    <Property Type="String" Name="StateName" Nullable="true" MaxLength="100" />
+    <Property Type="Int16" Name="CountryId" Nullable="true" />
+    <Property Type="String" Name="CountryName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="BrokerType" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="BrokerSubType" Nullable="true" MaxLength="100" />
+    <Property Type="Int16" Name="ProductLineId" Nullable="true" />
+    <Property Type="String" Name="StreetAddress" Nullable="true" MaxLength="150" />
+  </ComplexType>
+  <ComplexType Name="GetPolicyTypeList_Result">
+    <Property Type="Int32" Name="PolicyTypeId" Nullable="false" />
+    <Property Type="String" Name="AttachmentType" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="PolicyType" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CoverageVersion" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="PolicySymbol" Nullable="true" MaxLength="3" />
+    <Property Type="String" Name="PolicyCode" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="PolicySymbolDescription" Nullable="true" MaxLength="63" />
+  </ComplexType>
+  <EntityType Name="Reasoncode">
+    <Key>
+      <PropertyRef Name="ReasonID" />
+    </Key>
+    <Property Name="ReasonID" Type="Guid" Nullable="false" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemId" Type="Int16" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="Renewal" Type="Boolean" Nullable="false" />
+    <Property Name="StatusId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Status" Relationship="MDMModel.FK__Reasoncod__Statu__57E7F8DC" FromRole="Reasoncode" ToRole="Status" />
+    <NavigationProperty Name="Status1" Relationship="MDMModel.fk_ReasonStatuscode" FromRole="Reasoncode" ToRole="Status" />
+    <Property Name="DetailDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK__Reasoncod__Statu__57E7F8DC">
+    <End Type="MDMModel.Status" Role="Status" Multiplicity="1" />
+    <End Type="MDMModel.Reasoncode" Role="Reasoncode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="StatusId" />
+      </Principal>
+      <Dependent Role="Reasoncode">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ReasonStatuscode">
+    <End Type="MDMModel.Status" Role="Status" Multiplicity="1" />
+    <End Type="MDMModel.Reasoncode" Role="Reasoncode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="StatusId" />
+      </Principal>
+      <Dependent Role="Reasoncode">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Coverage">
+    <Key>
+      <PropertyRef Name="CoverageId" />
+    </Key>
+    <Property Name="CoverageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CoverageCode" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+    <Property Name="CoverageName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CoverageDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ProductLineId" Type="Int16" Nullable="false" />
+    <Property Name="SourceSystemName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="PolicyTypeId" Type="Int32" />
+    <NavigationProperty Name="ProductLine" Relationship="MDMModel.FK_Coverage_ProductLine" FromRole="Coverage" ToRole="ProductLine" />
+  </EntityType>
+  <EntityType Name="PolicyType">
+    <Key>
+      <PropertyRef Name="PolicyTypeId" />
+    </Key>
+    <Property Name="PolicyTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AttachmentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PolicyType1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CoverageVersion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PolicySymbol" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+    <Property Name="PolicySymbolDescription" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+    <Property Name="PolicyCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="IsDirect" Type="Boolean" />
+    <Property Name="ProductLineId" Type="Int16" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="ProductlineSubtypeId" Type="Int32" />
+    <NavigationProperty Name="ProductLine" Relationship="MDMModel.FK_PolicyTypes" FromRole="PolicyType" ToRole="ProductLine" />
+  </EntityType>
+  <EntityType Name="CurrencyRegion">
+    <Key>
+      <PropertyRef Name="Currencyid" />
+      <PropertyRef Name="Regionid" />
+    </Key>
+    <Property Name="Currencyid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Regionid" Type="Int16" Nullable="false" />
+    <Property Name="Transactional" Type="Int32" Nullable="false" />
+    <Property Name="Original" Type="Int32" Nullable="false" />
+    <Property Name="Jurisdictional" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Currency" Relationship="MDMModel.FK_CurrencyRegion_Currency" FromRole="CurrencyRegion" ToRole="Currency" />
+    <NavigationProperty Name="Region" Relationship="MDMModel.FK_CurrencyRegion_Region" FromRole="CurrencyRegion" ToRole="Region" />
+  </EntityType>
+  <Association Name="FK_CurrencyRegion_Currency">
+    <End Type="MDMModel.Currency" Role="Currency" Multiplicity="1" />
+    <End Type="MDMModel.CurrencyRegion" Role="CurrencyRegion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Currency">
+        <PropertyRef Name="CurrencyId" />
+      </Principal>
+      <Dependent Role="CurrencyRegion">
+        <PropertyRef Name="Currencyid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CurrencyRegion_Region">
+    <End Type="MDMModel.Region" Role="Region" Multiplicity="1" />
+    <End Type="MDMModel.CurrencyRegion" Role="CurrencyRegion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionId" />
+      </Principal>
+      <Dependent Role="CurrencyRegion">
+        <PropertyRef Name="Regionid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="FormType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductLineId" Type="Int32" />
+    <Property Name="FormTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <ComplexType Name="SearchInsuredList_Result">
+    <Property Type="Int64" Name="Ranks" Nullable="true" />
+    <Property Type="Guid" Name="PartyId" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+    <Property Type="Int32" Name="AdvisenId" Nullable="true" />
+    <Property Type="String" Name="DBNumber" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="NAICCode" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="SICCode" Nullable="true" MaxLength="20" />
+    <Property Type="Int32" Name="InsuredAliasId" Nullable="true" />
+    <Property Type="String" Name="InsuredAliasName" Nullable="true" MaxLength="300" />
+    <Property Type="DateTime" Name="ChildInsFromDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="ChildInsToDate" Nullable="true" Precision="23" />
+    <Property Type="Guid" Name="AddressId" Nullable="true" />
+    <Property Type="String" Name="Addressline1" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="Addressline2" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="Zipcode" Nullable="true" MaxLength="15" />
+    <Property Type="Boolean" Name="IsPrimaryAddress" Nullable="true" />
+    <Property Type="String" Name="AddressType" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="CityId" Nullable="true" />
+    <Property Type="String" Name="CityName" Nullable="true" MaxLength="150" />
+    <Property Type="Int16" Name="StateId" Nullable="true" />
+    <Property Type="String" Name="StateName" Nullable="true" MaxLength="100" />
+    <Property Type="Int16" Name="CountryId" Nullable="true" />
+    <Property Type="String" Name="CountryName" Nullable="false" MaxLength="150" />
+  </ComplexType>
+  <EntityType Name="Branch">
+    <Key>
+      <PropertyRef Name="BranchId" />
+    </Key>
+    <Property Name="BranchId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BranchName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="BranchCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="BranchDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="RegionId" Type="Int16" />
+    <Property Name="CityId" Type="Int32" />
+    <Property Name="SourceSystemName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="City" Relationship="MDMModel.FK__CityId" FromRole="Branch" ToRole="City" />
+    <NavigationProperty Name="Region" Relationship="MDMModel.FK_RegionId" FromRole="Branch" ToRole="Region" />
+  </EntityType>
+  <Association Name="FK__CityId">
+    <End Type="MDMModel.City" Role="City" Multiplicity="0..1" />
+    <End Type="MDMModel.Branch" Role="Branch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="Branch">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RegionId">
+    <End Type="MDMModel.Region" Role="Region" Multiplicity="0..1" />
+    <End Type="MDMModel.Branch" Role="Branch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionId" />
+      </Principal>
+      <Dependent Role="Branch">
+        <PropertyRef Name="RegionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PolicySymbol">
+    <Key>
+      <PropertyRef Name="PolicySymbolId" />
+    </Key>
+    <Property Name="PolicySymbolId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PolicySymbol1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="RegionId" Type="Int16" />
+    <NavigationProperty Name="Region" Relationship="MDMModel.FK__PolicySym__Regio__613C58EC" FromRole="PolicySymbol" ToRole="Region" />
+  </EntityType>
+  <Association Name="FK__PolicySym__Regio__613C58EC">
+    <End Type="MDMModel.Region" Role="Region" Multiplicity="0..1" />
+    <End Type="MDMModel.PolicySymbol" Role="PolicySymbol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionId" />
+      </Principal>
+      <Dependent Role="PolicySymbol">
+        <PropertyRef Name="RegionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Broker">
+    <Key>
+      <PropertyRef Name="BrokerId" />
+    </Key>
+    <Property Name="BrokerName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="BrokerDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="BrokerCode" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Name="ParentBrokerId" Type="Int32" />
+    <Property Name="AdvisenId" Type="Int32" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="BrokerId" Type="Guid" Nullable="false" />
+    <NavigationProperty Name="BrokerParties" Relationship="MDMModel.FK__BrokerPar__broke__3D491139" FromRole="Broker" ToRole="BrokerParty" />
+  </EntityType>
+  <EntityType Name="BrokerParty">
+    <Key>
+      <PropertyRef Name="BrokerPartyId" />
+    </Key>
+    <Property Name="BrokerPartyId" Type="Guid" Nullable="false" />
+    <Property Name="Cityid" Type="Int32" Nullable="false" />
+    <Property Name="BrokerEntityName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="BrokerEntityDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="BrokerFullCode" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+    <Property Name="BrokerStreetAddressLine1" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="BrokerStreetAddressLine2" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="BrokerZipCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="brokerid" Type="Guid" />
+    <Property Name="BrokerType" Type="Guid" />
+    <Property Name="Wholesaler" Type="Guid" />
+    <NavigationProperty Name="Broker" Relationship="MDMModel.FK__BrokerPar__broke__3D491139" FromRole="BrokerParty" ToRole="Broker" />
+    <NavigationProperty Name="BrokerAddresses" Relationship="MDMModel.FK_BrokerParty_BrokerAddress" FromRole="BrokerParty" ToRole="BrokerAddress" />
+    <NavigationProperty Name="City" Relationship="MDMModel.FK__BC_CityId" FromRole="BrokerParty" ToRole="City" />
+    <NavigationProperty Name="BrokerProductLines" Relationship="MDMModel.FK__BrokerProduct_BrokerPartyID" FromRole="BrokerParty" ToRole="BrokerProductLine" />
+    <NavigationProperty Name="BrokerProductLineSubTypes" Relationship="MDMModel.FK__BrokerProductSubType_BrokerPartyID" FromRole="BrokerParty" ToRole="BrokerProductLineSubType" />
+  </EntityType>
+  <EntityType Name="BrokerProductLineSubType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductLineSubTypeId" Type="Int32" Nullable="false" />
+    <Property Name="BrokerPartyID" Type="Guid" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="CreatedOnDate" Type="DateTime" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="BrokerParty" Relationship="MDMModel.FK__BrokerProductSubType_BrokerPartyID" FromRole="BrokerProductLineSubType" ToRole="BrokerParty" />
+    <NavigationProperty Name="ProductLineSubType" Relationship="MDMModel.FK__BrokerProductSubType_ProductLineSubTypeId" FromRole="BrokerProductLineSubType" ToRole="ProductLineSubType" />
+  </EntityType>
+  <Association Name="FK__BrokerPar__broke__3D491139">
+    <End Type="MDMModel.Broker" Role="Broker" Multiplicity="0..1" />
+    <End Type="MDMModel.BrokerParty" Role="BrokerParty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Broker">
+        <PropertyRef Name="BrokerId" />
+      </Principal>
+      <Dependent Role="BrokerParty">
+        <PropertyRef Name="brokerid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BrokerParty_BrokerAddress">
+    <End Type="MDMModel.BrokerParty" Role="BrokerParty" Multiplicity="1" />
+    <End Type="MDMModel.BrokerAddress" Role="BrokerAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BrokerParty">
+        <PropertyRef Name="BrokerPartyId" />
+      </Principal>
+      <Dependent Role="BrokerAddress">
+        <PropertyRef Name="Partyid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BC_CityId">
+    <End Type="MDMModel.City" Role="City" Multiplicity="1" />
+    <End Type="MDMModel.BrokerParty" Role="BrokerParty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="BrokerParty">
+        <PropertyRef Name="Cityid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BrokerProduct_BrokerPartyID">
+    <End Type="MDMModel.BrokerParty" Role="BrokerParty" Multiplicity="1" />
+    <End Type="MDMModel.BrokerProductLine" Role="BrokerProductLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BrokerParty">
+        <PropertyRef Name="BrokerPartyId" />
+      </Principal>
+      <Dependent Role="BrokerProductLine">
+        <PropertyRef Name="BrokerPartyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BrokerProductSubType_BrokerPartyID">
+    <End Type="MDMModel.BrokerParty" Role="BrokerParty" Multiplicity="1" />
+    <End Type="MDMModel.BrokerProductLineSubType" Role="BrokerProductLineSubType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BrokerParty">
+        <PropertyRef Name="BrokerPartyId" />
+      </Principal>
+      <Dependent Role="BrokerProductLineSubType">
+        <PropertyRef Name="BrokerPartyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ProductLineSubType">
+    <Key>
+      <PropertyRef Name="ProductLineSubTypeId" />
+    </Key>
+    <Property Name="ProductLineSubTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductLineSubTypeName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ProductLineSubTypeDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ProductLineId" Type="Int16" Nullable="false" />
+    <Property Name="SourceSystemName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="Code" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="BrokerProductLineSubTypes" Relationship="MDMModel.FK__BrokerProductSubType_ProductLineSubTypeId" FromRole="ProductLineSubType" ToRole="BrokerProductLineSubType" />
+    <NavigationProperty Name="UnderwriterProductSubLines" Relationship="MDMModel.FK__ProductLineSubTypeId" FromRole="ProductLineSubType" ToRole="UnderwriterProductSubLine" />
+    <NavigationProperty Name="ProductLine" Relationship="MDMModel.FK__ProductLineId" FromRole="ProductLineSubType" ToRole="ProductLine" />
+    <NavigationProperty Name="SectionCodes" Relationship="MDMModel.FK_ProductLineSubTypeId" FromRole="ProductLineSubType" ToRole="SectionCode" />
+  </EntityType>
+  <EntityType Name="Underwriter">
+    <Key>
+      <PropertyRef Name="UnderwriterId" />
+    </Key>
+    <Property Name="UnderwriterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UnderwriterName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="UnderwriterDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="RegionId" Type="Int16" Nullable="false" />
+    <Property Name="SourceSystemName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemId" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="WindowsLogin" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="Region" Relationship="MDMModel.FK_Underwriter_Region" FromRole="Underwriter" ToRole="Region" />
+    <NavigationProperty Name="UnderwriterProductLines" Relationship="MDMModel.FK__UP_UnderwriterId" FromRole="Underwriter" ToRole="UnderwriterProductLine" />
+    <NavigationProperty Name="UnderwriterProductSubLines" Relationship="MDMModel.FK__UProSub_UnderwriterId" FromRole="Underwriter" ToRole="UnderwriterProductSubLine" />
+  </EntityType>
+  <EntityType Name="UnderwriterProductSubLine">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductLineSubTypeId" Type="Int32" Nullable="false" />
+    <Property Name="UnderwriterId" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="CreatedOnDate" Type="DateTime" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="ProductLineSubType" Relationship="MDMModel.FK__ProductLineSubTypeId" FromRole="UnderwriterProductSubLine" ToRole="ProductLineSubType" />
+    <NavigationProperty Name="Underwriter" Relationship="MDMModel.FK__UProSub_UnderwriterId" FromRole="UnderwriterProductSubLine" ToRole="Underwriter" />
+  </EntityType>
+  <Association Name="FK__BrokerProductSubType_ProductLineSubTypeId">
+    <End Type="MDMModel.ProductLineSubType" Role="ProductLineSubType" Multiplicity="1" />
+    <End Type="MDMModel.BrokerProductLineSubType" Role="BrokerProductLineSubType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductLineSubType">
+        <PropertyRef Name="ProductLineSubTypeId" />
+      </Principal>
+      <Dependent Role="BrokerProductLineSubType">
+        <PropertyRef Name="ProductLineSubTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ProductLineSubTypeId">
+    <End Type="MDMModel.ProductLineSubType" Role="ProductLineSubType" Multiplicity="1" />
+    <End Type="MDMModel.UnderwriterProductSubLine" Role="UnderwriterProductSubLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductLineSubType">
+        <PropertyRef Name="ProductLineSubTypeId" />
+      </Principal>
+      <Dependent Role="UnderwriterProductSubLine">
+        <PropertyRef Name="ProductLineSubTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Underwriter_Region">
+    <End Type="MDMModel.Region" Role="Region" Multiplicity="1" />
+    <End Type="MDMModel.Underwriter" Role="Underwriter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionId" />
+      </Principal>
+      <Dependent Role="Underwriter">
+        <PropertyRef Name="RegionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UP_UnderwriterId">
+    <End Type="MDMModel.Underwriter" Role="Underwriter" Multiplicity="1" />
+    <End Type="MDMModel.UnderwriterProductLine" Role="UnderwriterProductLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Underwriter">
+        <PropertyRef Name="UnderwriterId" />
+      </Principal>
+      <Dependent Role="UnderwriterProductLine">
+        <PropertyRef Name="UnderwriterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UProSub_UnderwriterId">
+    <End Type="MDMModel.Underwriter" Role="Underwriter" Multiplicity="1" />
+    <End Type="MDMModel.UnderwriterProductSubLine" Role="UnderwriterProductSubLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Underwriter">
+        <PropertyRef Name="UnderwriterId" />
+      </Principal>
+      <Dependent Role="UnderwriterProductSubLine">
+        <PropertyRef Name="UnderwriterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="SearchUnderwriterByProductLine_Result">
+    <Property Type="String" Name="UnderwriterName" Nullable="false" MaxLength="150" />
+    <Property Type="Int32" Name="UnderwriterId" Nullable="false" />
+    <Property Type="Int16" Name="ProductLineId" Nullable="true" />
+    <Property Type="String" Name="ProductLineName" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="ProductLineSubTypeId" Nullable="true" />
+    <Property Type="String" Name="ProductLineSubTypeName" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <EntityType Name="ProductLine">
+    <Key>
+      <PropertyRef Name="ProductLineId" />
+    </Key>
+    <Property Name="ProductLineId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductLineName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ProductLineCode" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <NavigationProperty Name="BrokerProductLines" Relationship="MDMModel.FK__BrokerProduct_ProductLineId" FromRole="ProductLine" ToRole="BrokerProductLine" />
+    <NavigationProperty Name="Coverages" Relationship="MDMModel.FK_Coverage_ProductLine" FromRole="ProductLine" ToRole="Coverage" />
+    <NavigationProperty Name="PolicyTypes" Relationship="MDMModel.FK_PolicyTypes" FromRole="ProductLine" ToRole="PolicyType" />
+    <NavigationProperty Name="ProductLineSubTypes" Relationship="MDMModel.FK__ProductLineId" FromRole="ProductLine" ToRole="ProductLineSubType" />
+    <NavigationProperty Name="UnderwriterProductLines" Relationship="MDMModel.FK__UP_ProductLineId" FromRole="ProductLine" ToRole="UnderwriterProductLine" />
+  </EntityType>
+  <Association Name="FK__BrokerProduct_ProductLineId">
+    <End Type="MDMModel.ProductLine" Role="ProductLine" Multiplicity="1" />
+    <End Type="MDMModel.BrokerProductLine" Role="BrokerProductLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductLine">
+        <PropertyRef Name="ProductLineId" />
+      </Principal>
+      <Dependent Role="BrokerProductLine">
+        <PropertyRef Name="ProductLineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Coverage_ProductLine">
+    <End Type="MDMModel.ProductLine" Role="ProductLine" Multiplicity="1" />
+    <End Type="MDMModel.Coverage" Role="Coverage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductLine">
+        <PropertyRef Name="ProductLineId" />
+      </Principal>
+      <Dependent Role="Coverage">
+        <PropertyRef Name="ProductLineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PolicyTypes">
+    <End Type="MDMModel.ProductLine" Role="ProductLine" Multiplicity="0..1" />
+    <End Type="MDMModel.PolicyType" Role="PolicyType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductLine">
+        <PropertyRef Name="ProductLineId" />
+      </Principal>
+      <Dependent Role="PolicyType">
+        <PropertyRef Name="ProductLineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ProductLineId">
+    <End Type="MDMModel.ProductLine" Role="ProductLine" Multiplicity="1" />
+    <End Type="MDMModel.ProductLineSubType" Role="ProductLineSubType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductLine">
+        <PropertyRef Name="ProductLineId" />
+      </Principal>
+      <Dependent Role="ProductLineSubType">
+        <PropertyRef Name="ProductLineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UP_ProductLineId">
+    <End Type="MDMModel.ProductLine" Role="ProductLine" Multiplicity="1" />
+    <End Type="MDMModel.UnderwriterProductLine" Role="UnderwriterProductLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductLine">
+        <PropertyRef Name="ProductLineId" />
+      </Principal>
+      <Dependent Role="UnderwriterProductLine">
+        <PropertyRef Name="ProductLineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ProfitCode">
+    <Key>
+      <PropertyRef Name="ProfitCodeId" />
+    </Key>
+    <Property Name="ProfitCodeId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProfitCodeName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ProfitCodeDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="SourceSystemId" Type="Int16" />
+    <Property Name="ISOCGName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SectionCodeId" Type="Int16" Nullable="false" />
+    <Property Name="SourceSystemName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="Code" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SectionCode" Relationship="MDMModel.FK_SectionCodeId" FromRole="ProfitCode" ToRole="SectionCode" />
+  </EntityType>
+  <EntityType Name="SectionCode">
+    <Key>
+      <PropertyRef Name="SectionCodeId" />
+    </Key>
+    <Property Name="SectionCodeId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SectionCodeName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Code" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="SectionCodeDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ProductLineSubTypeId" Type="Int32" Nullable="false" />
+    <Property Name="SectionCodeLookupId" Type="Int16" />
+    <Property Name="SourceSystemName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedByUserId" Type="Int32" />
+    <Property Name="SourceSystemId" Type="Int32" />
+    <NavigationProperty Name="ProductLineSubType" Relationship="MDMModel.FK_ProductLineSubTypeId" FromRole="SectionCode" ToRole="ProductLineSubType" />
+    <NavigationProperty Name="ProfitCodes" Relationship="MDMModel.FK_SectionCodeId" FromRole="SectionCode" ToRole="ProfitCode" />
+  </EntityType>
+  <Association Name="FK_ProductLineSubTypeId">
+    <End Type="MDMModel.ProductLineSubType" Role="ProductLineSubType" Multiplicity="1" />
+    <End Type="MDMModel.SectionCode" Role="SectionCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductLineSubType">
+        <PropertyRef Name="ProductLineSubTypeId" />
+      </Principal>
+      <Dependent Role="SectionCode">
+        <PropertyRef Name="ProductLineSubTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SectionCodeId">
+    <End Type="MDMModel.SectionCode" Role="SectionCode" Multiplicity="1" />
+    <End Type="MDMModel.ProfitCode" Role="ProfitCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SectionCode">
+        <PropertyRef Name="SectionCodeId" />
+      </Principal>
+      <Dependent Role="ProfitCode">
+        <PropertyRef Name="SectionCodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

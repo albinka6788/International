@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Angular JS Controller</title>
+    <link href="~/Content/plugin/toastr-2.1.2/toastr.min.css" rel="stylesheet" />
+    <link href="~/Content/css/extended.css" rel="stylesheet" />
+</head>
+
+<body>
+    <h2>AngularJS Sample Application</h2> <button>test</button>
+
+    <div ng-app="rootApplication" ng-controller="indexController">
+        <ul>
+            <li ng-repeat="user in users">
+                Name : {{user.BrokerName}}, Email : {{user.Email}}, CreatedOn : {{user.CreatedOn}}
+            </li>
+        </ul>
+    </div>
+
+    <img id="throbber-image-1" src="@Url.Content("~/Content/images/ajax-loader-1.gif")" alt=""/>
+    <div id="throbber-curtain"></div>
+
+    <script type="text/javascript" src="~/Scripts/js-system/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/js-system/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/js-system/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/js-system/jquery-ui-1.8.24.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/js-system/angular-1.4.8.js"></script>
+    <script type="text/javascript" src="~/Scripts/js-application/extensions.js"></script>
+    <script type="text/javascript" src="~/Content/plugin/toastr-2.1.2/toastr.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/rootApplication.js"></script>
+    <script type="text/javascript" src="~/Scripts/services/utilities.js"></script>
+    <script type="text/javascript" src="~/Scripts/controllers/indexController.js"></script>
+
+</body>
+</html>

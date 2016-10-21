@@ -1,0 +1,41 @@
+﻿@model International.BusinessEntities.Models.AdditionalInsuredModel
+@{ var regularPattern = @"^([-_.,()/@$a-zA-Z0-9 ]+$)";}
+
+    <!-- Modal Insured Details -->
+    <div id="add-insured" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Additional Insured Details</h4>
+                </div>
+                <form id="AdditionalInsured">
+                    <div class="modal-body">
+                        <p>
+                            <div class="clearfix">
+                                <label class="col-md-5" for="name">Additional Insured Name</label>
+                                <div class="col-md-7">                              
+                                    @Html.TextBoxFor(model => model.InsuredName, new { placeholder = "Additional Insured Name", data_ng_model = "AdditionalInsured.InsuredName",
+                                                                                       @class = "form-control",
+                                                                                       allow_pattern = regularPattern,
+                                                                                       maxlength = "300",
+                                                                                       extraspace = "",
+                                                                                       autocomplete = "off"
+                               })
+                                    @Html.ValidationMessageFor(model=>model.InsuredName)
+                        </div>
+                    </div>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="SaveAdditionalInsured();">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+</div>
+

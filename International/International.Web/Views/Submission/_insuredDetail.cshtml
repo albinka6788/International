@@ -1,0 +1,668 @@
+﻿@model International.BusinessEntities.Models.SubmissionModel
+
+@{ var regularPattern = @"^([-_.,()/@$a-zA-Z0-9 ]+$)";
+   //var alphaNumericPattern = @"^([()$a-zA-Z0-9 ]+$)";
+ var isView = (bool)ViewBag.isView;
+}
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            $.validator.setDefaults({ ignore: [] });
+        });
+
+    </script>
+}
+
+@if (!isView)
+{
+    <div class="container-fluid bottom-space" ng-init="InitInsuredPage()">
+        <div class="bg-primary">
+            <h4>Insured Details</h4>
+        </div>
+        <form name="insuredForm" id="InsuredForm">
+
+            <div class="td-space clearfix">
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Insured Name</label>
+                        <div class=" col-md-6">
+                            <div class="input-group">
+                                @Html.TextBoxFor(model => model.Insured, new
+                           {
+                               @class = "form-control",
+                               data_ng_model = "submissionModel.Insured",
+                               placeholder = "Search Insured Name",
+                               data_ng_minlength = "3",
+                               validation_rules = "",
+                               status = "{{submissionModel.CurrentStatusId}}",
+                               identifier = "DisableLostCancellation",
+                               ng_readonly = "currentprocess == enums.SubmissionProcess.EditAmendment || currentprocess == enums.SubmissionProcess.CreateAmendment",
+                               data_ng_blur = "checkInsured()",
+                               autocomplete = "off"
+                           })
+                                @Html.HiddenFor(model => model.InsuredId)
+
+                                <span class="input-group-addon" id="basic-addon2" data-toggle="modal" ng-click="searchInsured();" style="cursor:pointer;"><i class="fa fa-search"></i></span>
+                                <div style="display:none;">
+                                    @Html.ValidationMessageFor(model => model.Insured)
+                                    @Html.ValidationMessageFor(model => model.SelectedInsured)
+                                    @Html.TextBoxFor(model => model.SelectedInsured, new { @class = "form-control", data_ng_model = "submissionModel.SelectedInsured" })
+                                </div>
+
+
+
+                            </div>
+                            <span class="field-validation-error" ng-show="insuredForm.Insured.$error.minlength">
+                                <span class="" for="Insured" generated="true">Please enter at least 3 characters of insured name</span>
+                            </span>
+                            @*@Html.ValidationMessageFor(model => model.Insured)*@
+                            @Html.ValidationMessageFor(model => model.SelectedInsured)
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        @*<a href="http://uat.mdm.berksi.com" target="_blank">   <button type="button" class="btn btn-primary col-md-2">Manage</button></a>*@
+                        <a href="http://mdm.berksi.com" target="_blank">   <button type="button" class="btn btn-primary col-md-2">Manage</button></a>
+                    </div>
+                    <div class="col-md-4 form-group" ng-show="submissionModel.SelectedInsured">
+                        <label class="col-md-6" for="name">Selected Insured</label>
+                        <div class="col-md-6">
+                            <span title="{{submissionModel.SelectedInsured}}" data-toggle="tooltip" tooltip> {{submissionModel.SelectedInsured|textCutFilter}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Address Line 1</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" data-ng-model="InsuredDetail.Addressline1" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Address Line 2</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" data-ng-model="InsuredDetail.Addressline2" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Insured Country</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" data-ng-model="InsuredDetail.CountryName" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Insured State</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" data-ng-model="InsuredDetail.StateName" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Insured City</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" data-ng-model="InsuredDetail.CityName" disabled>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Insured Zip Code</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" data-ng-model="InsuredDetail.Zipcode" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">D&B Number</label>
+                        <div class="col-md-6">
+                            <input type="text" value="" class="form-control" data-ng-model="InsuredDetail.DBNumber" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">NAIC Code</label>
+                        <div class="col-md-6">
+                            <input type="text" value="" class="form-control" data-ng-model="InsuredDetail.NAICCode" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">SIC Code</label>
+                        <div class="col-md-6">
+                            <input type="text" value="" class="form-control" data-ng-model="InsuredDetail.SICCode" disabled>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-8" for="name">Is DBA Name different from Insured?</label>
+                        <div class="col-md-4">
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(x => x.IsDifferentDBA, true, new
+                                               {
+                                                   data_ng_model = "submissionModel.IsDifferentDBA",
+                                                   data_ng_change = "setDba();",
+                                                   data_ng_value = "true",
+                                                   validation_rules = "",
+                                                   status = "{{submissionModel.CurrentStatusId}}",
+                                                   identifier = "DisableLostCancellation"
+                                               }) Yes
+
+                            </label>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(x => x.IsDifferentDBA, false, new
+                                               {
+                                                   data_ng_model = "submissionModel.IsDifferentDBA",
+                                                   data_ng_change = "setDba();",
+                                                   data_ng_value = "false",
+                                                   validation_rules = "",
+                                                   status = "{{submissionModel.CurrentStatusId}}",
+                                                   identifier = "DisableLostCancellation"
+                                               }) No
+                            </label>
+                            @Html.ValidationMessageFor(model => model.IsDifferentDBA)
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">DBA Name</label>
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.DBAName, new
+                           {
+                               //validate_alpha_numeric = "",
+                               data_ng_model = "submissionModel.DBAName",
+                               @class = "form-control",
+                               maxlength = "250",
+                               data_ng_disabled = "submissionModel.IsDifferentDBA==false",
+                               validation_rules = "",
+                               status = "{{submissionModel.CurrentStatusId}}",
+                               identifier = "DisableLostCancellation",
+                               //allow_pattern = alphaNumericPattern,
+                               autocomplete = "off"
+                           })
+                            @Html.ValidationMessageFor(model => model.DBAName)
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Direct/Assumed</label>
+                        <div class="col-md-6">
+                            <select class="form-control" data-ng-model="submissionModel.DirectAssumedTypeCode" ng-options="option.Value as option.Text for option in submissionListModel.DirectAssumedList"
+                                    data-val="true"
+                                    @*data-val-required="Please select Direct / Assumed"*@
+                                    name="DirectAssumedTypeCode" id="DirectAssumedTypeCode"
+                                    ng-change="submissionModel.CedantName=submissionModel.DirectAssumedTypeCode == enums.DirectAssumed.Assumed?'':''"
+                                    validation_rules=""
+                                    status="{{submissionModel.CurrentStatusId}}"
+                                    identifier="DisableLostQuotedIndicatedEndorse">
+                                <option value="">- Select  -</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.DirectAssumedTypeCode)
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Cedant Name</label>
+                        <div class="col-md-6">
+
+                            <input type="text" class="form-control" name="CedantName" ng-model="submissionModel.CedantName"
+                                   ng-disabled="!(submissionModel.DirectAssumedTypeCode == enums.DirectAssumed.Assumed)" maxlength="250" allow_pattern=@regularPattern extraspace=""
+                                   validation_rules=""
+                                   status="{{submissionModel.CurrentStatusId}}"
+                                   identifier="DisableLostCancellation"
+                                   autocomplete="off" />
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Domicile Country</label>
+                        <div class="col-md-6">
+                            <select class="form-control" data-ng-model="submissionModel.DomicileCountryId" ng-options="option.Value as option.Text for option in submissionListModel.CountryList"
+                                    ng-change="setDomicileStateList();" convert-to-number
+                                    validation_rules=""
+                                    status="{{submissionModel.CurrentStatusId}}"
+                                    identifier="DomicileCountryId"
+                                    ng-disabled="DomacileDisableRule();"
+                                    data-val="true" name="DomicileCountryId" id="DomicileCountryId">
+                                <option value="">- Select  -</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.DomicileCountryId)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Domicile State</label>
+                        <div class="col-md-6">
+                            <select class="form-control" data-ng-model="submissionModel.DomicileStateId" ng-options="option.Value as option.Text for option in submissionListModel.DomacileStateList" convert-to-number
+                                    validation_rules=""
+                                    status="{{submissionModel.CurrentStatusId}}"
+                                    ng-disabled="DomacileDisableRule();"
+                                    identifier="DomicileStateId" data-val="true" name="DomicileStateId" id="DomicileStateId">
+                                <option value="">- Select  -</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.DomicileStateId)
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Assumed Entity Type</label>
+                        <div class="col-md-6">
+                            <select class="form-control" data-ng-model="submissionModel.AssumedEntityType" ng-options="option.Value as option.Text for option in submissionListModel.AssumedEntityList"
+                                    name="AssumedEntityType" id="AssumedEntityType" validation_rules=""
+                                    status="{{submissionModel.CurrentStatusId}}"
+                                    identifier="AssumedEntityType">
+                                <option value="">- Select  -</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-insured" ng-click="addAdditionalInsured();" ng-show="!LostDisableRule();">Add Additional Insured</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-cedant" ng-click="addAdditionalCedant();" ng-show="!LostDisableRule();">Add Additional Cedant</button>
+                </div>
+                <div class="col-md-6 btn-size">
+                    <button type="button" class="btn btn-primary" ng-click="saveInsured()">Next</button>
+                    <button type="button" class="btn btn-primary" ng-click="decrementStep()">Back</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+    <div class="container-fluid  dt-overflow">
+
+        <div class="table-responsive" ng-show="submissionModel.AdditionalInsureds.length > 0">
+            <div class="bg-primary">
+                <h4>Additional Insured Details</h4>
+            </div>
+            <table border="1" class="table table-bordered table-striped display" id="insuredlist" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Insured Name</th>
+                        <th width="20%">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="additionalInsured in submissionModel.AdditionalInsureds">
+                        <td>
+                            <a href="#" data-toggle="tooltip" data-placement="right" title="{{additionalInsured.InsuredName}}" tooltip>
+                                {{additionalInsured.InsuredName|textCutFilter}}
+                            </a>
+                        </td>
+                        <td class="actions">
+                            <a href="javascript:void(0);" ng-click="getAdditionalInsured($index);" data-toggle="modal" data-target="#add-insured" ng-show="!LostDisableRule();"><i class="fa fa-edit"></i></a>
+                            <a href="javascript:void(0);" ng-click="deleteAdditionalInsured($index);"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive" ng-show="submissionModel.AdditionalCedants.length > 0">
+            <div class="bg-primary">
+                <h4>Additional Cedant Details</h4>
+            </div>
+            <table border="1" class="table table-bordered table-striped display" id="clist" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th width="20%">Cedant Name</th>
+                        <th width="20%">Domicile Country</th>
+                        <th width="20%">Domicile State</th>
+                        <th width="20%">Assumed Entity Type</th>
+                        <th width="8%">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="additionalCedant in submissionModel.AdditionalCedants">
+                        <td>
+                            <a href="#" data-toggle="tooltip" data-placement="right" title="{{additionalCedant.CedantName}}" tooltip>{{additionalCedant.CedantName|textCutFilter}}</a>
+
+                        </td>
+                        <td>{{additionalCedant.CountryName}}</td>
+                        <td>{{additionalCedant.Statename}}</td>
+                        <td>{{additionalCedant.AssumedEntityTypeName}}</td>
+                        <td class="actions">
+                            <a href="javascript:void(0);" ng-click="getAdditionalCedant($index);" data-toggle="modal" data-target="#add-cedant" ng-show="!LostDisableRule();"><i class="fa fa-edit"></i></a>
+                            <a href="javascript:void(0);" ng-click="deleteAdditionalCedant($index);"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+    <!-- Modal Search Insured -->
+    <div id="search-insured" class="modal fade" role="dialog">
+        <div style="width:1000px" class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="hidePopup();">&times;</button>
+                    <h4 class="modal-title">Insured Details List</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <div class="container-fluid  dt-overflow">
+                            <div class="table-responsive">
+                                <table border="1" class="table table-bordered table-striped display" id="Addresslist" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Choose</th>
+                                            <th>Insured Name</th>
+                                            <th>Default Address Type</th>
+                                            <th>Address Line 1</th>
+                                            <th>Country</th>
+                                            <th>State</th>
+                                            <th>City</th>
+                                            <th>Zip Code</th>
+                                            <th>D&B Number</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="insured in InsuredList">
+                                            <td><input type="radio" ng-change="$parent.SelectedInsured=1;getInsuredAddress(insured,$index);" ng-model="$parent.SelectedInsured" value="{{$index+1}}"></td>
+                                            <td><a href="#" data-toggle="tooltip" data-placement="right" title="{{insured.InsuredAliasName}}" tooltip>{{insured.InsuredAliasName|textCutFilter}}</a></td>
+                                            <td>Default Address</td>
+                                            <td><span data-toggle="tooltip" tooltip  title="{{insured.Addressline1}}">{{insured.Addressline1|textCutFilter}}</span></td>
+                                            <td>{{insured.CountryName}}</td>
+                                            <td>{{insured.StateName}}</td>
+                                            <td>{{insured.CityName}}</td>
+                                            <td>{{insured.Zipcode}}</td>
+                                            <td>{{insured.DBNumber}}</td>
+                                        </tr>
+                                        <tr ng-show="InsuredList.length < 1">
+                                            <td colspan="9" style="text-align:center;"><span> No records found</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="table-responsive" ng-show="InsuredAddressList.length > 0">
+                                <table border="1" class="table table-bordered table-striped display" id="clist" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Choose</th>
+                                            <th>Address Type</th>
+                                            <th>Address Line 1</th>
+                                            <th>Country</th>
+                                            <th>State</th>
+                                            <th>City</th>
+                                            <th>Zip Code</th>
+                                            <th>Advisen ID</th>
+                                            <th>D&B Number</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="insured in InsuredAddressList">
+                                            <td><input type="radio" ng-change="IsSelectedInsured=true;selectInsuredItem(insured,$index);" ng-model="$parent.selectedAddress" value="{{$index+1}}"></td>
+                                            <td>{{insured.AddressType}}</td>
+                                            <td>{{insured.Addressline1|textCutFilter}}</td>
+                                            <td>{{insured.CountryName}}</td>
+                                            <td>{{insured.StateName}}</td>
+                                            <td>{{insured.CityName}}</td>
+                                            <td>{{insured.Zipcode}}</td>
+                                            <td>{{insured.AdvisenId}}</td>
+                                            <td>{{insured.DBNumber}}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </p>
+                    <p style="text-align:center;"><span ng-show="insuredErrorSubmit && !IsSelectedInsured && InsuredAddressList.length > 0;" class="field-validation-error">Please select an address from the Insured Address List</span></p>
+
+                </div>
+                <div class="modal-footer" ng-show="InsuredAddressList.length > 0">
+                    <button type="button" class="btn btn-primary" ng-click="SelectedInsured=0;selectedAddress=0;setInsured();">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    @Html.Partial("_AddAdditionalInsured", new AdditionalInsuredModel())
+
+    @Html.Partial("_AddAdditionalCedent", new AdditionalCedantModel())
+}
+
+
+
+
+else
+{
+
+    <div class="container-fluid bottom-space" ng-init="InitInsuredPage()">
+        <div class="bg-primary">
+            <h4>Insured Details</h4>
+        </div>
+
+        <form name="insuredForm" id="InsuredForm">
+
+            <div class="td-space clearfix">
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Insured Name</label>
+                        <div class=" col-md-6">
+                            <div class="input-group">
+                                {{submissionModel.Insured}}
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Address Line 1</label>
+                        <div class="col-md-6">
+                            {{InsuredDetail.Addressline1}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Address Line 2</label>
+                        <div class="col-md-6">
+                            {{InsuredDetail.Addressline2}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Insured Country</label>
+                        <div class="col-md-6">
+                            {{InsuredDetail.CountryName}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Insured State</label>
+                        <div class="col-md-6">
+                            {{InsuredDetail.StateName}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Insured City</label>
+                        <div class="col-md-6">
+                            {{InsuredDetail.CityName}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Insured Zip Code</label>
+                        <div class="col-md-6">
+                            {{InsuredDetail.Zipcode}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">D&B Number</label>
+                        <div class="col-md-6">
+                            {{InsuredDetail.DBNumber}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">NAIC Code</label>
+                        <div class="col-md-6">
+                            {{InsuredDetail.NAICCode}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">SIC Code</label>
+                        <div class="col-md-6">
+                            {{InsuredDetail.SICCode}}
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-8" for="name">Is DBA Name different from Insured?</label>
+                        <div class="col-md-4">
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(x => x.IsDifferentDBA, true, new
+                                               {
+                                                   data_ng_model = "submissionModel.IsDifferentDBA",
+                                                   data_ng_change = "setDba();",
+                                                   data_ng_value = "true",
+                                                   validation_rules = "",
+                                                   ng_disabled = "true"
+                                               }) Yes
+
+                            </label>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(x => x.IsDifferentDBA, false, new
+                                               {
+                                                   data_ng_model = "submissionModel.IsDifferentDBA",
+                                                   data_ng_change = "setDba();",
+                                                   data_ng_value = "false",
+                                                   validation_rules = "",
+                                                   ng_disabled = "true"
+                                               }) No
+                            </label>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">DBA Name</label>
+                        <div class="col-md-6">
+                            {{submissionModel.DBAName}}
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Direct/Assumed</label>
+                        <div class="col-md-6">
+
+                            {{submissionListModel.DirectAssumedList.getValue(submissionModel.DirectAssumedTypeCode)}}
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Cedant Name</label>
+                        <div class="col-md-6">
+
+                            <span style="word-wrap: break-word;">   {{submissionModel.CedantName}}</span>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Domicile Country</label>
+                        <div class="col-md-6">
+                            {{submissionListModel.CountryList.getValue(submissionModel.DomicileCountryId)}}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Domicile State</label>
+                        <div class="col-md-6">
+
+                            {{submissionListModel.DomacileStateList.getValue(submissionModel.DomicileStateId)}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label class="col-md-6" for="name">Assumed Entity Type</label>
+                        <div class="col-md-6">
+
+                            {{submissionListModel.AssumedEntityList.getValue(submissionModel.AssumedEntityType)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-insured" ng-click="addAdditionalInsured();" ng-show="!LostDisableRule();">Add Additional Insured</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-cedant" ng-click="addAdditionalCedant();" ng-show="!LostDisableRule();">Add Additional Cedant</button>*@
+                </div>
+                <div class="col-md-6 btn-size">
+                    <button type="button" class="btn btn-primary" ng-click="saveInsured();">Next</button>
+                    <button type="button" class="btn btn-primary" ng-click="decrementStep();">Back</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+    <div class="container-fluid  dt-overflow">
+
+        <div class="table-responsive" ng-show="submissionModel.AdditionalInsureds.length > 0">
+            <div class="bg-primary">
+                <h4>Additional Insured Details</h4>
+            </div>
+            <table border="1" class="table table-bordered table-striped display" id="insuredlist" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Insured Name</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="additionalInsured in submissionModel.AdditionalInsureds">
+                        <td>
+                            <span data-toggle="tooltip" tooltip title="{{additionalInsured.InsuredName}}">{{additionalInsured.InsuredName|textCutFilter}}</span>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive" ng-show="submissionModel.AdditionalCedants.length > 0">
+            <div class="bg-primary">
+                <h4>Additional Cedant Details</h4>
+            </div>
+            <table border="1" class="table table-bordered table-striped display" id="clist" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th width="20%">Cedant Name</th>
+                        <th width="20%">Domicile Country</th>
+                        <th width="20%">Domicile State</th>
+                        <th width="20%">Assumed Entity Type</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="additionalCedant in submissionModel.AdditionalCedants">
+                        <td><span title="{{additionalCedant.CedantName}}" data-toggle="tooltip" tooltip>{{additionalCedant.CedantName|textCutFilter}}</span></td>
+                        <td>{{additionalCedant.CountryName}}</td>
+                        <td>{{additionalCedant.Statename}}</td>
+                        <td>{{additionalCedant.AssumedEntityTypeName}}</td>
+
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+
+}

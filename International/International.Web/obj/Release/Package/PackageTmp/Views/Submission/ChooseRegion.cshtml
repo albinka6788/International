@@ -1,0 +1,35 @@
+﻿@model UserRegionModel
+@{
+    ViewBag.Title = "ChooseRegion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src="~/Scripts/controllers/submissionListingController.js"></script>
+
+}
+
+<div class="wrapper" ng-controller="submissionListingController" ng-init="getRegionList();">
+
+
+    <div class="container">
+        @*<div class="jumbotron">
+                <h2 class="text-center text-primary">Welcome to International Submission System</h2>
+                <h5 class="text-center">You are now logged in...</h5>
+
+            </div>*@
+        <h4></h4>
+        <h3 class="text-center">Choose region to continue</h3>
+        <div class="form-group col-sm-2 col-sm-offset-5">
+
+            <select class="form-control" ng-model="UserRegionModel.RegionId" convert-to-number
+                    ng-options="option.Value as option.Text for option in UserRegionModel.UserRegionList"
+                    data-val="true"
+                    data-val-required="Please select Region" ng-change="SetRegion()"
+                    name="RegionId" id="RegionId">
+                <option value="">- Select -</option>
+            </select>
+
+
+        </div>
+    </div>
+</div>

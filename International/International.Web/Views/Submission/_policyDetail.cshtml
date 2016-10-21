@@ -1,0 +1,399 @@
+﻿@model International.BusinessEntities.Models.PolicyDetailModel
+@{ var regularPattern = @"^([0-9]+$)";
+ var isView = (bool)ViewBag.IsView;
+}
+
+@if (!isView)
+{
+    <div class="container-fluid" ng-init="PolicyDetailInit()">
+        <div class="bg-primary">
+            <h4>Policy Details</h4>
+        </div>
+        <form id="PolicyDetailForm" name="PolicyDetailForm">
+            <div class="td-space clearfix">
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">
+                            Bind Date &nbsp;
+                            <input type="checkbox" ng-change="submissionModel.PolicyDetail.BindDate=null" ng-model="submissionModel.PolicyDetail.IsBindDate"
+                                   validation_rules identifier="BindDate" status="{{submissionModel.CurrentStatusId}}">
+                        </label>
+                        <div class="col-sm-6">
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.BindDate, new
+                                   {
+                                       @class = "form-control date",
+                                       date_time_picker = "",
+                                       placeholder = "Bind Date",
+                                       data_ng_model = "submissionModel.PolicyDetail.BindDate",
+                                       mindate = "Jan-01-2014",
+                                       maxdate = "Dec-31-2040",
+                                       ng_disabled = "submissionModel.PolicyDetail.IsBindDate",
+                                       validation_rules = "",
+                                       status = "{{submissionModel.CurrentStatusId}}",
+                                       identifier = "BindDate"
+                                   })
+                                <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.BindDate)
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Renewable (Y/N)</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" ng-model="submissionModel.PolicyDetail.Renewable"
+                                    ng-options="option.Value as option.Text for option in submissionListModel.RenewableList"
+                                    data-val="true"
+                                    name="Renewable" id="Renewable" ng-change="OnRenewableChange()"
+                                    validation_rules identifier="Renewable" status="{{submissionModel.CurrentStatusId}}">
+                                <option value="">- Select  -</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.Renewable)
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Date of Renewal</label>
+                        <div class="col-sm-6">
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.RenewalDate, new
+                                   {
+                                       @class = "form-control date",
+                                       date_time_picker = "",
+                                       placeholder = "Renewal Date",
+                                       data_ng_model = "submissionModel.PolicyDetail.RenewalDate",
+                                       ng_disabled = "submissionModel.PolicyDetail.Renewable!='RENEW_Y'",
+                                       validation_rules = "",
+                                       status = "{{submissionModel.CurrentStatusId}}",
+                                       identifier = "RenewalDate"
+                                   })
+                                <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.RenewalDate)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Admitted/Non-Admitted</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" ng-model="submissionModel.PolicyDetail.AdmittedTypeCode"
+                                    ng-options="option.Value as option.Text for option in submissionListModel.AdmittedNotAdmittedList"
+                                    data-val="true"
+                                    data-val-required="Select Admitted NotAdmitted"
+                                    name="AdmittedTypeCode" id="AdmittedTypeCode" ng-change=""
+                                    validation_rules identifier="Admitted" status="{{submissionModel.CurrentStatusId}}">
+                                <option value="">- Select  -</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.AdmittedTypeCode)
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">
+                            Company Paper &nbsp;
+                            <input type="checkbox" ng-change="submissionModel.PolicyDetail.CompanyPaperTypeCode=null" ng-model="submissionModel.PolicyDetail.IsCompanyPaperType"
+                                   validation_rules identifier="EnableInBound" status="{{submissionModel.CurrentStatusId}}">
+                        </label>
+                        <div class="col-sm-6">
+                            <select class="form-control" ng-model="submissionModel.PolicyDetail.CompanyPaperTypeCode"
+                                    ng-options="option.Value as option.Text for option in submissionListModel.CompanyPaperList"
+                                    data-val="true"
+                                    data-val-required="Please enter company paper"
+                                    name="CompanyPaperTypeCode" id="CompanyPaperTypeCode" ng_disabled="submissionModel.PolicyDetail.IsCompanyPaperType"
+                                    validation_rules identifier="EnableInBound" status="{{submissionModel.CurrentStatusId}}">
+                                <option value="">- Select  -</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.CompanyPaperTypeCode)
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">
+                            Company Paper Number &nbsp;
+                            <input type="checkbox" ng-change="CHKCompanyPaperNumberChange()" ng-model="submissionModel.PolicyDetail.IsCompanyPaperNumber"
+                                   validation_rules identifier="EnableInBound" status="{{submissionModel.CurrentStatusId}}">
+                        </label>
+                        <div class="col-sm-6">
+                            <select class="form-control" ng-model="submissionModel.PolicyDetail.CompanyPaperNumberTypeCode"
+                                    ng-options="option.Value as option.Text for option in submissionListModel.CompanyPaperNumberList"
+                                    data-val="true"
+                                    data-val-required="Please enter company paper number" ng-change="GetMasterPolicyNumber()"
+                                    name="CompanyPaperNumberTypeCode" id="CompanyPaperNumberTypeCode" ng_disabled="submissionModel.PolicyDetail.IsCompanyPaperNumber"
+                                    validation_rules identifier="EnableInBound" status="{{submissionModel.CurrentStatusId}}">
+                                <option value="">- Select  -</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.CompanyPaperNumberTypeCode)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Policy Symbol</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" ng-model="submissionModel.PolicyDetail.PolicySymbol"
+                                    ng-options="option.Value as option.Text for option in submissionListModel.PolicySymbolList"
+                                    data-val="true"
+                                    data-val-required="Please enter policy symbol"
+                                    name="PolicySymbol" id="PolicySymbol" ng-change="GetMasterPolicyNumber()"
+                                    validation_rules identifier="EnableInBound" status="{{submissionModel.CurrentStatusId}}">
+                                <option value="">- Select  -</option>                              
+                            </select>
+                            @Html.ValidationMessageFor(model => model.PolicySymbol)
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">
+                            Policy Number &nbsp;
+                            <input type="checkbox" ng-change="CHKPolicyNumberChange()" ng-model="submissionModel.PolicyDetail.IsPolicyNumber"
+                                   validation_rules identifier="EnableInBound" status="{{submissionModel.CurrentStatusId}}">
+                        </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.PolicyNumber, new
+                            {
+                                data_ng_model = "submissionModel.PolicyDetail.PolicyNumber",
+                                allow_pattern = regularPattern,
+                                placeholder = "Policy Number",
+                                @class = "form-control",
+                                maxlength = "6",
+                                ng_disabled = "submissionModel.PolicyDetail.IsPolicyNumber",
+                                ng_change = "GetMasterPolicyNumber()",
+                                data_ng_keyup = "checkPolicyNumberExist()",
+                                validation_rules = "",
+                                status = "{{submissionModel.CurrentStatusId}}",
+                                identifier = "EnableInBound",
+                                autocomplete = "off"
+                            })
+                            @Html.ValidationMessageFor(model => model.PolicyNumber)
+                            <span ng-show="alredyExistPolicyNumber" class="field-validation-error">This policy number already exist</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Suffix</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" ng-model="submissionModel.PolicyDetail.SuffixCode"
+                                    ng-options="option.Value as option.Text for option in submissionListModel.SuffixCodeList"
+                                    data-val="true"
+                                    data-val-required="Please enter suffix"
+                                    name="SuffixCode" id="SuffixCode" ng-change="GetMasterPolicyNumber()"
+                                    validation_rules identifier="EnableInBound" status="{{submissionModel.CurrentStatusId}}">
+                                <option value="">-- Select --</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.SuffixCode)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">LTA</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" id="name" ng-model="submissionModel.PolicyDetail.LTACode"
+                                    validation_rules identifier="LTACode" status="{{submissionModel.CurrentStatusId}}">
+                                <option value="">-- Select --</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.LTACode)
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Risk Country</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" ng-model="submissionModel.PolicyDetail.RiskCountryId"
+                                    ng-options="option.Value as option.Text for option in submissionListModel.CountryList"
+                                    data-val="true"
+                                    name="RiskCountryId" id="RiskCountryId"
+                                    validation_rules identifier="RiskCountry" convert-to-number status="{{submissionModel.CurrentStatusId}}">
+                                <option value="">-- Select --</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.RiskCountryId)
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Master Policy Number</label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.MasterPolicyNumber, new
+                       {
+                           data_ng_model = "submissionModel.PolicyDetail.MasterPolicyNumber",
+                           placeholder = "Master Policy Number",
+                           @class = "form-control",
+                           ng_disabled = "true"
+                       })
+                            @Html.ValidationMessageFor(model => model.MasterPolicyNumber)
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Offshore/Onshore</label>
+                        <div class="col-sm-6">
+
+
+                            <select class="form-control" ng-model="submissionModel.PolicyDetail.OffOnShoreCode"
+                                    ng-options="option.Value as option.Text for option in submissionListModel.OffOnShoreList"
+                                    name="OffOnShoreCode" id="OffOnShoreCode" data-val="true"
+                                    validation_rules identifier="OffOnShoreCode" status="{{submissionModel.CurrentStatusId}}">
+                                <option value="">- Select  -</option>
+                            </select>
+
+                            @Html.ValidationMessageFor(model => model.OffOnShoreCode)
+
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Form type</label>
+                        <div class="col-sm-6">
+
+                            <select class="form-control" ng-model="submissionModel.PolicyDetail.FormTypeId" convert-to-number
+                                    ng-options="option.Value as option.Text for option in submissionListModel.FormTypeList"
+                                    validation_rules identifier="DisableLostCancellation" status="{{submissionModel.CurrentStatusId}}">
+                                <option value="">- Select  -</option>
+                            </select>
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-12 btn-size">
+                    <button class="btn btn-primary" ng-click="PolicyDetailSubmit()">Submit</button>
+                    <button class="btn btn-primary" ng-class="{disabled: !hasPreviousStep()}" ng-click="decrementStep();">Back</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+}
+
+else
+{
+    <div class="container-fluid" ng-init="PolicyDetailInit()">
+        <div class="bg-primary">
+            <h4>Policy Details</h4>
+        </div>
+        <form id="PolicyDetailForm" name="PolicyDetailForm">
+            <div class="td-space clearfix">
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">
+                            Bind Date 
+                        </label>
+                        <div class="col-sm-6">
+                            {{submissionModel.PolicyDetail.BindDate}}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Renewable (Y/N)</label>
+                        <div class="col-sm-6">
+
+                            {{submissionListModel.RenewableList.getValue(submissionModel.PolicyDetail.Renewable)}}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Date of Renewal</label>
+                        <div class="col-sm-6">
+                            {{submissionModel.PolicyDetail.RenewalDate}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Admitted/Non-Admitted</label>
+                        <div class="col-sm-6">
+
+                            {{submissionListModel.AdmittedNotAdmittedList.getValue(submissionModel.PolicyDetail.AdmittedTypeCode)}}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">
+                            Company Paper &nbsp;
+                            <input type="checkbox" ng-model="submissionModel.PolicyDetail.IsCompanyPaperType"
+                                   disabled>
+                        </label>
+                        <div class="col-sm-6">
+
+                            {{submissionListModel.CompanyPaperList.getValue(submissionModel.PolicyDetail.CompanyPaperTypeCode)}}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">
+                            Company Paper Number 
+                        </label>
+
+                        <div class="col-sm-6">
+                            {{submissionListModel.CompanyPaperNumberList.getValue(submissionModel.PolicyDetail.CompanyPaperNumberTypeCode)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Policy Symbol</label>
+                        <div class="col-sm-6">
+                            {{submissionListModel.PolicySymbolList.getValue(submissionModel.PolicyDetail.PolicySymbol)}}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">
+                            Policy Number 
+                        </label>
+                        <div class="col-sm-6">
+                            {{submissionModel.PolicyDetail.PolicyNumber}}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Suffix</label>
+                        <div class="col-sm-6">
+
+
+                            {{submissionListModel.SuffixCodeList.getValue(submissionModel.PolicyDetail.SuffixCode)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">LTA</label>
+                        <div class="col-sm-6">
+                            {{submissionModel.PolicyDetail.LTACode}}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Risk Country</label>
+                        <div class="col-sm-6">
+
+                            {{submissionListModel.CountryList.getValue(submissionModel.PolicyDetail.RiskCountryId)}}
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Master Policy Number</label>
+                        <div class="col-sm-6">
+                            {{submissionModel.PolicyDetail.MasterPolicyNumber}}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Offshore/Onshore</label>
+                        <div class="col-sm-6">
+                            {{submissionListModel.OffOnShoreList.getValue(submissionModel.PolicyDetail.OffOnShoreCode)}}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Form type</label>
+                        <div class="col-sm-6">
+                            {{submissionListModel.FormTypeList.getValue(submissionModel.PolicyDetail.FormTypeId)}}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-12 btn-size">
+                    <button class="btn btn-primary" ng-if="currentprocess == enums.SubmissionProcess.ViewSubmission" ng-click="BackToList()">Cancel</button>
+                    <button class="btn btn-primary" ng-if="currentprocess == enums.SubmissionProcess.SubmissionQC || currentprocess == enums.SubmissionProcess.AmendmentQC" ng-click="PD_SubmitOrNextClick()">{{buttonText_PD}}</button>
+                    @*<button class="btn btn-primary" ng-click="PolicyDetailSubmit()">Submit</button>*@
+                    <button class="btn btn-primary" ng-class="{disabled: !hasPreviousStep()}" ng-click="decrementStep();">Back</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+}

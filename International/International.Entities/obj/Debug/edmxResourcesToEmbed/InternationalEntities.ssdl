@@ -1,0 +1,776 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InternationalSubmissionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AdditionalCedant">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubmissionId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CedantName" Type="varchar" MaxLength="300" />
+    <Property Name="DomicileCountryId" Type="smallint" />
+    <Property Name="DomicileStateId" Type="smallint" />
+    <Property Name="AssumedEntityType" Type="varchar" MaxLength="64" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+    <Property Name="ProcessIdentifier" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="AdditionalInsured">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubmissionId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="InsuredName" Type="varchar" MaxLength="300" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+    <Property Name="ProcessIdentifier" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="CoverageDetails">
+    <Key>
+      <PropertyRef Name="CoverageDetailId" />
+    </Key>
+    <Property Name="CoverageDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LayerId" Type="int" />
+    <Property Name="CoverageId" Type="int" />
+    <Property Name="PremiumId" Type="int" />
+  </EntityType>
+  <EntityType Name="ErrorLog">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Detail" Type="varchar(max)" />
+    <Property Name="LoggedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Groups">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GroupName" Type="varchar" MaxLength="50" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreatedOnDate" Type="datetime" />
+    <Property Name="CreatedByUserId" Type="int" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="LayerDetails">
+    <Key>
+      <PropertyRef Name="LayerId" />
+    </Key>
+    <Property Name="LayerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubmissionId" Type="uniqueidentifier" />
+    <Property Name="LayerName" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="Module">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ModuleName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ModuleDescription" Type="varchar" MaxLength="500" />
+    <Property Name="Sort" Type="int" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="varchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="PolicyDetails">
+    <Key>
+      <PropertyRef Name="PolicyId" />
+    </Key>
+    <Property Name="PolicyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IsBindDate" Type="bit" />
+    <Property Name="BindDate" Type="datetime" />
+    <Property Name="Renewable" Type="varchar" MaxLength="20" />
+    <Property Name="RenewalDate" Type="datetime" />
+    <Property Name="AdmittedTypeCode" Type="varchar" MaxLength="20" />
+    <Property Name="IsCompanyPaperType" Type="bit" />
+    <Property Name="CompanyPaperTypeCode" Type="varchar" MaxLength="20" />
+    <Property Name="IsCompanyPaperNumber" Type="bit" />
+    <Property Name="CompanyPaperNumberTypeCode" Type="varchar" MaxLength="20" />
+    <Property Name="PolicySymbol" Type="varchar" MaxLength="20" />
+    <Property Name="IsPolicyNumber" Type="bit" />
+    <Property Name="PolicyNumber" Type="varchar" MaxLength="32" />
+    <Property Name="SuffixCode" Type="varchar" MaxLength="20" />
+    <Property Name="LTACode" Type="varchar" MaxLength="20" />
+    <Property Name="RiskCountryId" Type="smallint" />
+    <Property Name="MasterPolicyNumber" Type="varchar" MaxLength="20" />
+    <Property Name="FormTypeId" Type="int" />
+    <Property Name="OffOnShoreCode" Type="varchar" MaxLength="50" />
+    <Property Name="ProcessIdentifier" Type="uniqueidentifier" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="PremiumDetails">
+    <Key>
+      <PropertyRef Name="PremiumId" />
+    </Key>
+    <Property Name="PremiumId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ExchangeRateDate" Type="datetime" />
+    <Property Name="LayerPercent" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PolicyCommissionPercent" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="OriginalCurrencyCode" Type="char" MaxLength="3" />
+    <Property Name="OriginalLayerLimit" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="IsOriginalAttachmentPoint" Type="bit" />
+    <Property Name="OriginalAttachmentPoint" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TransactionalCurrencyCode" Type="char" MaxLength="3" />
+    <Property Name="ConversionRateToTransactional" Type="numeric" Precision="19" Scale="5" />
+    <Property Name="TransactionalSIR" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TransactionalDeductible" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TransactionalGrossPremium" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TransactionalCollections" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="TransactionalDeductions" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TransactionalGSTIN" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TransactionalGSTOUT" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="IsTransactionalTIV" Type="bit" />
+    <Property Name="TransactionalTIV" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="JurCurrencyCode" Type="char" MaxLength="3" />
+    <Property Name="JurExchangeRate" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="USDExchangeRate" Type="numeric" Precision="19" Scale="4" />
+    <Property Name="PremiumType" Type="varchar" MaxLength="32" />
+    <Property Name="Installment" Type="varchar" MaxLength="20" />
+    <Property Name="ProcessIdentifier" Type="uniqueidentifier" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="ProjectDetails">
+    <Key>
+      <PropertyRef Name="ProjectId" />
+    </Key>
+    <Property Name="ProjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectName" Type="varchar" MaxLength="256" />
+    <Property Name="GeneralContractorName" Type="varchar" MaxLength="256" />
+    <Property Name="ProjectOwnerName" Type="varchar" MaxLength="256" />
+    <Property Name="CountryId" Type="smallint" />
+    <Property Name="StateId" Type="smallint" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="ProjectStreetAddress" Type="varchar" MaxLength="256" />
+    <Property Name="Latitude" Type="varchar" MaxLength="32" />
+    <Property Name="Longitude" Type="varchar" MaxLength="32" />
+    <Property Name="ProcessIdentifier" Type="uniqueidentifier" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="QCStatusHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubmissionId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Date1" Type="datetime" />
+    <Property Name="Status1" Type="int" />
+    <Property Name="Date2" Type="datetime" />
+    <Property Name="Status2" Type="int" />
+    <Property Name="Date3" Type="datetime" />
+    <Property Name="Status3" Type="int" />
+    <Property Name="Date4" Type="datetime" />
+    <Property Name="Status4" Type="int" />
+    <Property Name="Date5" Type="datetime" />
+    <Property Name="Status5" Type="int" />
+    <Property Name="Date6" Type="datetime" />
+    <Property Name="Status6" Type="int" />
+    <Property Name="Date7" Type="datetime" />
+    <Property Name="Status7" Type="int" />
+    <Property Name="Date8" Type="datetime" />
+    <Property Name="Status8" Type="int" />
+    <Property Name="Date9" Type="datetime" />
+    <Property Name="Status9" Type="int" />
+    <Property Name="Date10" Type="datetime" />
+    <Property Name="Status10" Type="int" />
+    <Property Name="StatusCount" Type="int" />
+  </EntityType>
+  <EntityType Name="Rights">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Right" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RightsToRole">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="SubModuleId" Type="int" Nullable="false" />
+    <Property Name="Rights" Type="smallint" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="Submission">
+    <Key>
+      <PropertyRef Name="SubmissionId" />
+    </Key>
+    <Property Name="SubmissionId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="SubmissionHeaderId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="SubmissionNumber" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="NewRenewalTypeCode" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="RegionId" Type="smallint" Nullable="false" />
+    <Property Name="ProfitCenterUnderWriterId" Type="int" Nullable="false" />
+    <Property Name="IssuingUnderWriterId" Type="int" Nullable="false" />
+    <Property Name="ProductLineTypeId" Type="smallint" Nullable="false" />
+    <Property Name="ProductLineSubTypeId" Type="smallint" Nullable="false" />
+    <Property Name="SectionCodeId" Type="smallint" Nullable="false" />
+    <Property Name="ProfitCodeId" Type="smallint" Nullable="false" />
+    <Property Name="AttachmentTypeCode" Type="varchar" MaxLength="20" />
+    <Property Name="CurrentStatusId" Type="int" Nullable="false" />
+    <Property Name="EffectiveDate" Type="datetime" Nullable="false" />
+    <Property Name="ExpiryDate" Type="datetime" Nullable="false" />
+    <Property Name="InsuredId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="InsuredAddressId" Type="uniqueidentifier" />
+    <Property Name="InsuredAliasId" Type="int" />
+    <Property Name="IsDifferentDBA" Type="bit" />
+    <Property Name="DBAName" Type="varchar" MaxLength="256" />
+    <Property Name="PriorityCompanyCode" Type="varchar" MaxLength="20" />
+    <Property Name="DirectAssumedTypeCode" Type="varchar" MaxLength="20" />
+    <Property Name="CedantName" Type="varchar" MaxLength="256" />
+    <Property Name="DomicileStateId" Type="smallint" />
+    <Property Name="AssumedEntityType" Type="varchar" MaxLength="64" />
+    <Property Name="BrokerEntityId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="RetailBrokerID" Type="uniqueidentifier" />
+    <Property Name="BrokerContactPersonId" Type="uniqueidentifier" />
+    <Property Name="IncumbentAttackingBrokerType" Type="varchar" MaxLength="50" />
+    <Property Name="IsBy_Berk_SI_FROM_Broker" Type="bit" />
+    <Property Name="By_Berk_SI_FROM_Broker" Type="datetime" />
+    <Property Name="IsBy_India_FROM_Berk_SI" Type="bit" />
+    <Property Name="By_India_FROM_Berk_SI" Type="datetime" />
+    <Property Name="ProfitCentreOffice" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="IssuingOffice" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="IsUnclearAccount" Type="bit" />
+    <Property Name="ReasonID" Type="uniqueidentifier" />
+    <Property Name="ProcessDate" Type="datetime" />
+    <Property Name="PolicyTypeID" Type="int" />
+    <Property Name="CoverageID" Type="int" />
+    <Property Name="SixDigitSubmissionNumber" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="RenewalofPolicyNumber" Type="varchar" MaxLength="32" />
+    <Property Name="ParentSubmissionId" Type="uniqueidentifier" />
+    <Property Name="ProcessIdentifier" Type="uniqueidentifier" />
+    <Property Name="PolicyId" Type="int" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="PremiumId" Type="int" />
+    <Property Name="QCStatusId" Type="int" />
+    <Property Name="QCApprovaldate" Type="datetime" />
+    <Property Name="QCRemark" Type="varchar" MaxLength="250" />
+    <Property Name="ImmediateParentId" Type="uniqueidentifier" />
+    <Property Name="AffiliationsCode" Type="varchar" MaxLength="50" />
+    <Property Name="MarketSegmentCode" Type="varchar" MaxLength="50" />
+    <Property Name="Remark" Type="varchar" MaxLength="250" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="SubmissionCoverages">
+    <Key>
+      <PropertyRef Name="SubmissionCoverageId" />
+    </Key>
+    <Property Name="SubmissionCoverageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubmissionId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CoverageId" Type="int" Nullable="false" />
+    <Property Name="CoverageCode" Type="varchar" MaxLength="24" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="ProcessIdentifier" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="SubmissionHeader">
+    <Key>
+      <PropertyRef Name="SubmissionHeaderId" />
+    </Key>
+    <Property Name="SubmissionHeaderId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="SubmissionNumber" Type="varchar" MaxLength="50" />
+    <Property Name="PolicyNumber" Type="varchar" MaxLength="50" />
+    <Property Name="IsDuckSubmissionNumber" Type="char" MaxLength="1" />
+    <Property Name="DuckSubmissionNumber" Type="varchar" MaxLength="50" />
+    <Property Name="SourceSystemName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+    <Property Name="ProcessIdentifier" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="SubModule">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="500" />
+    <Property Name="ParentId" Type="int" Nullable="false" />
+    <Property Name="Sort" Type="int" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="varchar" MaxLength="250" />
+    <Property Name="Controller" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Action" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="IsMenu" Type="bit" Nullable="false" />
+    <Property Name="MinRight" Type="int" Nullable="false" />
+    <Property Name="IsModule" Type="bit" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="UserRegions">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="RegionId" Type="int" />
+    <Property Name="RegionName" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="150" />
+    <Property Name="LastName" Type="varchar" MaxLength="150" />
+    <Property Name="Email" Type="varchar" MaxLength="255" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" />
+    <Property Name="GroupId" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="LastModifedOnDate" Type="datetime" />
+    <Property Name="LastModifiedByUserId" Type="int" />
+  </EntityType>
+  <EntityType Name="UserSessionLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="SessionString" Type="nvarchar(max)" />
+    <Property Name="SessionStatus" Type="bit" />
+    <Property Name="SessionIP" Type="varchar" MaxLength="50" />
+    <Property Name="SessionMedia" Type="varchar" MaxLength="100" />
+    <Property Name="SessionBrowser" Type="varchar" MaxLength="100" />
+    <Property Name="CreatedOnDate" Type="datetime" />
+    <Property Name="LastModifiedOnDate" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_AdditionalCedant_Submission">
+    <End Role="Submission" Type="Self.Submission" Multiplicity="1" />
+    <End Role="AdditionalCedant" Type="Self.AdditionalCedant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Submission">
+        <PropertyRef Name="SubmissionId" />
+      </Principal>
+      <Dependent Role="AdditionalCedant">
+        <PropertyRef Name="SubmissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdditionalInsured_AdditionalInsured">
+    <End Role="Submission" Type="Self.Submission" Multiplicity="1" />
+    <End Role="AdditionalInsured" Type="Self.AdditionalInsured" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Submission">
+        <PropertyRef Name="SubmissionId" />
+      </Principal>
+      <Dependent Role="AdditionalInsured">
+        <PropertyRef Name="SubmissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CoverageDetails_LayerDetails">
+    <End Role="LayerDetails" Type="Self.LayerDetails" Multiplicity="0..1" />
+    <End Role="CoverageDetails" Type="Self.CoverageDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LayerDetails">
+        <PropertyRef Name="LayerId" />
+      </Principal>
+      <Dependent Role="CoverageDetails">
+        <PropertyRef Name="LayerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CoverageDetails_PremiumDetails">
+    <End Role="PremiumDetails" Type="Self.PremiumDetails" Multiplicity="0..1" />
+    <End Role="CoverageDetails" Type="Self.CoverageDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PremiumDetails">
+        <PropertyRef Name="PremiumId" />
+      </Principal>
+      <Dependent Role="CoverageDetails">
+        <PropertyRef Name="PremiumId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LayerDetails_Submission">
+    <End Role="Submission" Type="Self.Submission" Multiplicity="0..1" />
+    <End Role="LayerDetails" Type="Self.LayerDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Submission">
+        <PropertyRef Name="SubmissionId" />
+      </Principal>
+      <Dependent Role="LayerDetails">
+        <PropertyRef Name="SubmissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCStatusHistory_Submission">
+    <End Role="Submission" Type="Self.Submission" Multiplicity="1" />
+    <End Role="QCStatusHistory" Type="Self.QCStatusHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Submission">
+        <PropertyRef Name="SubmissionId" />
+      </Principal>
+      <Dependent Role="QCStatusHistory">
+        <PropertyRef Name="SubmissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RightsToRole_SubModule">
+    <End Role="SubModule" Type="Self.SubModule" Multiplicity="1" />
+    <End Role="RightsToRole" Type="Self.RightsToRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubModule">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="RightsToRole">
+        <PropertyRef Name="SubModuleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Submission_PolicyDetails">
+    <End Role="PolicyDetails" Type="Self.PolicyDetails" Multiplicity="0..1" />
+    <End Role="Submission" Type="Self.Submission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PolicyDetails">
+        <PropertyRef Name="PolicyId" />
+      </Principal>
+      <Dependent Role="Submission">
+        <PropertyRef Name="PolicyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Submission_PremiumDetails">
+    <End Role="PremiumDetails" Type="Self.PremiumDetails" Multiplicity="0..1" />
+    <End Role="Submission" Type="Self.Submission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PremiumDetails">
+        <PropertyRef Name="PremiumId" />
+      </Principal>
+      <Dependent Role="Submission">
+        <PropertyRef Name="PremiumId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Submission_ProjectDetails">
+    <End Role="ProjectDetails" Type="Self.ProjectDetails" Multiplicity="0..1" />
+    <End Role="Submission" Type="Self.Submission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectDetails">
+        <PropertyRef Name="ProjectId" />
+      </Principal>
+      <Dependent Role="Submission">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Submission_SubmissionHeader_SubmissionHeaderId">
+    <End Role="SubmissionHeader" Type="Self.SubmissionHeader" Multiplicity="1" />
+    <End Role="Submission" Type="Self.Submission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubmissionHeader">
+        <PropertyRef Name="SubmissionHeaderId" />
+      </Principal>
+      <Dependent Role="Submission">
+        <PropertyRef Name="SubmissionHeaderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubmissionCoverages_Submission">
+    <End Role="Submission" Type="Self.Submission" Multiplicity="1" />
+    <End Role="SubmissionCoverages" Type="Self.SubmissionCoverages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Submission">
+        <PropertyRef Name="SubmissionId" />
+      </Principal>
+      <Dependent Role="SubmissionCoverages">
+        <PropertyRef Name="SubmissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubModule_Module">
+    <End Role="Module" Type="Self.Module" Multiplicity="1" />
+    <End Role="SubModule" Type="Self.SubModule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Module">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="SubModule">
+        <PropertyRef Name="ParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRegions_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="UserRegions" Type="Self.UserRegions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserRegions">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Groups">
+    <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Groups">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="GroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="sp_GeneratePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Length" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_CreateAmendment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SubmissionId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="Userid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_CreateReversal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BoundSubmissionId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="Userid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="USP_ExportSubmission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="regionId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="USP_GetAmendmentQC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="submissionNumber" Type="varchar" Mode="In" />
+    <Parameter Name="newRenewalCode" Type="varchar" Mode="In" />
+    <Parameter Name="renewalCode" Type="varchar" Mode="In" />
+    <Parameter Name="policyNumber" Type="varchar" Mode="In" />
+    <Parameter Name="insuredName" Type="varchar" Mode="In" />
+    <Parameter Name="uwID" Type="int" Mode="In" />
+    <Parameter Name="pID" Type="int" Mode="In" />
+    <Parameter Name="psID" Type="int" Mode="In" />
+    <Parameter Name="cID" Type="int" Mode="In" />
+    <Parameter Name="QCStatus" Type="int" Mode="In" />
+    <Parameter Name="bID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="bpID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="pTypes" Type="varchar" Mode="In" />
+    <Parameter Name="effDateF" Type="date" Mode="In" />
+    <Parameter Name="effDateT" Type="date" Mode="In" />
+    <Parameter Name="proDateF" Type="date" Mode="In" />
+    <Parameter Name="proDateT" Type="date" Mode="In" />
+    <Parameter Name="createDateF" Type="date" Mode="In" />
+    <Parameter Name="createDateT" Type="date" Mode="In" />
+    <Parameter Name="modifyDateF" Type="date" Mode="In" />
+    <Parameter Name="modifyDateT" Type="date" Mode="In" />
+    <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
+    <Parameter Name="createdBy" Type="varchar" Mode="In" />
+    <Parameter Name="QCDateF" Type="date" Mode="In" />
+    <Parameter Name="QCDateT" Type="date" Mode="In" />
+    <Parameter Name="orderBy" Type="varchar" Mode="In" />
+    <Parameter Name="orderDirection" Type="varchar" Mode="In" />
+    <Parameter Name="pageNo" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="regionId" Type="int" Mode="In" />
+    <Parameter Name="recordCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="USP_GetAmendmentSubmissions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="submissionNumber" Type="varchar" Mode="In" />
+    <Parameter Name="regionId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="USP_GetGroups" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="GroupName" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="int" Mode="In" />
+    <Parameter Name="FromDate" Type="datetime" Mode="In" />
+    <Parameter Name="ToDate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="USP_GetSubmissions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="submissionNumber" Type="varchar" Mode="In" />
+    <Parameter Name="newRenewalCode" Type="varchar" Mode="In" />
+    <Parameter Name="renewalCode" Type="varchar" Mode="In" />
+    <Parameter Name="policyNumber" Type="varchar" Mode="In" />
+    <Parameter Name="insuredName" Type="varchar" Mode="In" />
+    <Parameter Name="uwID" Type="int" Mode="In" />
+    <Parameter Name="pID" Type="int" Mode="In" />
+    <Parameter Name="psID" Type="int" Mode="In" />
+    <Parameter Name="cID" Type="int" Mode="In" />
+    <Parameter Name="QCStatus" Type="int" Mode="In" />
+    <Parameter Name="bID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="bpID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="pTypes" Type="varchar" Mode="In" />
+    <Parameter Name="effDateF" Type="date" Mode="In" />
+    <Parameter Name="effDateT" Type="date" Mode="In" />
+    <Parameter Name="proDateF" Type="date" Mode="In" />
+    <Parameter Name="proDateT" Type="date" Mode="In" />
+    <Parameter Name="createDateF" Type="date" Mode="In" />
+    <Parameter Name="createDateT" Type="date" Mode="In" />
+    <Parameter Name="modifyDateF" Type="date" Mode="In" />
+    <Parameter Name="modifyDateT" Type="date" Mode="In" />
+    <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
+    <Parameter Name="createdBy" Type="varchar" Mode="In" />
+    <Parameter Name="QCDateF" Type="date" Mode="In" />
+    <Parameter Name="QCDateT" Type="date" Mode="In" />
+    <Parameter Name="orderBy" Type="varchar" Mode="In" />
+    <Parameter Name="orderDirection" Type="varchar" Mode="In" />
+    <Parameter Name="pageNo" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="regionId" Type="int" Mode="In" />
+    <Parameter Name="recordCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="USP_GetSubmissionsQC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="submissionNumber" Type="varchar" Mode="In" />
+    <Parameter Name="newRenewalCode" Type="varchar" Mode="In" />
+    <Parameter Name="renewalCode" Type="varchar" Mode="In" />
+    <Parameter Name="policyNumber" Type="varchar" Mode="In" />
+    <Parameter Name="insuredName" Type="varchar" Mode="In" />
+    <Parameter Name="uwID" Type="int" Mode="In" />
+    <Parameter Name="pID" Type="int" Mode="In" />
+    <Parameter Name="psID" Type="int" Mode="In" />
+    <Parameter Name="cID" Type="int" Mode="In" />
+    <Parameter Name="QCStatus" Type="int" Mode="In" />
+    <Parameter Name="bID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="bpID" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="pTypes" Type="varchar" Mode="In" />
+    <Parameter Name="effDateF" Type="date" Mode="In" />
+    <Parameter Name="effDateT" Type="date" Mode="In" />
+    <Parameter Name="proDateF" Type="date" Mode="In" />
+    <Parameter Name="proDateT" Type="date" Mode="In" />
+    <Parameter Name="createDateF" Type="date" Mode="In" />
+    <Parameter Name="createDateT" Type="date" Mode="In" />
+    <Parameter Name="modifyDateF" Type="date" Mode="In" />
+    <Parameter Name="modifyDateT" Type="date" Mode="In" />
+    <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
+    <Parameter Name="createdBy" Type="varchar" Mode="In" />
+    <Parameter Name="QCDateF" Type="date" Mode="In" />
+    <Parameter Name="QCDateT" Type="date" Mode="In" />
+    <Parameter Name="orderBy" Type="varchar" Mode="In" />
+    <Parameter Name="orderDirection" Type="varchar" Mode="In" />
+    <Parameter Name="pageNo" Type="int" Mode="In" />
+    <Parameter Name="pageSize" Type="int" Mode="In" />
+    <Parameter Name="regionId" Type="int" Mode="In" />
+    <Parameter Name="recordCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="USP_GetUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="int" Mode="In" />
+    <Parameter Name="FromDate" Type="datetime" Mode="In" />
+    <Parameter Name="ToDate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="USP_UpdateQCStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="submissionId" Type="uniqueidentifier" Mode="In" />
+    <Parameter Name="SStatus" Type="int" Mode="In" />
+    <Parameter Name="QCStatus" Type="int" Mode="In" />
+    <Parameter Name="QCRemark" Type="varchar" Mode="In" />
+    <Parameter Name="QCApprovalDate" Type="datetime" Mode="In" />
+    <Parameter Name="UserId" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="InternationalSubmissionModelStoreContainer">
+    <EntitySet Name="AdditionalCedant" EntityType="Self.AdditionalCedant" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AdditionalInsured" EntityType="Self.AdditionalInsured" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CoverageDetails" EntityType="Self.CoverageDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LayerDetails" EntityType="Self.LayerDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PolicyDetails" EntityType="Self.PolicyDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PremiumDetails" EntityType="Self.PremiumDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectDetails" EntityType="Self.ProjectDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QCStatusHistory" EntityType="Self.QCStatusHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rights" EntityType="Self.Rights" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RightsToRole" EntityType="Self.RightsToRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Submission" EntityType="Self.Submission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubmissionCoverages" EntityType="Self.SubmissionCoverages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubmissionHeader" EntityType="Self.SubmissionHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubModule" EntityType="Self.SubModule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRegions" EntityType="Self.UserRegions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserSessionLog" EntityType="Self.UserSessionLog" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AdditionalCedant_Submission" Association="Self.FK_AdditionalCedant_Submission">
+      <End Role="Submission" EntitySet="Submission" />
+      <End Role="AdditionalCedant" EntitySet="AdditionalCedant" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdditionalInsured_AdditionalInsured" Association="Self.FK_AdditionalInsured_AdditionalInsured">
+      <End Role="Submission" EntitySet="Submission" />
+      <End Role="AdditionalInsured" EntitySet="AdditionalInsured" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CoverageDetails_LayerDetails" Association="Self.FK_CoverageDetails_LayerDetails">
+      <End Role="LayerDetails" EntitySet="LayerDetails" />
+      <End Role="CoverageDetails" EntitySet="CoverageDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CoverageDetails_PremiumDetails" Association="Self.FK_CoverageDetails_PremiumDetails">
+      <End Role="PremiumDetails" EntitySet="PremiumDetails" />
+      <End Role="CoverageDetails" EntitySet="CoverageDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LayerDetails_Submission" Association="Self.FK_LayerDetails_Submission">
+      <End Role="Submission" EntitySet="Submission" />
+      <End Role="LayerDetails" EntitySet="LayerDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCStatusHistory_Submission" Association="Self.FK_QCStatusHistory_Submission">
+      <End Role="Submission" EntitySet="Submission" />
+      <End Role="QCStatusHistory" EntitySet="QCStatusHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RightsToRole_SubModule" Association="Self.FK_RightsToRole_SubModule">
+      <End Role="SubModule" EntitySet="SubModule" />
+      <End Role="RightsToRole" EntitySet="RightsToRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Submission_PolicyDetails" Association="Self.FK_Submission_PolicyDetails">
+      <End Role="PolicyDetails" EntitySet="PolicyDetails" />
+      <End Role="Submission" EntitySet="Submission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Submission_PremiumDetails" Association="Self.FK_Submission_PremiumDetails">
+      <End Role="PremiumDetails" EntitySet="PremiumDetails" />
+      <End Role="Submission" EntitySet="Submission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Submission_ProjectDetails" Association="Self.FK_Submission_ProjectDetails">
+      <End Role="ProjectDetails" EntitySet="ProjectDetails" />
+      <End Role="Submission" EntitySet="Submission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Submission_SubmissionHeader_SubmissionHeaderId" Association="Self.FK_Submission_SubmissionHeader_SubmissionHeaderId">
+      <End Role="SubmissionHeader" EntitySet="SubmissionHeader" />
+      <End Role="Submission" EntitySet="Submission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubmissionCoverages_Submission" Association="Self.FK_SubmissionCoverages_Submission">
+      <End Role="Submission" EntitySet="Submission" />
+      <End Role="SubmissionCoverages" EntitySet="SubmissionCoverages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubModule_Module" Association="Self.FK_SubModule_Module">
+      <End Role="Module" EntitySet="Module" />
+      <End Role="SubModule" EntitySet="SubModule" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRegions_Users" Association="Self.FK_UserRegions_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserRegions" EntitySet="UserRegions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Groups" Association="Self.FK_Users_Groups">
+      <End Role="Groups" EntitySet="Groups" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

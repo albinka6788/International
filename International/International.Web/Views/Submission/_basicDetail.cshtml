@@ -1,0 +1,545 @@
+﻿@model International.BusinessEntities.Models.SubmissionModel
+@{
+    var isView = (bool)ViewBag.isView;        
+    <script data-semver="3.10.0" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"></script>
+
+}
+
+@{ var regularPattern = @"^([0-9]+$)";
+ var alphaNumericPattern = @"^([a-zA-Z0-9]+$)";
+}
+<div class="container-fluid  dt-overflow" ng-init="InitBasicDetailPage()">
+    <div class="bg-primary">
+        <h4>Basic Details</h4>
+    </div>
+    @if (!isView)
+    {
+        <form id="BasicForm" name="BasicForm">
+            <div class="td-space clearfix">
+                <div id="dvDisable">
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">6 Digit Number</label>
+                            <div class="col-sm-6">                                
+                                @Html.TextBoxFor(model => model.SixDigitNumber, new
+                                {
+                                    data_ng_model = "submissionModel.SixDigitNumber",
+                                    placeholder = "6 Digit Number",
+                                    @class = "form-control",
+                                    allow_pattern = regularPattern,
+                                    maxlength = "6",
+                                    data_ng_keyup = "checkSubmissionNumberExist()",
+                                    data_ng_disabled = "currentprocess!=enums.SubmissionProcess.CreateSubmission",
+                                    autocomplete = "off"
+                                })
+                                @Html.ValidationMessageFor(model => model.SixDigitNumber)
+                                <span ng-show="alredyExistSubmission" class="field-validation-error">This number already exists</span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 form-group" ng-class="{'vis-hidden': !submissionModel.SelectedPCUnderwriter}">
+                            <label class="col-sm-6" for="name">Selected Profit Centre Underwriter</label>
+                            <div class="col-sm-6">
+                                {{submissionModel.SelectedPCUnderwriter}}
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 form-group" ng-show="submissionModel.SelectedIssueUnderwriter">
+                            <label class="col-sm-6" for="name">Selected Issuing Underwriter</label>
+                            <div class="col-sm-6">
+                                {{submissionModel.SelectedIssueUnderwriter}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">New/Renewal</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" ng-model="submissionModel.NewRenewalTypeCode"
+                                        ng-options="option.Value as option.Text for option in submissionListModel.NewRenewalList"
+                                        data-val="true"
+                                        data-val-required="Please select New/Renewal"
+                                        name="NewRenewalTypeCode" id="NewRenewalTypeCode" ng-change="NewRenewalChange();"
+                                        validation_rules identifier="NewRenewalTypeCode" status="{{submissionModel.CurrentStatusId}}" currentprocess="{{currentprocess}}">
+                                    <option value="">- Select  -</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.NewRenewalTypeCode)
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Profit Centre Underwriter</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(model => model.PCUnderwriter, new
+                                {
+                                   @class = "form-control",
+                                   placeholder = "Profit Centre Underwriter",
+                                   auto_complete = "",
+                                   getdata = "getPCUnderwriter(key,callback)",
+                                   selectaction = "selectPCUnderWriter(result)",
+                                   isautofocus = "false",
+                                   min_length = "2",
+                                   index_no = "0",
+                                   width = "200",
+                                   data_ng_model = "submissionModel.PCUnderwriter",
+                                   data_ng_blur = "checkPCUnderwriter()",
+                                   data_ng_disabled = "UnderwriterDisableRule();",
+                                   autocomplete = "off"
+                                })
+                                @Html.ValidationMessageFor(model => model.SelectedPCUnderwriter)
+                                <div style="display:none;">
+                                    @Html.TextBoxFor(model => model.SelectedPCUnderwriter, new { data_ng_model = "submissionModel.SelectedPCUnderwriter", })
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Issuing Underwriter</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(model => model.IssueUnderwriter, new
+                                {
+                                   @class = "form-control",
+                                   placeholder = "Issuing Underwriter",
+                                   auto_complete = "",
+                                   getdata = "getUnderwriter(key,callback)",
+                                   selectaction = "selectUnderWriter(result)",
+                                   isautofocus = "false",
+                                   min_length = "2",
+                                   index_no = "0",
+                                   width = "200",
+                                   data_ng_model = "submissionModel.IssueUnderwriter",
+                                   data_ng_blur = "submissionModel.SelectedIssueUnderwriter=!submissionModel.IssueUnderwriter?'':submissionModel.SelectedIssueUnderwriter;submissionModel.IssuingUnderWriterId=submissionModel.IssueUnderwriter==''?0:submissionModel.IssuingUnderWriterId",
+                                   data_ng_disabled = "UnderwriterDisableRule();",
+                                   autocomplete = "off"
+                                })
+                                @Html.ValidationMessageFor(model => model.IssueUnderwriter)
+
+                                <span class="field-validation-error" ng-show="BasicForm.IssueUnderwriter.$error.required">Please enter Issuing Underwriter</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Product Line</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" ng-model="submissionModel.ProductLineTypeId" convert-to-number
+                                        ng-options="option.Value as option.Text for option in submissionListModel.ProductLine"
+                                        data-val="true"
+                                        data-val-required="Please select Product Line"
+                                        name="ProductLineTypeId" id="ProductLineTypeId" ng-change="setProductSubLine()"
+                                        validation_rules="" status="{{submissionModel.CurrentStatusId}}" identifier="DisableUnderwriter" currentprocess="{{currentprocess}}">
+                                    <option value="">- Select  -</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.ProductLineTypeId)
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Product Line Subtype</label>
+                            <div class="col-sm-6">
+
+                                <select class="form-control" ng-model="submissionModel.ProductLineSubTypeId" convert-to-number
+                                        ng-options="option.Value as option.Text for option in submissionListModel.ProductLineSubType"
+                                        data-val="true"
+                                        data-val-required="Please select Product Line Subtype"
+                                        name="ProductLineSubTypeId" id="ProductLineSubTypeId" ng-change="setSectionCodeList();"
+                                        validation_rules="" status="{{submissionModel.CurrentStatusId}}" identifier="DisableUnderwriter" currentprocess="{{currentprocess}}">
+                                    <option value="">- Select  -</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.ProductLineSubTypeId)
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Section Code</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" ng-model="submissionModel.SectionCodeId" convert-to-number
+                                        ng-options="option.Value as (option.Text|textCutFilter) for option in submissionListModel.SectionCodeList"
+                                        data-val="true"
+                                        data-val-required="Please select Section Code"
+                                        name="SectionCodeId" id="SectionCodeId" ng-change="setProfitCodeList();"
+                                        validation_rules="" status="{{submissionModel.CurrentStatusId}}" identifier="DisableUnderwriter" currentprocess="{{currentprocess}}">
+                                    <option value="">- Select  -</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.SectionCodeId)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Profit Code</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" ng-model="submissionModel.ProfitCodeId"
+                                        @*ng-options="option.Value as (option.Text|textCutFilter) for option in submissionListModel.ProfitCodeList"*@
+                                        data-val="true"
+                                        name="ProfitCodeId" id="ProfitCodeId" convert-to-number
+                                        data-val-required="Please select Profit Code"
+                                        validation_rules="" status="{{submissionModel.CurrentStatusId}}" identifier="DisableUnderwriter" currentprocess="{{currentprocess}}">
+                                    <option value="">- Select  -</option>
+                                    <option ng-if="submissionListModel.ProfitCodeList" ng-repeat="option in submissionListModel.ProfitCodeList" title="{{option.Text}}" value="{{option.Value}}">{{option.Text|textCutFilter}}</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.ProfitCodeId)
+
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Attachment Type</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" ng-model="submissionModel.AttachmentTypeCode" data-val="true"
+                                        ng-options="option.Value as option.Text for option in submissionListModel.AttachmentTypeList"
+                                        name="AttachmentTypeCode" id="AttachmentTypeCode" ng-change="setPolicyTypeList()"
+                                        validation_rules="" status="{{submissionModel.CurrentStatusId}}" identifier="AttachmentTypeCode" currentprocess="{{currentprocess}}">
+                                    <option value="">- Select  -</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.AttachmentTypeCode)
+
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Policy Type</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" ng-model="submissionModel.PolicyTypeID" convert-to-number
+                                        ng-options="option.Value as (option.Text|textCutFilter) for option in submissionListModel.PolicyTypeList"
+                                        name="PolicyTypeID" id="PolicyTypeID" ng-change="setCoverageCodeList();" data-val="true"
+                                        validation_rules identifier="PolicyTypeID" status="{{submissionModel.CurrentStatusId}}" currentprocess="{{currentprocess}}">
+                                    <option value="">- Select  -</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.PolicyTypeID)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="Coverage">Coverage Code</label>
+                            <div class="col-sm-6">                                                           
+                                <div ng-dropdown-multiselect="" id="CoverageCode" name="CoverageCode" options="submissionListModel.CoverageCodeList"
+                                     selected-model="submissionModel.SelectedSubmissionCoverageList" @*extra-settings="MultiselectDropdownSettings"*@></div>
+                            
+                                <div ng-if="submissionModel.SelectedSubmissionCoverageList.length < 1" ng-show="CoverageNotSelected">
+                                    <span class="field-validation-error" for="CoverageCode">Please Select Coverage Code</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Current Status</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" ng-model="submissionModel.CurrentStatusId" convert-to-number
+                                        ng-options="option.Value as option.Text for option in submissionListModel.StatusList"
+                                        data-val="true"
+                                        data-val-required="Please select Current Status"
+                                        name="CurrentStatusId" id="CurrentStatusId"
+                                        ng-blur="validStatus();" ng-change="OnCurrentStatusChange()"
+                                        value="{{submissionModel.CurrentStatusId}}">
+                                    <option value="" ng-if="currentprocess == (enums.SubmissionProcess.CreateSubmission) || currentprocess == (enums.SubmissionProcess.CreateAmendment)">- Select  -</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.CurrentStatusId)
+
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Effective Date</label>
+                            <div class="col-sm-6">
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(model => model.EffectiveDate, new
+                                    {
+                                       @class = "form-control date",
+                                       date_time_picker = "",
+                                       data_ng_model = "submissionModel.EffectiveDate",
+                                       mindate = "{{Mindate}}",
+                                       maxdate = "Dec-31-2040",
+                                       validation_rules = "",
+                                       status = "{{submissionModel.CurrentStatusId}}",
+                                       identifier = "DisableLostQuotedIndicated",
+                                       value = "{{submissionModel.EffectiveDate}}"
+                                    })
+
+                                    <span class="input-group-addon" disabled="false"><i class="fa fa-calendar"></i></span>
+
+                                </div>
+                                @Html.ValidationMessageFor(x => x.EffectiveDate)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Expiry Date</label>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+
+                                    @Html.TextBoxFor(model => model.ExpiryDate, new
+                                    {
+                                       @class = "form-control date",
+                                       date_time_picker = "",
+                                       data_ng_model = "submissionModel.ExpiryDate",
+                                       mindate = "{{submissionModel.EffectiveDate}}",
+                                       maxdate = "Dec-31-2040",
+                                       ng_disabled = "false",
+                                       validation_rules = "",
+                                       status = "{{submissionModel.CurrentStatusId}}",
+                                       identifier = "ExpiryDate",
+                                       value = "{{submissionModel.ExpiryDate}}"
+                                    })
+
+
+                                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+
+                                </div>
+                                @Html.ValidationMessageFor(x => x.ExpiryDate)
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Market Segment</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" ng-model="submissionModel.MarketSegmentCode"
+                                        ng-options="option.Value as option.Text for option in submissionListModel.MarketSegmentList"
+                                        validation_rules identifier="DisableLostCancellation" status="{{submissionModel.CurrentStatusId}}">
+                                    <option value="">- Select  -</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Affiliations</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" ng-model="submissionModel.AffiliationsCode"
+                                        ng-options="option.Value as option.Text for option in submissionListModel.AffliationList"
+                                        validation_rules identifier="DisableLostCancellation" status="{{submissionModel.CurrentStatusId}}">
+                                    <option value="">- Select  -</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Renewal of (Policy Number)</label>
+                            <div class="col-sm-6">
+
+                                @Html.TextBoxFor(model => model.RenewalofPolicyNumber, new
+                                {
+                                   @class = "form-control",
+                                   placeholder = "Renewal of (Policy Number)",
+                                   data_ng_model = "submissionModel.RenewalofPolicyNumber",
+                                   allow_pattern = alphaNumericPattern,
+                                   ng_keyup = "renewalPolicyFormat()",
+                                   autocomplete = "off",
+                                   maxlength = 16,
+                                   validation_rules = "",
+                                   status = "{{submissionModel.CurrentStatusId}}",
+                                   identifier = "RenewalofPolicyNumber",
+                                   currentprocess = "{{currentprocess}}",
+                                   ng_disabled = "!(submissionModel.NewRenewalTypeCode == enums.Newrenewal.Renew)"
+                                })
+                                @Html.ValidationMessageFor(model => model.RenewalofPolicyNumber)
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 form-group" ng-show="'@Model.SubmissionId' != '@Guid.Empty'">
+                            <label class="col-sm-6" for="name">Submission No</label>
+                            <div class="col-sm-6">
+
+                                <input type="text" value="{{submissionModel.SubmissionNumber}}" disabled class="form-control ">
+
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group" ng_if="submissionModel.CurrentStatusId == enums.CurrentStatusEnum.ReEntry || submissionModel.CurrentStatusId == enums.CurrentStatusEnum.Reversal">
+                            <label class="col-sm-6" for="name">Parent Submission No</label>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <input type="text" value="{{submissionModel.ParentSubmissionNo}}" disabled class="form-control">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 btn-size">
+                    <button type="button" class="btn btn-primary" ng-click="SaveBasic();">Next</button>
+                </div>
+            </div>
+        </form>
+    }
+
+
+
+    else
+    {
+        <form id="BasicForm" name="BasicForm">
+            <div class="td-space clearfix">
+                <div id="dvDisable">
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">6 Digit Number</label>
+                            <div class="col-sm-6">
+                                {{submissionModel.SixDigitNumber}}
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">New/Renewal</label>
+                            <div class="col-sm-6">
+
+                                {{submissionListModel.NewRenewalList.getValue(submissionModel.NewRenewalTypeCode)}}
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Profit Centre Underwriter</label>
+                            <div class="col-sm-6">
+                                {{submissionModel.PCUnderwriter}}
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Issuing Underwriter</label>
+                            <div class="col-sm-6">
+                                {{submissionModel.IssueUnderwriter}}
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Product Line</label>
+                            <div class="col-sm-6">
+                                {{submissionListModel.ProductLine.getValue(submissionModel.ProductLineTypeId)}}
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Product Line Subtype</label>
+                            <div class="col-sm-6">
+                                {{submissionListModel.ProductLineSubType.getValue(submissionModel.ProductLineSubTypeId)}}
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Section Code</label>
+                            <div class="col-sm-6">
+                                {{submissionListModel.SectionCodeList.getValue(submissionModel.SectionCodeId)}}
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Profit Code</label>
+                            <div class="col-sm-6">
+                                {{submissionListModel.ProfitCodeList.getValue(submissionModel.ProfitCodeId)}}
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Attachment Type</label>
+                            <div class="col-sm-6">
+                                {{submissionListModel.AttachmentTypeList.getValue(submissionModel.AttachmentTypeCode)}}
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Policy Type</label>
+                            <div class="col-sm-6">
+                                {{submissionListModel.PolicyTypeList.getValue(submissionModel.PolicyTypeID)}}
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Coverage Code</label>
+                            <div class="col-sm-6" >                               
+                                <div ng-repeat="coverage in submissionModel.SelectedSubmissionCoverageList">
+                                    {{coverage.label}} {{$last ? '' : ' | '}} 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Current Status</label>
+                            <div class="col-sm-6">
+                                {{submissionListModel.StatusList.getValue(submissionModel.CurrentStatusId)}}
+
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Effective Date</label>
+                            <div class="col-sm-6">
+                                <div class="input-group date">
+                                    {{submissionModel.EffectiveDate}}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Expiry Date</label>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    {{submissionModel.ExpiryDate}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Market Segment</label>
+                            <div class="col-sm-6">
+                                {{submissionListModel.MarketSegmentList.getValue(submissionModel.MarketSegmentCode)}}
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Affiliations</label>
+                            <div class="col-sm-6">
+                                {{submissionListModel.AffliationList.getValue(submissionModel.AffiliationsCode)}}
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Renewal of (Policy Number)</label>
+                            <div class="col-sm-6">
+                                {{submissionModel.RenewalofPolicyNumber}}
+                            </div>
+                        </div>
+                        
+
+                        <div class="col-sm-4 form-group" ng-show="'@Model.SubmissionId' != '@Guid.Empty'">
+                            <label class="col-sm-6" for="name">Submission No</label>
+                            <div class="col-sm-6">
+
+                                {{submissionModel.SubmissionNumber}}
+
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group" ng_if="submissionModel.CurrentStatusId == enums.CurrentStatusEnum.ReEntry || submissionModel.CurrentStatusId == enums.CurrentStatusEnum.Reversal">
+                            <label class="col-sm-6" for="name">Parent Submission No</label>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    {{submissionModel.ParentSubmissionNo}}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-12 btn-size">
+                    <button type="button" class="btn btn-primary" ng-click="SaveBasic();">Next</button>
+                </div>
+            </div>
+        </form>
+    }
+</div>

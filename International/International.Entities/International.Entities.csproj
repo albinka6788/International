@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{504610FB-98B7-4FCE-8B43-285AB393CFB4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>International.Entities</RootNamespace>
+    <AssemblyName>International.Entities</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdditionalCedant.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdditionalInsured.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CoverageDetail.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorLog.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Group.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InternationalEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InternationalEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InternationalEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InternationalEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InternationalEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="LayerDetail.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\Branch.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\Broker.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\BrokerAddress.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\BrokerParty.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\BrokerProductLine.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\BrokerProductLineSubType.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\City.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\ContactPersonBroker.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\ContactPersonInsured.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\Country.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\Coverage.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\Currency.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\CurrencyRegion.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\FormType.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\GetPolicyTypeList_Result.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\IndustryCode.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\InsuredAddress.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\InsuredAlia.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\InsuredParty.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\InsuredParty_Backup_2802016.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\MasterInsured.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\MasterInsureds_Backup_2802016.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\MDMEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MDMEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\MDMEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\MDMEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MDMEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\NAIC.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\PolicySymbol.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\PolicyType.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\ProductLine.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\ProductLineSubType.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\ProfitCode.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\Project.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\Reasoncode.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\Region.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\SearchBrokerByProductLine_Result.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\SearchBrokerContact_Result.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\SearchBrokerEntityByProductLine_Result.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\SearchInsuredList_Result.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\SearchUnderwriterByProductLine_Result.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\SectionCode.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\State.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\Status.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\TypeMaster.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\Underwriter.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\UnderwriterProductLine.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MDMEntities\UnderwriterProductSubLine.cs">
+      <DependentUpon>MDMEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Module.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PolicyDetail.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PremiumDetail.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectDetail.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QCStatusHistory.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Right.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RightsToRole.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Submission.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubmissionCoverage.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubmissionHeader.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubModule.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserRegion.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserSessionLog.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USP_ExportSubmission_Result.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USP_GetAmendmentQC_Result.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USP_GetAmendmentSubmissions_Result.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USP_GetGroups_Result.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USP_GetSubmissionsQC_Result.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USP_GetSubmissions_Result.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USP_GetUsers_Result.cs">
+      <DependentUpon>InternationalEntities.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="InternationalEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>InternationalEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="InternationalEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InternationalEntities.edmx</DependentUpon>
+      <LastGenOutput>InternationalEntities.Context.cs</LastGenOutput>
+    </None>
+    <None Include="InternationalEntities.edmx.diagram">
+      <DependentUpon>InternationalEntities.edmx</DependentUpon>
+    </None>
+    <None Include="InternationalEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InternationalEntities.edmx</DependentUpon>
+      <LastGenOutput>InternationalEntities.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="MDMEntities\MDMEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MDMEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="MDMEntities\MDMEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MDMEntities.edmx</DependentUpon>
+      <LastGenOutput>MDMEntities.Context.cs</LastGenOutput>
+    </None>
+    <None Include="MDMEntities\MDMEntities.edmx.diagram">
+      <DependentUpon>MDMEntities.edmx</DependentUpon>
+    </None>
+    <None Include="MDMEntities\MDMEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MDMEntities.edmx</DependentUpon>
+      <LastGenOutput>MDMEntities.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

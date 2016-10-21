@@ -1,0 +1,365 @@
+﻿@model International.BusinessEntities.Models.SubmissionModel
+@{
+    var isView = (bool)ViewBag.isView;
+}
+<div class="container-fluid  dt-overflow" ng-init="InitBrokerDetailPage()">
+    @if (!isView)
+    {
+
+        <div class="bg-primary">
+            <h4>Broker Details</h4>
+        </div>
+        <form id="BrokerForm">
+            <div class="td-space clearfix">
+
+
+
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Name</label>
+                        <div class="col-sm-6">
+
+                            @Html.TextBoxFor(model => model.Broker, new
+                           {
+                               @class = "form-control",
+                               auto_complete = "",
+                               getdata = "getBroker(key,callback)",
+                               selectaction = "selectBroker(result)",
+                               isautofocus = "false",
+                               min_length = "1",
+                               index_no = "0",
+                               width = "200",
+                               data_ng_model = "submissionModel.Broker",
+                               data_ng_blur="checkBroker();",
+                               data_ng_disabled = "BrokerDisableRule();"
+                           })
+
+                            @Html.ValidationMessageFor(model => model.SelectedBroker)
+
+
+                            <div style="display:none;">
+                                @Html.TextBoxFor(model => model.SelectedBroker, new { data_ng_model = "submissionModel.SelectedBroker" })
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Entity</label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.BrokerEntity, new
+                           {
+                               @class = "form-control",
+                               auto_complete = "",
+                               getdata = "getBrokerEntity(key,callback)",
+                               selectaction = "selectBrokerEntity(result)",
+                               isautofocus = "false",
+                               min_length = "1",
+                               index_no = "0",
+                               width = "200",
+                               data_ng_model = "submissionModel.BrokerEntity",
+                               data_ng_disabled = "BrokerDisableRule();",
+                               data_ng_blur = "checkBrokerEntity();"
+                           })
+
+
+                            @Html.ValidationMessageFor(model => model.SelectedBrokerEntity)
+
+                            <div style="display:none;">
+                                @Html.TextBoxFor(model => model.SelectedBrokerEntity, new { data_ng_model = "submissionModel.SelectedBrokerEntity", })
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Contact Person</label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.BrokerContactPerson, new
+                           {
+                               @class = "form-control",
+                               auto_complete = "",
+                               getdata = "getBrokerContact(key,callback)",
+                               selectaction = "selectBrokerContact(result)",
+                               isautofocus = "false",
+                               min_length = "1",
+                               index_no = "0",
+                               width = "200",
+                               data_ng_model = "submissionModel.BrokerContactPerson",
+                               data_ng_disabled = "BrokerDisableRule();",
+                               data_ng_blur = "checkBrokerContact();"
+                           })
+
+
+
+                            @Html.ValidationMessageFor(model => model.SelectedBrokerContactPerson)
+
+                            <div style="display:none;">
+                                @Html.TextBoxFor(model => model.SelectedBrokerContactPerson, new { data_ng_model = "submissionModel.SelectedBrokerContactPerson", })
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row" ng-show="submissionModel.SelectedBroker">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Selected Broker Name</label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.SelectedBroker, new { data_ng_model = "submissionModel.SelectedBroker", @disabled = true, @class = "form-control" })
+
+                            @*{{submissionModel.SelectedBroker}}*@
+
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group" ng-show="submissionModel.SelectedBroker">
+                        <label class="col-sm-6" for="name">Selected Broker Entity</label>
+                        <div class="col-sm-6">
+
+                            @Html.TextBoxFor(model => model.SelectedBrokerEntity, new { data_ng_model = "submissionModel.SelectedBrokerEntity", @disabled = true, @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group" ng-show="submissionModel.SelectedBroker">
+                        <label class="col-sm-6" for="name">Selected Broker Contact</label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.SelectedBrokerContactPerson, new { data_ng_model = "submissionModel.SelectedBrokerContactPerson", @disabled = true, @class = "form-control" })
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Country</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" ng-model="Broker.CountryName" disabled>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker State</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" ng-model="Broker.StateName" disabled>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Contact Person Email</label>
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="BrokerContact.Email" class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker City</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" ng-model="Broker.CityName" disabled>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Street Address</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" ng-model="Broker.StreetAddress" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Contact Person Number</label>
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="BrokerContact.PhoneNumber" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Wholesaler/Retailer</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" ng-model="Broker.BrokerType" disabled>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Subtype</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" ng-model="Broker.BrokerSubType" disabled>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Contact Person Mobile</label>
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="BrokerContact.MobileNumber" class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Code</label>
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="Broker.BrokerCode" disabled class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Incumbent/Attacking Broker</label>
+                        <div class="col-sm-6">
+
+                            <select class="form-control" ng-model="submissionModel.IncumbentAttackingBrokerType"
+                                    ng-options="option.Value as option.Text for option in submissionListModel.IncumbentAttackingBrokerList"
+                                    data-val="true"
+                                    data-val-required="Please select value for Incumbent/Attacking"
+                                    name="IncumbentAttackingBrokerType" id="IncumbentAttackingBrokerType"
+                                    validation_rules=""
+                                    status="{{submissionModel.CurrentStatusId}}"
+                                    identifier="DisableLostCancellation">
+                                <option value="">- Select  -</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.IncumbentAttackingBrokerType)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 btn-size">
+                    <button type="button" class="btn btn-primary" ng-click="saveBroker();">Next</button>
+                    <button type="button" class="btn btn-primary" ng-click="decrementStep();">Back</button>
+                </div>
+            </div>
+        </form>
+
+    }
+
+
+    else
+    {
+        <div class="bg-primary">
+            <h4>Broker Details</h4>
+        </div>
+        <form id="BrokerForm">
+            <div class="td-space clearfix">
+
+
+
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Name</label>
+                        <div class="col-sm-6">
+
+                         {{submissionModel.Broker}}
+
+                         
+
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Entity</label>
+                        <div class="col-sm-6">
+                          {{submissionModel.BrokerEntity}}
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Contact Person</label>
+                        <div class="col-sm-6">
+                          {{submissionModel.BrokerContactPerson}}
+                        </div>
+                    </div>
+
+                </div>
+
+              
+
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Country</label>
+                        <div class="col-sm-6">
+                        {{Broker.CountryName}}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker State</label>
+                        <div class="col-sm-6">
+                          {{Broker.StateName}}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Contact Person Email</label>
+                        <div class="col-sm-6">
+                          {{BrokerContact.Email}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker City</label>
+                        <div class="col-sm-6">
+                           {{Broker.CityName}}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Street Address</label>
+                        <div class="col-sm-6">
+                           {{Broker.StreetAddress}}
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Contact Person Number</label>
+                        <div class="col-sm-6">
+                           {{BrokerContact.PhoneNumber}}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Wholesaler/Retailer</label>
+                        <div class="col-sm-6">
+                          {{Broker.BrokerType}}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Subtype</label>
+                        <div class="col-sm-6">
+                         {{Broker.BrokerSubType}}
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Contact Person Mobile</label>
+                        <div class="col-sm-6">
+                          {{BrokerContact.MobileNumber}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Broker Code</label>
+                        <div class="col-sm-6">
+                          {{Broker.BrokerCode}}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label class="col-sm-6" for="name">Incumbent/Attacking Broker</label>
+                        <div class="col-sm-6">
+                            {{submissionListModel.IncumbentAttackingBrokerList.getValue(submissionModel.IncumbentAttackingBrokerType)}}
+
+                          
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 btn-size">
+                    <button type="button" class="btn btn-primary" ng-click="saveBroker();">Next</button>
+                    <button type="button" class="btn btn-primary" ng-click="decrementStep();">Back</button>
+                </div>
+            </div>
+        </form>
+
+
+    }
+
+</div>

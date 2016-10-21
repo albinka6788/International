@@ -1,0 +1,618 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="InternationalSubmissionModelStoreContainer" CdmEntityContainer="InternationalSubmissionEntities">
+    <FunctionImportMapping FunctionImportName="USP_GetGroups" FunctionName="InternationalSubmissionModel.Store.USP_GetGroups">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="InternationalSubmissionModel.USP_GetGroups_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_GeneratePassword" FunctionName="InternationalSubmissionModel.Store.sp_GeneratePassword" />
+    <FunctionImportMapping FunctionImportName="USP_GetUsers" FunctionName="InternationalSubmissionModel.Store.USP_GetUsers">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="InternationalSubmissionModel.USP_GetUsers_Result">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Regions" ColumnName="Regions" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="ErrorLogs">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.ErrorLog">
+        <MappingFragment StoreEntitySet="ErrorLog">
+          <ScalarProperty Name="LoggedAt" ColumnName="LoggedAt" />
+          <ScalarProperty Name="Detail" ColumnName="Detail" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Groups">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.Group">
+        <MappingFragment StoreEntitySet="Groups">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Modules">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.Module">
+        <MappingFragment StoreEntitySet="Module">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="Sort" ColumnName="Sort" />
+          <ScalarProperty Name="ModuleDescription" ColumnName="ModuleDescription" />
+          <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rights">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.Right">
+        <MappingFragment StoreEntitySet="Rights">
+          <ScalarProperty Name="Right1" ColumnName="Right" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RightsToRoles">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.RightsToRole">
+        <MappingFragment StoreEntitySet="RightsToRole">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="Rights" ColumnName="Rights" />
+          <ScalarProperty Name="SubModuleId" ColumnName="SubModuleId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="definition" ColumnName="definition" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserSessionLogs">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.UserSessionLog">
+        <MappingFragment StoreEntitySet="UserSessionLog">
+          <ScalarProperty Name="LastModifiedOnDate" ColumnName="LastModifiedOnDate" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="SessionBrowser" ColumnName="SessionBrowser" />
+          <ScalarProperty Name="SessionMedia" ColumnName="SessionMedia" />
+          <ScalarProperty Name="SessionIP" ColumnName="SessionIP" />
+          <ScalarProperty Name="SessionStatus" ColumnName="SessionStatus" />
+          <ScalarProperty Name="SessionString" ColumnName="SessionString" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AdditionalInsureds">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.AdditionalInsured">
+        <MappingFragment StoreEntitySet="AdditionalInsured">
+          <ScalarProperty Name="ProcessIdentifier" ColumnName="ProcessIdentifier" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="InsuredName" ColumnName="InsuredName" />
+          <ScalarProperty Name="SubmissionId" ColumnName="SubmissionId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LayerDetails">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.LayerDetail">
+        <MappingFragment StoreEntitySet="LayerDetails">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="LayerName" ColumnName="LayerName" />
+          <ScalarProperty Name="SubmissionId" ColumnName="SubmissionId" />
+          <ScalarProperty Name="LayerId" ColumnName="LayerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubmissionHeaders">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.SubmissionHeader">
+        <MappingFragment StoreEntitySet="SubmissionHeader">
+          <ScalarProperty Name="ProcessIdentifier" ColumnName="ProcessIdentifier" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="SourceSystemName" ColumnName="SourceSystemName" />
+          <ScalarProperty Name="DuckSubmissionNumber" ColumnName="DuckSubmissionNumber" />
+          <ScalarProperty Name="IsDuckSubmissionNumber" ColumnName="IsDuckSubmissionNumber" />
+          <ScalarProperty Name="PolicyNumber" ColumnName="PolicyNumber" />
+          <ScalarProperty Name="SubmissionNumber" ColumnName="SubmissionNumber" />
+          <ScalarProperty Name="SubmissionHeaderId" ColumnName="SubmissionHeaderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRegions">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.UserRegion">
+        <MappingFragment StoreEntitySet="UserRegions">
+          <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectDetails">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.ProjectDetail">
+        <MappingFragment StoreEntitySet="ProjectDetails">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="ProcessIdentifier" ColumnName="ProcessIdentifier" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="ProjectStreetAddress" ColumnName="ProjectStreetAddress" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="ProjectOwnerName" ColumnName="ProjectOwnerName" />
+          <ScalarProperty Name="GeneralContractorName" ColumnName="GeneralContractorName" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubModules">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.SubModule">
+        <MappingFragment StoreEntitySet="SubModule">
+          <ScalarProperty Name="IsModule" ColumnName="IsModule" />
+          <ScalarProperty Name="MinRight" ColumnName="MinRight" />
+          <ScalarProperty Name="IsMenu" ColumnName="IsMenu" />
+          <ScalarProperty Name="Action" ColumnName="Action" />
+          <ScalarProperty Name="Controller" ColumnName="Controller" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="Sort" ColumnName="Sort" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QCStatusHistories">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.QCStatusHistory">
+        <MappingFragment StoreEntitySet="QCStatusHistory">
+          <ScalarProperty Name="StatusCount" ColumnName="StatusCount" />
+          <ScalarProperty Name="Status10" ColumnName="Status10" />
+          <ScalarProperty Name="Date10" ColumnName="Date10" />
+          <ScalarProperty Name="Status9" ColumnName="Status9" />
+          <ScalarProperty Name="Date9" ColumnName="Date9" />
+          <ScalarProperty Name="Status8" ColumnName="Status8" />
+          <ScalarProperty Name="Date8" ColumnName="Date8" />
+          <ScalarProperty Name="Status7" ColumnName="Status7" />
+          <ScalarProperty Name="Date7" ColumnName="Date7" />
+          <ScalarProperty Name="Status6" ColumnName="Status6" />
+          <ScalarProperty Name="Date6" ColumnName="Date6" />
+          <ScalarProperty Name="Status5" ColumnName="Status5" />
+          <ScalarProperty Name="Date5" ColumnName="Date5" />
+          <ScalarProperty Name="Status4" ColumnName="Status4" />
+          <ScalarProperty Name="Date4" ColumnName="Date4" />
+          <ScalarProperty Name="Status3" ColumnName="Status3" />
+          <ScalarProperty Name="Date3" ColumnName="Date3" />
+          <ScalarProperty Name="Status2" ColumnName="Status2" />
+          <ScalarProperty Name="Date2" ColumnName="Date2" />
+          <ScalarProperty Name="Status1" ColumnName="Status1" />
+          <ScalarProperty Name="Date1" ColumnName="Date1" />
+          <ScalarProperty Name="SubmissionId" ColumnName="SubmissionId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="usp_CreateAmendment" FunctionName="InternationalSubmissionModel.Store.usp_CreateAmendment" />
+    <FunctionImportMapping FunctionImportName="usp_CreateReversal" FunctionName="InternationalSubmissionModel.Store.usp_CreateReversal" />
+    <EntitySetMapping Name="CoverageDetails">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.CoverageDetail">
+        <MappingFragment StoreEntitySet="CoverageDetails">
+          <ScalarProperty Name="PremiumId" ColumnName="PremiumId" />
+          <ScalarProperty Name="CoverageId" ColumnName="CoverageId" />
+          <ScalarProperty Name="LayerId" ColumnName="LayerId" />
+          <ScalarProperty Name="CoverageDetailId" ColumnName="CoverageDetailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="USP_UpdateQCStatus" FunctionName="InternationalSubmissionModel.Store.USP_UpdateQCStatus" />
+    <EntitySetMapping Name="AdditionalCedants">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.AdditionalCedant">
+        <MappingFragment StoreEntitySet="AdditionalCedant">
+          <ScalarProperty Name="ProcessIdentifier" ColumnName="ProcessIdentifier" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="AssumedEntityType" ColumnName="AssumedEntityType" />
+          <ScalarProperty Name="DomicileStateId" ColumnName="DomicileStateId" />
+          <ScalarProperty Name="DomicileCountryId" ColumnName="DomicileCountryId" />
+          <ScalarProperty Name="CedantName" ColumnName="CedantName" />
+          <ScalarProperty Name="SubmissionId" ColumnName="SubmissionId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="USP_ExportSubmission" FunctionName="InternationalSubmissionModel.Store.USP_ExportSubmission">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="InternationalSubmissionModel.USP_ExportSubmission_Result">
+          <ScalarProperty Name="Work_item__submission_no_" ColumnName="Work item /submission no." />
+          <ScalarProperty Name="New_Renewal" ColumnName="New/Renewal" />
+          <ScalarProperty Name="Date_of_Renewal" ColumnName="Date of Renewal" />
+          <ScalarProperty Name="Renewable__Y_N_" ColumnName="Renewable (Y/N)" />
+          <ScalarProperty Name="Master_Policy_Number" ColumnName="Master Policy Number" />
+          <ScalarProperty Name="Renewal_of__Policy_Number_" ColumnName="Renewal of (Policy Number)" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="USP_GetSubmissions" FunctionName="InternationalSubmissionModel.Store.USP_GetSubmissions">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="InternationalSubmissionModel.USP_GetSubmissions_Result">
+          <ScalarProperty Name="SubmissionId" ColumnName="SubmissionId" />
+          <ScalarProperty Name="SubmissionNumber" ColumnName="SubmissionNumber" />
+          <ScalarProperty Name="NewRenewal" ColumnName="NewRenewal" />
+          <ScalarProperty Name="RenewalDate" ColumnName="RenewalDate" />
+          <ScalarProperty Name="Renewal" ColumnName="Renewal" />
+          <ScalarProperty Name="MasterPolicyNumber" ColumnName="MasterPolicyNumber" />
+          <ScalarProperty Name="InsuredName" ColumnName="InsuredName" />
+          <ScalarProperty Name="Addressline1" ColumnName="Addressline1" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="ProfitCenterUW" ColumnName="ProfitCenterUW" />
+          <ScalarProperty Name="ProductLineName" ColumnName="ProductLineName" />
+          <ScalarProperty Name="ProductLineSubTypeName" ColumnName="ProductLineSubTypeName" />
+          <ScalarProperty Name="SectionCodeName" ColumnName="SectionCodeName" />
+          <ScalarProperty Name="ProfitCodeName" ColumnName="ProfitCodeName" />
+          <ScalarProperty Name="CoverageName" ColumnName="CoverageName" />
+          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+          <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+          <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+          <ScalarProperty Name="ProcessDate" ColumnName="ProcessDate" />
+          <ScalarProperty Name="BrokerName" ColumnName="BrokerName" />
+          <ScalarProperty Name="BCityName" ColumnName="BCityName" />
+          <ScalarProperty Name="BStatename" ColumnName="BStatename" />
+          <ScalarProperty Name="BCountryName" ColumnName="BCountryName" />
+          <ScalarProperty Name="ProfitCenterOffice" ColumnName="ProfitCenterOffice" />
+          <ScalarProperty Name="IssuingOffice" ColumnName="IssuingOffice" />
+          <ScalarProperty Name="GrossPremiumUSD" ColumnName="GrossPremiumUSD" />
+          <ScalarProperty Name="TotalInsuredValueUSD" ColumnName="TotalInsuredValueUSD" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="PolicyType" ColumnName="PolicyType" />
+          <ScalarProperty Name="Date1" ColumnName="Date1" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="QCStatusName" ColumnName="QCStatusName" />
+          <ScalarProperty Name="MarketSegment" ColumnName="MarketSegment" />
+          <ScalarProperty Name="Affiliations" ColumnName="Affiliations" />
+          <ScalarProperty Name="Offshore_Onshore" ColumnName="Offshore_Onshore" />
+          <ScalarProperty Name="Formtype" ColumnName="Formtype" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="USP_GetAmendmentSubmissions" FunctionName="InternationalSubmissionModel.Store.USP_GetAmendmentSubmissions">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="InternationalSubmissionModel.USP_GetAmendmentSubmissions_Result">
+          <ScalarProperty Name="SubmissionId" ColumnName="SubmissionId" />
+          <ScalarProperty Name="SubmissionNumber" ColumnName="SubmissionNumber" />
+          <ScalarProperty Name="NewRenewal" ColumnName="NewRenewal" />
+          <ScalarProperty Name="RenewalDate" ColumnName="RenewalDate" />
+          <ScalarProperty Name="Renewal" ColumnName="Renewal" />
+          <ScalarProperty Name="MasterPolicyNumber" ColumnName="MasterPolicyNumber" />
+          <ScalarProperty Name="InsuredName" ColumnName="InsuredName" />
+          <ScalarProperty Name="Addressline1" ColumnName="Addressline1" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="ProfitCenterUW" ColumnName="ProfitCenterUW" />
+          <ScalarProperty Name="ProductLineName" ColumnName="ProductLineName" />
+          <ScalarProperty Name="ProductLineSubTypeName" ColumnName="ProductLineSubTypeName" />
+          <ScalarProperty Name="SectionCodeName" ColumnName="SectionCodeName" />
+          <ScalarProperty Name="ProfitCodeName" ColumnName="ProfitCodeName" />
+          <ScalarProperty Name="CoverageName" ColumnName="CoverageName" />
+          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+          <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+          <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+          <ScalarProperty Name="ProcessDate" ColumnName="ProcessDate" />
+          <ScalarProperty Name="BrokerName" ColumnName="BrokerName" />
+          <ScalarProperty Name="BCityName" ColumnName="BCityName" />
+          <ScalarProperty Name="BStatename" ColumnName="BStatename" />
+          <ScalarProperty Name="BCountryName" ColumnName="BCountryName" />
+          <ScalarProperty Name="ProfitCenterOffice" ColumnName="ProfitCenterOffice" />
+          <ScalarProperty Name="IssuingOffice" ColumnName="IssuingOffice" />
+          <ScalarProperty Name="GrossPremiumUSD" ColumnName="GrossPremiumUSD" />
+          <ScalarProperty Name="TotalInsuredValueUSD" ColumnName="TotalInsuredValueUSD" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="PolicyType" ColumnName="PolicyType" />
+          <ScalarProperty Name="Date1" ColumnName="Date1" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="QCStatusName" ColumnName="QCStatusName" />
+          <ScalarProperty Name="MarketSegment" ColumnName="MarketSegment" />
+          <ScalarProperty Name="Affiliations" ColumnName="Affiliations" />
+          <ScalarProperty Name="Offshore_Onshore" ColumnName="Offshore_Onshore" />
+          <ScalarProperty Name="Formtype" ColumnName="Formtype" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="PolicyDetails">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.PolicyDetail">
+        <MappingFragment StoreEntitySet="PolicyDetails">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="ProcessIdentifier" ColumnName="ProcessIdentifier" />
+          <ScalarProperty Name="OffOnShoreCode" ColumnName="OffOnShoreCode" />
+          <ScalarProperty Name="FormTypeId" ColumnName="FormTypeId" />
+          <ScalarProperty Name="MasterPolicyNumber" ColumnName="MasterPolicyNumber" />
+          <ScalarProperty Name="RiskCountryId" ColumnName="RiskCountryId" />
+          <ScalarProperty Name="LTACode" ColumnName="LTACode" />
+          <ScalarProperty Name="SuffixCode" ColumnName="SuffixCode" />
+          <ScalarProperty Name="PolicyNumber" ColumnName="PolicyNumber" />
+          <ScalarProperty Name="IsPolicyNumber" ColumnName="IsPolicyNumber" />
+          <ScalarProperty Name="PolicySymbol" ColumnName="PolicySymbol" />
+          <ScalarProperty Name="CompanyPaperNumberTypeCode" ColumnName="CompanyPaperNumberTypeCode" />
+          <ScalarProperty Name="IsCompanyPaperNumber" ColumnName="IsCompanyPaperNumber" />
+          <ScalarProperty Name="CompanyPaperTypeCode" ColumnName="CompanyPaperTypeCode" />
+          <ScalarProperty Name="IsCompanyPaperType" ColumnName="IsCompanyPaperType" />
+          <ScalarProperty Name="AdmittedTypeCode" ColumnName="AdmittedTypeCode" />
+          <ScalarProperty Name="RenewalDate" ColumnName="RenewalDate" />
+          <ScalarProperty Name="Renewable" ColumnName="Renewable" />
+          <ScalarProperty Name="BindDate" ColumnName="BindDate" />
+          <ScalarProperty Name="IsBindDate" ColumnName="IsBindDate" />
+          <ScalarProperty Name="PolicyId" ColumnName="PolicyId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="USP_GetAmendmentQC" FunctionName="InternationalSubmissionModel.Store.USP_GetAmendmentQC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="InternationalSubmissionModel.USP_GetAmendmentQC_Result">
+          <ScalarProperty Name="SubmissionId" ColumnName="SubmissionId" />
+          <ScalarProperty Name="SubmissionNumber" ColumnName="SubmissionNumber" />
+          <ScalarProperty Name="NewRenewal" ColumnName="NewRenewal" />
+          <ScalarProperty Name="RenewalDate" ColumnName="RenewalDate" />
+          <ScalarProperty Name="Renewal" ColumnName="Renewal" />
+          <ScalarProperty Name="MasterPolicyNumber" ColumnName="MasterPolicyNumber" />
+          <ScalarProperty Name="InsuredName" ColumnName="InsuredName" />
+          <ScalarProperty Name="Addressline1" ColumnName="Addressline1" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="ProfitCenterUW" ColumnName="ProfitCenterUW" />
+          <ScalarProperty Name="ProductLineName" ColumnName="ProductLineName" />
+          <ScalarProperty Name="ProductLineSubTypeName" ColumnName="ProductLineSubTypeName" />
+          <ScalarProperty Name="SectionCodeName" ColumnName="SectionCodeName" />
+          <ScalarProperty Name="ProfitCodeName" ColumnName="ProfitCodeName" />
+          <ScalarProperty Name="CoverageName" ColumnName="CoverageName" />
+          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+          <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+          <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+          <ScalarProperty Name="ProcessDate" ColumnName="ProcessDate" />
+          <ScalarProperty Name="BrokerName" ColumnName="BrokerName" />
+          <ScalarProperty Name="BCityName" ColumnName="BCityName" />
+          <ScalarProperty Name="BStatename" ColumnName="BStatename" />
+          <ScalarProperty Name="BCountryName" ColumnName="BCountryName" />
+          <ScalarProperty Name="ProfitCenterOffice" ColumnName="ProfitCenterOffice" />
+          <ScalarProperty Name="IssuingOffice" ColumnName="IssuingOffice" />
+          <ScalarProperty Name="GrossPremiumUSD" ColumnName="GrossPremiumUSD" />
+          <ScalarProperty Name="TotalInsuredValueUSD" ColumnName="TotalInsuredValueUSD" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="PolicyType" ColumnName="PolicyType" />
+          <ScalarProperty Name="Date1" ColumnName="Date1" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="QCStatusName" ColumnName="QCStatusName" />
+          <ScalarProperty Name="MarketSegment" ColumnName="MarketSegment" />
+          <ScalarProperty Name="Affiliations" ColumnName="Affiliations" />
+          <ScalarProperty Name="Offshore_Onshore" ColumnName="Offshore_Onshore" />
+          <ScalarProperty Name="Formtype" ColumnName="Formtype" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="USP_GetSubmissionsQC" FunctionName="InternationalSubmissionModel.Store.USP_GetSubmissionsQC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="InternationalSubmissionModel.USP_GetSubmissionsQC_Result">
+          <ScalarProperty Name="SubmissionId" ColumnName="SubmissionId" />
+          <ScalarProperty Name="SubmissionNumber" ColumnName="SubmissionNumber" />
+          <ScalarProperty Name="NewRenewal" ColumnName="NewRenewal" />
+          <ScalarProperty Name="RenewalDate" ColumnName="RenewalDate" />
+          <ScalarProperty Name="Renewal" ColumnName="Renewal" />
+          <ScalarProperty Name="MasterPolicyNumber" ColumnName="MasterPolicyNumber" />
+          <ScalarProperty Name="InsuredName" ColumnName="InsuredName" />
+          <ScalarProperty Name="Addressline1" ColumnName="Addressline1" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="ProfitCenterUW" ColumnName="ProfitCenterUW" />
+          <ScalarProperty Name="ProductLineName" ColumnName="ProductLineName" />
+          <ScalarProperty Name="ProductLineSubTypeName" ColumnName="ProductLineSubTypeName" />
+          <ScalarProperty Name="SectionCodeName" ColumnName="SectionCodeName" />
+          <ScalarProperty Name="ProfitCodeName" ColumnName="ProfitCodeName" />
+          <ScalarProperty Name="CoverageName" ColumnName="CoverageName" />
+          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+          <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+          <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+          <ScalarProperty Name="ProcessDate" ColumnName="ProcessDate" />
+          <ScalarProperty Name="BrokerName" ColumnName="BrokerName" />
+          <ScalarProperty Name="BCityName" ColumnName="BCityName" />
+          <ScalarProperty Name="BStatename" ColumnName="BStatename" />
+          <ScalarProperty Name="BCountryName" ColumnName="BCountryName" />
+          <ScalarProperty Name="ProfitCenterOffice" ColumnName="ProfitCenterOffice" />
+          <ScalarProperty Name="IssuingOffice" ColumnName="IssuingOffice" />
+          <ScalarProperty Name="GrossPremiumUSD" ColumnName="GrossPremiumUSD" />
+          <ScalarProperty Name="TotalInsuredValueUSD" ColumnName="TotalInsuredValueUSD" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="PolicyType" ColumnName="PolicyType" />
+          <ScalarProperty Name="Date1" ColumnName="Date1" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="QCStatusName" ColumnName="QCStatusName" />
+          <ScalarProperty Name="MarketSegment" ColumnName="MarketSegment" />
+          <ScalarProperty Name="Affiliations" ColumnName="Affiliations" />
+          <ScalarProperty Name="Offshore_Onshore" ColumnName="Offshore_Onshore" />
+          <ScalarProperty Name="Formtype" ColumnName="Formtype" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="Submissions">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.Submission">
+        <MappingFragment StoreEntitySet="Submission">
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="MarketSegmentCode" ColumnName="MarketSegmentCode" />
+          <ScalarProperty Name="AffiliationsCode" ColumnName="AffiliationsCode" />
+          <ScalarProperty Name="ImmediateParentId" ColumnName="ImmediateParentId" />
+          <ScalarProperty Name="QCRemark" ColumnName="QCRemark" />
+          <ScalarProperty Name="QCApprovaldate" ColumnName="QCApprovaldate" />
+          <ScalarProperty Name="QCStatusId" ColumnName="QCStatusId" />
+          <ScalarProperty Name="PremiumId" ColumnName="PremiumId" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="PolicyId" ColumnName="PolicyId" />
+          <ScalarProperty Name="ProcessIdentifier" ColumnName="ProcessIdentifier" />
+          <ScalarProperty Name="ParentSubmissionId" ColumnName="ParentSubmissionId" />
+          <ScalarProperty Name="RenewalofPolicyNumber" ColumnName="RenewalofPolicyNumber" />
+          <ScalarProperty Name="SixDigitSubmissionNumber" ColumnName="SixDigitSubmissionNumber" />
+          <ScalarProperty Name="CoverageID" ColumnName="CoverageID" />
+          <ScalarProperty Name="PolicyTypeID" ColumnName="PolicyTypeID" />
+          <ScalarProperty Name="ProcessDate" ColumnName="ProcessDate" />
+          <ScalarProperty Name="ReasonID" ColumnName="ReasonID" />
+          <ScalarProperty Name="IsUnclearAccount" ColumnName="IsUnclearAccount" />
+          <ScalarProperty Name="IssuingOffice" ColumnName="IssuingOffice" />
+          <ScalarProperty Name="ProfitCentreOffice" ColumnName="ProfitCentreOffice" />
+          <ScalarProperty Name="By_India_FROM_Berk_SI" ColumnName="By_India_FROM_Berk_SI" />
+          <ScalarProperty Name="IsBy_India_FROM_Berk_SI" ColumnName="IsBy_India_FROM_Berk_SI" />
+          <ScalarProperty Name="By_Berk_SI_FROM_Broker" ColumnName="By_Berk_SI_FROM_Broker" />
+          <ScalarProperty Name="IsBy_Berk_SI_FROM_Broker" ColumnName="IsBy_Berk_SI_FROM_Broker" />
+          <ScalarProperty Name="IncumbentAttackingBrokerType" ColumnName="IncumbentAttackingBrokerType" />
+          <ScalarProperty Name="BrokerContactPersonId" ColumnName="BrokerContactPersonId" />
+          <ScalarProperty Name="RetailBrokerID" ColumnName="RetailBrokerID" />
+          <ScalarProperty Name="BrokerEntityId" ColumnName="BrokerEntityId" />
+          <ScalarProperty Name="AssumedEntityType" ColumnName="AssumedEntityType" />
+          <ScalarProperty Name="DomicileStateId" ColumnName="DomicileStateId" />
+          <ScalarProperty Name="CedantName" ColumnName="CedantName" />
+          <ScalarProperty Name="DirectAssumedTypeCode" ColumnName="DirectAssumedTypeCode" />
+          <ScalarProperty Name="PriorityCompanyCode" ColumnName="PriorityCompanyCode" />
+          <ScalarProperty Name="DBAName" ColumnName="DBAName" />
+          <ScalarProperty Name="IsDifferentDBA" ColumnName="IsDifferentDBA" />
+          <ScalarProperty Name="InsuredAliasId" ColumnName="InsuredAliasId" />
+          <ScalarProperty Name="InsuredAddressId" ColumnName="InsuredAddressId" />
+          <ScalarProperty Name="InsuredId" ColumnName="InsuredId" />
+          <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+          <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+          <ScalarProperty Name="CurrentStatusId" ColumnName="CurrentStatusId" />
+          <ScalarProperty Name="AttachmentTypeCode" ColumnName="AttachmentTypeCode" />
+          <ScalarProperty Name="ProfitCodeId" ColumnName="ProfitCodeId" />
+          <ScalarProperty Name="SectionCodeId" ColumnName="SectionCodeId" />
+          <ScalarProperty Name="ProductLineSubTypeId" ColumnName="ProductLineSubTypeId" />
+          <ScalarProperty Name="ProductLineTypeId" ColumnName="ProductLineTypeId" />
+          <ScalarProperty Name="IssuingUnderWriterId" ColumnName="IssuingUnderWriterId" />
+          <ScalarProperty Name="ProfitCenterUnderWriterId" ColumnName="ProfitCenterUnderWriterId" />
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+          <ScalarProperty Name="NewRenewalTypeCode" ColumnName="NewRenewalTypeCode" />
+          <ScalarProperty Name="SubmissionNumber" ColumnName="SubmissionNumber" />
+          <ScalarProperty Name="SubmissionHeaderId" ColumnName="SubmissionHeaderId" />
+          <ScalarProperty Name="SubmissionId" ColumnName="SubmissionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PremiumDetails">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.PremiumDetail">
+        <MappingFragment StoreEntitySet="PremiumDetails">
+          <ScalarProperty Name="Installment" ColumnName="Installment" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifedOnDate" ColumnName="LastModifedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="ProcessIdentifier" ColumnName="ProcessIdentifier" />
+          <ScalarProperty Name="PremiumType" ColumnName="PremiumType" />
+          <ScalarProperty Name="USDExchangeRate" ColumnName="USDExchangeRate" />
+          <ScalarProperty Name="JurExchangeRate" ColumnName="JurExchangeRate" />
+          <ScalarProperty Name="JurCurrencyCode" ColumnName="JurCurrencyCode" />
+          <ScalarProperty Name="TransactionalTIV" ColumnName="TransactionalTIV" />
+          <ScalarProperty Name="IsTransactionalTIV" ColumnName="IsTransactionalTIV" />
+          <ScalarProperty Name="TransactionalGSTOUT" ColumnName="TransactionalGSTOUT" />
+          <ScalarProperty Name="TransactionalGSTIN" ColumnName="TransactionalGSTIN" />
+          <ScalarProperty Name="TransactionalDeductions" ColumnName="TransactionalDeductions" />
+          <ScalarProperty Name="TransactionalCollections" ColumnName="TransactionalCollections" />
+          <ScalarProperty Name="TransactionalGrossPremium" ColumnName="TransactionalGrossPremium" />
+          <ScalarProperty Name="TransactionalDeductible" ColumnName="TransactionalDeductible" />
+          <ScalarProperty Name="TransactionalSIR" ColumnName="TransactionalSIR" />
+          <ScalarProperty Name="ConversionRateToTransactional" ColumnName="ConversionRateToTransactional" />
+          <ScalarProperty Name="TransactionalCurrencyCode" ColumnName="TransactionalCurrencyCode" />
+          <ScalarProperty Name="OriginalAttachmentPoint" ColumnName="OriginalAttachmentPoint" />
+          <ScalarProperty Name="IsOriginalAttachmentPoint" ColumnName="IsOriginalAttachmentPoint" />
+          <ScalarProperty Name="OriginalLayerLimit" ColumnName="OriginalLayerLimit" />
+          <ScalarProperty Name="OriginalCurrencyCode" ColumnName="OriginalCurrencyCode" />
+          <ScalarProperty Name="PolicyCommissionPercent" ColumnName="PolicyCommissionPercent" />
+          <ScalarProperty Name="LayerPercent" ColumnName="LayerPercent" />
+          <ScalarProperty Name="ExchangeRateDate" ColumnName="ExchangeRateDate" />
+          <ScalarProperty Name="PremiumId" ColumnName="PremiumId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubmissionCoverages">
+      <EntityTypeMapping TypeName="InternationalSubmissionModel.SubmissionCoverage">
+        <MappingFragment StoreEntitySet="SubmissionCoverages">
+          <ScalarProperty Name="ProcessIdentifier" ColumnName="ProcessIdentifier" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CoverageCode" ColumnName="CoverageCode" />
+          <ScalarProperty Name="CoverageId" ColumnName="CoverageId" />
+          <ScalarProperty Name="SubmissionId" ColumnName="SubmissionId" />
+          <ScalarProperty Name="SubmissionCoverageId" ColumnName="SubmissionCoverageId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

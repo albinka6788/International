@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7ae099a1e9e3464a8bc6dbeb05180acf" Name="Diagram1" ZoomLevel="53">
+        <EntityTypeShape EntityType="InternationalSubmissionModel.ErrorLog" Width="1.5" PointX="7.75" PointY="10.75" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.Group" Width="1.5" PointX="7.75" PointY="1.5" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.Module" Width="1.5" PointX="7.75" PointY="6.625" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.Right" Width="1.5" PointX="9.75" PointY="10.75" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.RightsToRole" PointX="12.625" PointY="6.625" Width="1.5" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.sysdiagram" Width="1.5" PointX="11.75" PointY="10.75" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.UserSessionLog" Width="1.5" PointX="2.75" PointY="13.75" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.AdditionalInsured" Width="1.5" PointX="11.875" PointY="14.875" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.LayerDetail" Width="1.5" PointX="11.875" PointY="18.375" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.SubmissionHeader" Width="1.5" PointX="7.375" PointY="35.375" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.UserRegion" Width="1.5" PointX="12.25" PointY="1.75" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.ProjectDetail" Width="1.5" PointX="7.375" PointY="29.375" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.User" Width="1.5" PointX="10.375" PointY="1" />
+        <AssociationConnector Association="InternationalSubmissionModel.FK_Users_Groups" />
+        <AssociationConnector Association="InternationalSubmissionModel.FK_UserRegions_Users" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.SubModule" Width="1.5" PointX="10" PointY="39" />
+        <AssociationConnector Association="InternationalSubmissionModel.FK_SubModule_Module" />
+        <AssociationConnector Association="InternationalSubmissionModel.FK_RightsToRole_SubModule" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.QCStatusHistory" Width="1.5" PointX="15.25" PointY="38.25" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.CoverageDetail" Width="1.5" PointX="16.125" PointY="34.375" />
+        <AssociationConnector Association="InternationalSubmissionModel.FK_CoverageDetails_LayerDetails" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.AdditionalCedant" Width="1.5" PointX="14.875" PointY="29.875" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.PolicyDetail" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.Submission" Width="1.5" PointX="9.625" PointY="14" />
+        <AssociationConnector Association="InternationalSubmissionModel.FK_AdditionalCedant_Submission" />
+        <AssociationConnector Association="InternationalSubmissionModel.FK_AdditionalInsured_AdditionalInsured" />
+        <AssociationConnector Association="InternationalSubmissionModel.FK_LayerDetails_Submission" />
+        <AssociationConnector Association="InternationalSubmissionModel.FK_Submission_PolicyDetails" />
+        <AssociationConnector Association="InternationalSubmissionModel.FK_Submission_ProjectDetails" />
+        <AssociationConnector Association="InternationalSubmissionModel.FK_QCStatusHistory_Submission" />
+        <AssociationConnector Association="InternationalSubmissionModel.FK_Submission_SubmissionHeader_SubmissionHeaderId" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.PremiumDetail" Width="1.5" PointX="7.375" PointY="20.75" />
+        <AssociationConnector Association="InternationalSubmissionModel.FK_CoverageDetails_PremiumDetails" />
+        <AssociationConnector Association="InternationalSubmissionModel.FK_Submission_PremiumDetails" />
+        <EntityTypeShape EntityType="InternationalSubmissionModel.SubmissionCoverage" Width="1.5" PointX="11.875" PointY="22.625" />
+        <AssociationConnector Association="InternationalSubmissionModel.FK_SubmissionCoverages_Submission" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

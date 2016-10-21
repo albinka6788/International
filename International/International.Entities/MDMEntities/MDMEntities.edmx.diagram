@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="54969f2158114da3ae7d5e7ab6a7e343" Name="Diagram1" ZoomLevel="41">
+        <EntityTypeShape EntityType="MDMModel.BrokerAddress" Width="1.5" PointX="6" PointY="32.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.BrokerProductLine" Width="1.5" PointX="6" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.City" Width="1.5" PointX="1.5" PointY="29.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.ContactPersonBroker" Width="1.5" PointX="10.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.ContactPersonInsured" Width="1.5" PointX="8" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.Country" Width="1.5" PointX="1.5" PointY="39.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.Currency" Width="1.5" PointX="10.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.IndustryCode" Width="1.5" PointX="8.75" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.InsuredAddress" Width="1.5" PointX="3.75" PointY="32.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.InsuredAlia" Width="1.5" PointX="8" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.InsuredParty" Width="1.5" PointX="5.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.MasterInsured" Width="1.5" PointX="10.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.NAIC" Width="1.5" PointX="12.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.Project" Width="1.5" PointX="3.75" PointY="38.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.Region" Width="1.5" PointX="1.5" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.State" Width="1.5" PointX="1.5" PointY="34.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.Status" Width="1.5" PointX="12.75" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.TypeMaster" Width="1.5" PointX="14.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.UnderwriterProductLine" Width="1.5" PointX="6" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.InsuredParty_Backup_2802016" Width="1.5" PointX="14.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.MasterInsureds_Backup_2802016" Width="1.5" PointX="10.75" PointY="16.25" IsExpanded="true" />
+        <AssociationConnector Association="MDMModel.FK__CityId_Proj" ManuallyRouted="false" />
+        <AssociationConnector Association="MDMModel.FK_City_State" ManuallyRouted="false" />
+        <AssociationConnector Association="MDMModel.FK_InsuredAddress_City" ManuallyRouted="false" />
+        <AssociationConnector Association="MDMModel.FK_ContactPersonInsured_InsuredParty_InsuredPartyId" ManuallyRouted="false" />
+        <AssociationConnector Association="MDMModel.FK__CountryId" ManuallyRouted="false" />
+        <AssociationConnector Association="MDMModel.FK_InsuredAlias_InsuredParty" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MDMModel.Reasoncode" Width="1.5" PointX="15" PointY="13" />
+        <AssociationConnector Association="MDMModel.FK__Reasoncod__Statu__57E7F8DC" />
+        <AssociationConnector Association="MDMModel.fk_ReasonStatuscode" />
+        <EntityTypeShape EntityType="MDMModel.Coverage" Width="1.5" PointX="3" PointY="15.25" />
+        <EntityTypeShape EntityType="MDMModel.PolicyType" Width="1.5" PointX="3" PointY="44.5" />
+        <EntityTypeShape EntityType="MDMModel.CurrencyRegion" Width="1.5" PointX="17" PointY="9.125" />
+        <AssociationConnector Association="MDMModel.FK_CurrencyRegion_Currency" />
+        <AssociationConnector Association="MDMModel.FK_CurrencyRegion_Region" />
+        <EntityTypeShape EntityType="MDMModel.FormType" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MDMModel.Branch" Width="1.5" PointX="8.75" PointY="20.75" />
+        <AssociationConnector Association="MDMModel.FK__CityId" />
+        <AssociationConnector Association="MDMModel.FK_RegionId" />
+        <EntityTypeShape EntityType="MDMModel.PolicySymbol" Width="1.5" PointX="3.75" PointY="19.875" />
+        <AssociationConnector Association="MDMModel.FK__PolicySym__Regio__613C58EC" />
+        <EntityTypeShape EntityType="MDMModel.Broker" Width="1.5" PointX="1.5" PointY="24.625" />
+        <EntityTypeShape EntityType="MDMModel.BrokerParty" Width="1.5" PointX="3.75" PointY="25.75" />
+        <EntityTypeShape EntityType="MDMModel.BrokerProductLineSubType" Width="1.5" PointX="6" PointY="39.625" />
+        <AssociationConnector Association="MDMModel.FK__BrokerPar__broke__3D491139" />
+        <AssociationConnector Association="MDMModel.FK_BrokerParty_BrokerAddress" />
+        <AssociationConnector Association="MDMModel.FK__BC_CityId" />
+        <AssociationConnector Association="MDMModel.FK__BrokerProduct_BrokerPartyID" />
+        <AssociationConnector Association="MDMModel.FK__BrokerProductSubType_BrokerPartyID" />
+        <EntityTypeShape EntityType="MDMModel.ProductLineSubType" Width="1.5" PointX="3" PointY="52.875" />
+        <EntityTypeShape EntityType="MDMModel.Underwriter" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MDMModel.UnderwriterProductSubLine" Width="1.5" PointX="5.25" PointY="52.375" />
+        <AssociationConnector Association="MDMModel.FK__BrokerProductSubType_ProductLineSubTypeId" />
+        <AssociationConnector Association="MDMModel.FK__ProductLineSubTypeId" />
+        <AssociationConnector Association="MDMModel.FK_Underwriter_Region" />
+        <AssociationConnector Association="MDMModel.FK__UP_UnderwriterId" />
+        <AssociationConnector Association="MDMModel.FK__UProSub_UnderwriterId" />
+        <EntityTypeShape EntityType="MDMModel.ProductLine" Width="1.5" PointX="0.75" PointY="30.5" />
+        <AssociationConnector Association="MDMModel.FK__BrokerProduct_ProductLineId" />
+        <AssociationConnector Association="MDMModel.FK_Coverage_ProductLine" />
+        <AssociationConnector Association="MDMModel.FK_PolicyTypes" />
+        <AssociationConnector Association="MDMModel.FK__ProductLineId" />
+        <AssociationConnector Association="MDMModel.FK__UP_ProductLineId" />
+        <EntityTypeShape EntityType="MDMModel.ProfitCode" Width="1.5" PointX="7.5" PointY="56.625" />
+        <EntityTypeShape EntityType="MDMModel.SectionCode" Width="3.375" PointX="2.25" PointY="58.375" />
+        <AssociationConnector Association="MDMModel.FK_ProductLineSubTypeId" />
+        <AssociationConnector Association="MDMModel.FK_SectionCodeId" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

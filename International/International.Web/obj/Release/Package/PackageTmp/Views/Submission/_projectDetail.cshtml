@@ -1,0 +1,260 @@
+﻿@model International.BusinessEntities.Models.ProjectDetailModel
+
+@{ var regularPattern = @"^([-_.,()/@$a-zA-Z0-9 ]+$)";
+    var regularPattern1 = @"^([-+.0-9]+$)";
+    var isView = (bool)ViewBag.isView;
+}
+
+<div class="container-fluid  dt-overflow" ng-init="InitProjectDetailPage()">
+    <div class="bg-primary">
+        <h4>Project Details</h4>
+    </div>
+@if (!isView)
+    {
+    <form id="ProjectForm" name="ProjectForm">
+        <div class="td-space clearfix">
+            <div class="row">
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Project Name</label>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(x => x.ProjectName, new
+                        {
+                            @class = "form-control",
+                            data_ng_model = "submissionModel.ProjectDetail.ProjectName",
+                            allow_pattern = regularPattern,
+                            extraspace="",
+                            validation_rules = "",
+                            maxlength = "250",
+                            status = "{{submissionModel.CurrentStatusId}}",
+                            identifier = "DisableLostCancellation",
+                            autocomplete = "off"
+                        })
+
+                        @Html.ValidationMessageFor(x => x.ProjectName)
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Name of General Contractor</label>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(x => x.GeneralContractorName, new
+                       {
+                           @class = "form-control",
+                           data_ng_model = "submissionModel.ProjectDetail.GeneralContractorName",
+                           allow_pattern = regularPattern,
+                           extraspace = "",
+                           validation_rules = "",
+                           maxlength = "250",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "DisableLostCancellation",
+                           autocomplete = "off"
+                       })
+                        @Html.ValidationMessageFor(x => x.GeneralContractorName)
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Project Owner Name</label>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(x => x.ProjectOwnerName, new
+                       {
+                           @class = "form-control",
+                           data_ng_model = "submissionModel.ProjectDetail.ProjectOwnerName",
+                           allow_pattern = regularPattern,
+                           extraspace = "",
+                           maxlength = "250",
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "DisableLostCancellation",
+                           autocomplete = "off"
+                       })
+                        @Html.ValidationMessageFor(x => x.ProjectOwnerName)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Project Country</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" data-ng-model="submissionModel.ProjectDetail.CountryId" ng-options="option.Value as option.Text for option in submissionListModel.CountryList"
+                                ng-change="setStateList();" ng-disabled="!submissionModel.ProjectDetail.ProjectName" convert-to-number
+                                validation_rules status="{{submissionModel.CurrentStatusId}}" identifier="DisableLostCancellation" data-val="true">
+                            <option value="">- Select  -</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Project State</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" data-ng-model="submissionModel.ProjectDetail.StateId" ng-options="option.Value as option.Text for option in submissionListModel.StateList"
+                                ng-change="setCityList();" ng-disabled="!submissionModel.ProjectDetail.ProjectName" convert-to-number validation_rules status="{{submissionModel.CurrentStatusId}}"
+                                identifier="DisableLostCancellation" data-val="true">
+                            <option value="">- Select  -</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Project City</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" data-ng-model="submissionModel.ProjectDetail.CityId" ng-options="option.Value as option.Text for option in submissionListModel.CityList"
+                                ng-disabled="!submissionModel.ProjectDetail.ProjectName" convert-to-number validation_rules status="{{submissionModel.CurrentStatusId}}"
+                                identifier="DisableLostCancellation" data-val="true">
+                            <option value="">- Select  -</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Project Street Address</label>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(x => x.ProjectStreetAddress, new
+                       {
+                           @class = "form-control",
+                           data_ng_model = "submissionModel.ProjectDetail.ProjectStreetAddress",
+                           data_ng_disabled = "!submissionModel.ProjectDetail.ProjectName",
+                           allow_pattern = regularPattern,
+                           extraspace = "",
+                           validation_rules = "",
+                           maxlength = "250",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "DisableLostCancellation",
+                           autocomplete = "off"
+                       })
+                        @Html.ValidationMessageFor(x => x.ProjectStreetAddress)
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Latitude</label>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(x => x.Latitude, new
+                        {
+                           @class = "form-control",
+                           data_ng_model = "submissionModel.ProjectDetail.Latitude",
+                           valid_decimal_number7="",
+                           validation_rules = "",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           identifier = "Latitude",
+                           maxlength = "32",
+                           producttype = "{{submissionModel.ProductLineSubTypeId}}",
+                           data_ng_keyup = "checkLatRange();",
+                           autocomplete = "off"
+                       })
+                        @Html.ValidationMessageFor(x => x.Latitude)
+                        <span ng-show="IslatRange" class="field-validation-error">Latitude must be between -90 and 90</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Longitude</label>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(x => x.Longitude, new
+                        {
+                           @class = "form-control",
+                           data_ng_model = "submissionModel.ProjectDetail.Longitude",
+                           valid_decimal_number7 = "",
+                           validation_rules = "",
+                           producttype = "{{submissionModel.ProductLineSubTypeId}}",
+                           identifier = "Longitude",
+                           maxlength = "32",
+                           status = "{{submissionModel.CurrentStatusId}}",
+                           data_ng_keyup = "checkLongRange()",
+                           autocomplete = "off"
+                       })
+                      
+                        @Html.ValidationMessageFor(x => x.Longitude)
+                        <span ng-show="IslongRange" class="field-validation-error">Longitude must be between -180 and 180</span>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-sm-12 btn-size">
+                <button type="button" class="btn btn-primary" ng-click="saveProject();">Next</button>
+                <button type="button" class="btn btn-primary" ng-click="decrementStep();">Back</button>
+            </div>
+        </div>
+    </form>
+    }
+else
+{
+    <form id="ProjectForm" name="ProjectForm">
+        <div class="td-space clearfix">
+            <div class="row">
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Project Name</label>
+                    <div class="col-sm-6">
+                     {{submissionModel.ProjectDetail.ProjectName}}
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Name of General Contractor</label>
+                    <div class="col-sm-6">
+                      {{submissionModel.ProjectDetail.GeneralContractorName}}
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Project Owner Name</label>
+                    <div class="col-sm-6">
+                      {{submissionModel.ProjectDetail.ProjectOwnerName}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Project Country</label>
+                    <div class="col-sm-6">
+                         {{submissionListModel.CountryList.getValue(submissionModel.ProjectDetail.CountryId)}}
+                        @*<select class="form-control" data-ng-model="submissionModel.ProjectDetail.CountryId" ng-options="option.Value as option.Text for option in submissionListModel.CountryList"
+                                ng-change="setStateList();" ng-disabled="!submissionModel.ProjectDetail.ProjectName" convert-to-number
+                                validation_rules status="{{submissionModel.CurrentStatusId}}" identifier="DisableLostQuotedIndicated" data-val="true">
+                            <option value="">- Select  -</option>
+                        </select>*@
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Project State</label>
+                    <div class="col-sm-6">
+                        {{submissionListModel.StateList.getValue(submissionModel.ProjectDetail.StateId)}}
+                        @*<select class="form-control" data-ng-model="submissionModel.ProjectDetail.StateId" ng-options="option.Value as option.Text for option in submissionListModel.StateList"
+                                ng-change="setCityList();" ng-disabled="!submissionModel.ProjectDetail.ProjectName" convert-to-number validation_rules status="{{submissionModel.CurrentStatusId}}" identifier="DisableLostQuotedIndicated" data-val="true">
+                            <option value="">- Select  -</option>
+                        </select>*@
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Project City</label>
+                    <div class="col-sm-6">
+                        {{submissionListModel.CityList.getValue(submissionModel.ProjectDetail.CityId)}}
+                        @*<select class="form-control" data-ng-model="submissionModel.ProjectDetail.CityId" ng-options="option.Value as option.Text for option in submissionListModel.CityList"
+                                ng-disabled="!submissionModel.ProjectDetail.ProjectName" convert-to-number validation_rules status="{{submissionModel.CurrentStatusId}}" identifier="DisableLostQuotedIndicated" data-val="true">
+                            <option value="">- Select  -</option>
+                        </select>*@
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Project Street Address</label>
+                    <div class="col-sm-6">
+                       {{submissionModel.ProjectDetail.ProjectStreetAddress}}
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Latitude</label>
+                    <div class="col-sm-6">
+                   {{submissionModel.ProjectDetail.Latitude}}
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="col-sm-6" for="name">Longitude</label>
+                    <div class="col-sm-6">
+                     {{submissionModel.ProjectDetail.Longitude}}
+                    </div>
+                </div>
+            </div>
+            <div class=" col-sm-12 btn-size">
+                <button type="button" class="btn btn-primary" ng-click="saveProject();">Next</button>
+                <button type="button" class="btn btn-primary" ng-click="decrementStep();">Back</button>
+            </div>
+        </div>
+    </form>
+}
+</div>
+
+

@@ -1,0 +1,232 @@
+﻿@model International.BusinessEntities.Models.SubmissionModel
+@{
+    
+    var isView = (bool)ViewBag.isView;
+}
+
+
+
+    @if (!isView)
+    {
+        <div class="container-fluid  dt-overflow" ng-init="OtherDetailsInit()">
+            <div class="bg-primary">
+                <h4>Other Details</h4>
+            </div>
+            <style>
+                .my-disable {
+                    pointer-events: none;
+                }
+            </style>
+            <form id="OtherDetailForm" name="OtherDetailForm">
+                <div class="td-space clearfix">
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Date of receiving - By Berk SI From Broker&nbsp; <input type="checkbox" ng-change="CHKBy_Berk_SI_FROM_BrokerChange(submissionModel.IsBy_Berk_SI_FROM_Broker)" ng-model="submissionModel.IsBy_Berk_SI_FROM_Broker" validation_rules identifier="By_Berk_SI_FROM_Broker" status="{{submissionModel.CurrentStatusId}}"></label>
+                            <div class="col-sm-6">
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(model => model.By_Berk_SI_FROM_Broker, new
+                                   {
+                                       @class = "form-control date",
+                                       date_time_picker = "",
+                                       time = true,
+                                       placeholder = "Date of receiving - By Berk SI From Broker",
+                                       ng_model = "submissionModel.By_Berk_SI_FROM_Broker",
+                                       mindate = "Jan-01-2013",
+                                       maxdate = "Dec-31-2040",
+                                       ng_disabled = "submissionModel.IsBy_Berk_SI_FROM_Broker",
+                                       ng_change = "OnBy_Berk_SI_FROM_BrokerChange()",
+                                       validation_rules = "",
+                                       status = "{{submissionModel.CurrentStatusId}}",
+                                       identifier = "By_Berk_SI_FROM_Broker"
+                                   })
+                                    <span class="input-group-addon" aria-hidden="true"><i class="fa fa-calendar"></i></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.By_Berk_SI_FROM_Broker)
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Date of receiving By Berk SI From Broker (GMT)</label>
+                            <div class="col-sm-6">                               
+                                <input type="text" class="form-control" readonly ng-model="By_Berk_SI_FROM_Broker_GMT" placeholder="Date of receiving By Berk SI From Broker (GMT)">
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Date of receiving - By India From Berk SI &nbsp;<input type="checkbox" ng-change="CHKBy_India_FROM_Berk_SIChange(submissionModel.IsBy_India_FROM_Berk_SI)" ng-model="submissionModel.IsBy_India_FROM_Berk_SI" validation_rules identifier="By_Berk_SI_FROM_Broker" status="{{submissionModel.CurrentStatusId}}"></label>
+                            <div class="col-sm-6">
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(model => model.By_India_FROM_Berk_SI, new
+                                   {
+                                       @class = "form-control date",
+                                       date_time_picker = "",
+                                       time = true,
+                                       placeholder = "Date of receiving - By India From Berk SI",
+                                       data_ng_model = "submissionModel.By_India_FROM_Berk_SI",
+                                       mindate = "Jan-01-2013",
+                                       maxdate = "Dec-31-2040",
+                                       ng_disabled = "submissionModel.IsBy_India_FROM_Berk_SI",
+                                       ng_change = "OnBy_India_FROM_Berk_SIChange()",
+                                       validation_rules = "",
+                                       status = "{{submissionModel.CurrentStatusId}}",
+                                       identifier = "By_Berk_SI_FROM_Broker"
+                                   })
+                                    <span class="input-group-addon" disabled="submissionModel.IsBy_India_FROM_Berk_SI"><i class="fa fa-calendar"></i></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.By_India_FROM_Berk_SI)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Date of receiving By India From Berk SI (GMT)</label>
+                            <div class="col-sm-6">                                
+                                <input type="text" class="form-control" readonly ng-model="By_India_FROM_Berk_SI_GMT" placeholder="Date of receiving By India From Berk SI (GMT)">                               
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Profit Centre Office</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" ng-model="submissionModel.ProfitCentreOffice"
+                                        ng-options="option.Value as option.Text for option in submissionListModel.ProfitCentreOfficeList"
+                                        data-val="true"
+                                        data-val-required="Please select Profit Centre Office"
+                                        name="ProfitCentreOffice" id="ProfitCentreOffice" ng-change="SetIssuingOffice()"
+                                        validation_rules identifier="ProfitCentreOffice" status="{{submissionModel.CurrentStatusId}}">
+                                    <option value="">- Select  -</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.ProfitCentreOffice)
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Issuing Office</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" ng-model="submissionModel.IssuingOffice"
+                                        ng-options="option.Value as option.Text for option in submissionListModel.ProfitCentreOfficeList"
+                                        data-val="true"
+                                        data-val-required="Please select Issuing Office"
+                                        name="IssuingOffice" id="IssuingOffice" ng-change=""
+                                        validation_rules identifier="IssuingOffice" status="{{submissionModel.CurrentStatusId}}">
+                                    <option value="">- Select  -</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.IssuingOffice)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8 form-group">
+                            <label class="col-sm-3" for="name">Remarks</label>  
+                            <div class="col-sm-9 form-group">
+                                <div>
+                                    @Html.TextAreaFor(model => model.Remark, new
+                                   {
+                                       @class = "form-control date",
+                                       placeholder = "Remark",
+                                       data_ng_model = "submissionModel.Remark",
+                                       maxlength = "250"
+                                   })
+
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Remark)
+                            </div>                       
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <div class="col-sm-6 checkbox">
+                                <label><input type="checkbox" ng-model="submissionModel.IsUnclearAccount" validation_rules identifier="UnclearAccount" status="{{submissionModel.CurrentStatusId}}" value=""><strong>Unclear</strong></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-sm-12 btn-size">
+                        <button class="btn btn-primary" ng-class="{disabled: !hasNextStep()}" ng-click="OD_SubmitOrNextClick()">{{StatusDepNext}}</button>
+                        <button class="btn btn-primary" ng-class="{disabled: !hasPreviousStep()}" ng-click="decrementStep();">Back</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    }
+
+    else
+    {
+        <div class="container-fluid  dt-overflow" ng-init="OtherDetailsInit()">
+            <div class="bg-primary">
+                <h4>Other Details</h4>
+            </div>
+            <style>
+                .my-disable {
+                    pointer-events: none;
+                }
+            </style>
+
+            <form id="OtherDetailForm" name="OtherDetailForm">
+                <div class="td-space clearfix">
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Date of receiving - By Berk SI From Broker&nbsp; <input type="checkbox" ng-change="CHKBy_Berk_SI_FROM_BrokerChange(submissionModel.IsBy_Berk_SI_FROM_Broker)" ng-model="submissionModel.IsBy_Berk_SI_FROM_Broker" status="{{submissionModel.CurrentStatusId}}" disabled></label>
+                            <div class="col-sm-6">
+                                <div class="input-group date">
+                                    {{submissionModel.By_Berk_SI_FROM_Broker}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Date of receiving By Berk SI From Broker (GMT)</label>
+                            <div class="col-sm-6">                               
+                                {{By_Berk_SI_FROM_Broker_GMT}}                              
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Date of receiving - By India From Berk SI &nbsp;<input type="checkbox" ng-model="submissionModel.IsBy_India_FROM_Berk_SI" status="{{submissionModel.CurrentStatusId}}" disabled></label>
+                            <div class="col-sm-6">
+                                <div class="input-group date">
+                                    {{submissionModel.By_India_FROM_Berk_SI}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Date of receiving By India From Berk SI (GMT)</label>
+                            <div class="col-sm-6">
+                                @*<div class="input-group">*@
+                                {{By_India_FROM_Berk_SI_GMT}}
+                                @*<span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>*@
+                                @*</div>*@
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Profit Centre Office</label>
+                            <div class="col-sm-6">
+                                {{submissionListModel.ProfitCentreOfficeList.getValue(submissionModel.ProfitCentreOffice)}}
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label class="col-sm-6" for="name">Issuing Office</label>
+                            <div class="col-sm-6">
+                                {{submissionListModel.ProfitCentreOfficeList.getValue(submissionModel.IssuingOffice)}}
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8 form-group">
+                            <label class="col-sm-3" for="name">Remarks</label>
+                            <div class="col-sm-9 form-group">
+                               {{submissionModel.Remark}}
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <div class="col-sm-6 checkbox">
+                                <label><input type="checkbox" ng-model="submissionModel.IsUnclearAccount" value="" disabled><strong>Unclear</strong></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-sm-12 btn-size">
+                        <button class="btn btn-primary" ng-class="{disabled: !hasNextStep()}" ng-click="incrementStep()">{{StatusDepNext}}</button>
+                        <button class="btn btn-primary" ng-class="{disabled: !hasPreviousStep()}" ng-click="decrementStep();">Back</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    }
+
+
